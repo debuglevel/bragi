@@ -85,7 +85,9 @@
         props: ["chapter"],
         template: `
                <tr>
-                 <td>{{ chapter.title }}</td>
+                 <td>
+                   <a v-bind:href="'chapter.html?id=' + chapter.id">{{ chapter.title }}</a>
+                 </td>
 <!--                 <td>{{ chapter.id }}</td> -->
                 <td>
                     <b-button v-bind:id="'popover-target-' + chapter.id">
