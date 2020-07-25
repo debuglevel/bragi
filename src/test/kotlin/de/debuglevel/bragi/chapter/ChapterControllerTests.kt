@@ -1,4 +1,4 @@
-package de.debuglevel.bragi.person
+package de.debuglevel.bragi.chapter
 
 import io.micronaut.core.type.Argument
 import io.micronaut.http.HttpRequest
@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 @MicronautTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class PersonControllerTests {
+class ChapterControllerTests {
     @Inject
     lateinit var server: EmbeddedServer
 
@@ -29,36 +29,36 @@ class PersonControllerTests {
 
     @ParameterizedTest
     @MethodSource("personRequestProvider")
-    fun `save person`(personRequest: PersonRequest) {
+    fun `save person`(addChapterRequest: AddChapterRequest) {
         // Arrange
 
         // Act
         val uri = UriBuilder.of("/").build()
         val savedPerson = httpClient.toBlocking()
-            .retrieve(HttpRequest.POST(uri, personRequest), PersonResponse::class.java)
+            .retrieve(HttpRequest.POST(uri, addChapterRequest), UpdateChapterResponse::class.java)
 
         // Assert
-        Assertions.assertThat(savedPerson.name).isEqualTo(personRequest.name)
+        Assertions.assertThat(savedPerson.title).isEqualTo(addChapterRequest.title)
     }
 
     @ParameterizedTest
     @MethodSource("personRequestProvider")
-    fun `retrieve person`(personRequest: PersonRequest) {
+    fun `retrieve person`(addChapterRequest: AddChapterRequest) {
         // Arrange
         val saveUri = UriBuilder.of("/").build()
         val savedPerson = httpClient.toBlocking()
-            .retrieve(HttpRequest.POST(saveUri, personRequest), PersonRequest::class.java)
+            .retrieve(HttpRequest.POST(saveUri, addChapterRequest), AddChapterRequest::class.java)
 
         // Act
         val retrieveUri = UriBuilder.of("/{id}")
             .expand(mutableMapOf("id" to savedPerson.id))
             .toString()
         val retrievedPerson = httpClient.toBlocking()
-            .retrieve(retrieveUri, PersonRequest::class.java)
+            .retrieve(retrieveUri, AddChapterRequest::class.java)
 
         // Assert
         Assertions.assertThat(retrievedPerson.id).isEqualTo(savedPerson.id)
-        Assertions.assertThat(retrievedPerson.name).isEqualTo(savedPerson.name)
+        Assertions.assertThat(retrievedPerson.title).isEqualTo(savedPerson.title)
         Assertions.assertThat(retrievedPerson).isEqualTo(savedPerson)
     }
 
@@ -71,14 +71,14 @@ class PersonControllerTests {
         val httpRequest = HttpRequest
             .GET<String>(retrieveUri)
             .basicAuth("SECRET_USERNAME", "SECRET_PASSWORD")
-        val argument = Argument.of(List::class.java, PersonRequest::class.java)
+        val argument = Argument.of(List::class.java, AddChapterRequest::class.java)
         val retrievedPersons = httpClient.toBlocking()
-            .retrieve(httpRequest, argument) as List<PersonRequest>
+            .retrieve(httpRequest, argument) as List<AddChapterRequest>
 
         // Assert
-        Assertions.assertThat(retrievedPersons).anyMatch { it.name == "Hermoine Granger" }
-        Assertions.assertThat(retrievedPersons).anyMatch { it.name == "Harry Potter" }
-        Assertions.assertThat(retrievedPersons).anyMatch { it.name == "Ronald Weasley" }
+        Assertions.assertThat(retrievedPersons).anyMatch { it.title == "Hermoine Granger" }
+        Assertions.assertThat(retrievedPersons).anyMatch { it.title == "Harry Potter" }
+        Assertions.assertThat(retrievedPersons).anyMatch { it.title == "Ronald Weasley" }
     }
 
     @Test
@@ -99,8 +99,8 @@ class PersonControllerTests {
             .hasMessageContaining("Unauthorized")
     }
 
-    fun personRequestProvider() = TestDataProvider.personProvider()
+    fun personRequestProvider() = TestDataProvider.chapterProvider()
         .map {
-            PersonRequest(it.id, it.name)
+            AddChapterRequest(it.id, it.title)
         }
 }
