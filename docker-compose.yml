@@ -2,7 +2,7 @@ version: '3'
 services:
   rest:
     build: .
-    image: greeter-microservice
+    image: bragi-rest
     ports:
       - "80:80"
     environment:
