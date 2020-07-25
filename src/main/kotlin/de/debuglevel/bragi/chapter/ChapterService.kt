@@ -22,16 +22,16 @@ class ChapterService(
     }
 
     fun add(chapter: Chapter): Chapter {
-        logger.debug { "Saving chapter '$chapter'..." }
+        logger.debug { "Adding chapter '$chapter'..." }
 
-        val savedChapter = chapterRepository.save(chapter)
+        val addedChapter = chapterRepository.save(chapter)
 
-        logger.debug { "Saved chapter: $savedChapter" }
-        return chapter
+        logger.debug { "Added chapter: $addedChapter" }
+        return addedChapter
     }
 
     fun update(id: UUID, chapter: Chapter): Chapter {
-        logger.debug { "Saving chapter '$chapter' with ID '$id'..." }
+        logger.debug { "Updating chapter '$chapter' with ID '$id'..." }
 
         // an object must be known to Hibernate (i.e. retrieved first) to get updated;
         // it would be a "detached entity" otherwise.
@@ -40,10 +40,10 @@ class ChapterService(
             content = chapter.content
         }
 
-        val savedChapter = chapterRepository.update(updateChapter)
+        val updatedChapter = chapterRepository.update(updateChapter)
 
-        logger.debug { "Saved chapter: $savedChapter with ID '$id'" }
-        return chapter
+        logger.debug { "Updated chapter: $updatedChapter with ID '$id'" }
+        return updatedChapter
     }
 
     fun list(): Set<Chapter> {
