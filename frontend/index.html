@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
+
+    <title>Bragi</title>
+
+    <!-- Required Stylesheets -->
+    <link
+            href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            type="text/css"
+    />
+    <link
+            href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css"
+            rel="stylesheet"
+            type="text/css"
+    />
+
+    <!-- Load polyfills to support older browsers -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es2015%2CIntersectionObserver"></script>
+
+    <!-- Required scripts -->
+    <script src="https://unpkg.com/vue@latest/dist/vue.js"></script>
+    <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
+</head>
+<body>
+<div id="app">
+
+    <b-container>
+        <b-jumbotron header="Bragi" lead="some day a non-linear book authoring system">
+        </b-jumbotron>
+
+        <nav class="nav flex-column">
+            <a class="nav-link" href="chapters.html">Chapters</a>
+        </nav>
+    </b-container>
+
+</div>
+
+<!-- Start running your app -->
+<script>
+      var vm = new Vue({
+        el: '#app',
+        data: {
+        }
+      })
+
+</script>
+
+</body>
+</html>

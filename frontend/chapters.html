@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
+
+    <title>Bragi - Chapters</title>
+
+    <!-- Required Stylesheets -->
+    <link
+            href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            type="text/css"
+    />
+    <link
+            href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css"
+            rel="stylesheet"
+            type="text/css"
+    />
+
+    <!-- Load polyfills to support older browsers -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es2015%2CIntersectionObserver"></script>
+
+    <!-- Required scripts -->
+    <script src="https://unpkg.com/vue@latest/dist/vue.js"></script>
+    <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
+</head>
+<body>
+<!-- Our application root element -->
+<div id="app">
+    <b-container>
+        <b-jumbotron header="Chapters">These are the chapters in your book, in no particular order.</b-jumbotron>
+
+        <table class="table table-sm table-hover">
+            <thead class="thead-light">
+            <th>Title</th>
+            <th>ID</th>
+            </thead>
+            <tbody>
+            <tr
+                    is="chapter-item"
+                    v-bind:chapter="item"
+                    v-bind:key="item.id"
+                    v-for="item in chapters"
+            ></tr>
+            </tbody>
+        </table>
+
+    </b-container>
+</div>
+
+<!-- Start running your app -->
+<script>
+    Vue.component("chapter-item", {
+        props: ["chapter"],
+        template: `
+               <tr>
+                 <td>{{ chapter.title }}</td>
+                 <td>{{ chapter.id }}</td>
+               </tr>
+            `,
+      });
+
+      var vm = new Vue({
+        el: '#app',
+        data: {
+            chapters: [
+//                { "id": 12, "title": "blubb" }
+            ],
+        },
+        mounted() {
+          axios
+            .get("http://localhost:8080/chapters/")
+            .then((response) => (this.chapters = response.data));
+        },
+      })
+
+</script>
+</body>
+</html>
