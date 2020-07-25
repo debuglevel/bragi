@@ -39,6 +39,7 @@
             <thead class="thead-light">
             <th>Title</th>
             <!--            <th>ID</th> -->
+            <th>Show Content</th>
             </thead>
             <tbody>
             <tr
@@ -49,6 +50,13 @@
             ></tr>
             </tbody>
         </table>
+
+
+        <b-popover :key="item.id" placement="top" target="popover-target-1" triggers="hover"
+                   v-bind:target="'popover-target-' + item.id" v-for="item in chapters">
+            <template v-slot:title>{{ item.title }}</template>
+            {{ item.content }}
+        </b-popover>
 
     </b-container>
 </div>
@@ -61,6 +69,11 @@
                <tr>
                  <td>{{ chapter.title }}</td>
 <!--                 <td>{{ chapter.id }}</td> -->
+                <td>
+                    <b-button v-bind:id="'popover-target-' + chapter.id">
+                        Hover Me
+                      </b-button>
+                </td>
                </tr>
             `,
       });
