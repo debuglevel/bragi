@@ -16,62 +16,70 @@ class ChapterServiceTests {
     lateinit var chapterService: ChapterService
 
     @ParameterizedTest
-    @MethodSource("personProvider")
-    fun `save person`(chapter: Chapter) {
+    @MethodSource("itemProvider")
+    fun `add chapter`(chapter: Chapter) {
         // Arrange
 
         // Act
-        val savedPerson = chapterService.add(chapter)
+        val addedItem = chapterService.add(chapter)
 
         // Assert
-        assertThat(savedPerson).isEqualTo(chapter)
+        assertThat(addedItem).isEqualTo(chapter)
     }
 
     @ParameterizedTest
-    @MethodSource("personProvider")
-    fun `retrieve person`(chapter: Chapter) {
+    @MethodSource("itemProvider")
+    fun `retrieve chapter`(chapter: Chapter) {
         // Arrange
-        val savedPerson = chapterService.add(chapter)
+        val addedItem = chapterService.add(chapter)
 
         // Act
-        val retrievedPerson = chapterService.get(savedPerson.id!!)
+        val retrievedItem = chapterService.get(addedItem.id!!)
 
         // Assert
-        assertThat(retrievedPerson).isEqualTo(savedPerson)
+        assertThat(retrievedItem).isEqualTo(addedItem)
     }
 
     @Test
-    fun `update person`() {
+    fun `update chapter`() {
         // Arrange
-        val person = Chapter(null, "Test")
-        val savedPerson = chapterService.add(person)
+        val item = Chapter(null, "Original Title", content = "Original Content")
+        val addedItem = chapterService.add(item)
 
         // Act
-        val retrievedPerson = chapterService.get(savedPerson.id!!)
-        retrievedPerson.title = "Test updated"
-        val updatedPerson = chapterService.update(retrievedPerson.id!!, retrievedPerson)
+        val retrievedItem = chapterService.get(addedItem.id!!)
+        retrievedItem.apply {
+            title = "Updated Title"
+            content = "Updated Content"
+        }
+        val updatedItem = chapterService.update(retrievedItem.id!!, retrievedItem)
 
         // Assert
-        assertThat(updatedPerson.title).isEqualTo("Test updated")
+        assertThat(updatedItem.title).isEqualTo("Updated Title")
+        assertThat(updatedItem.content).isEqualTo("Updated Content")
     }
 
     /**
      * Test updating a copy of the original entity, because this way it's ensured that the service can handle detached entities.
      */
     @Test
-    fun `update person with copy()`() {
+    fun `update chapter detached with copy()`() {
         // Arrange
-        val person = Chapter(null, "Test")
-        val savedPerson = chapterService.add(person)
+        val item = Chapter(null, "Original Title", content = "Original Content")
+        val savedItem = chapterService.add(item)
 
         // Act
-        val retrievedPerson = chapterService.get(savedPerson.id!!)
-        val updatePerson = retrievedPerson.copy(title = "Test updated")
-        val updatedPerson = chapterService.update(updatePerson.id!!, updatePerson)
+        val retrievedItem = chapterService.get(savedItem.id!!)
+        val updateItem = retrievedItem.copy(
+            title = "Updated Title",
+            content = "Updated Content"
+        )
+        val updatedItem = chapterService.update(updateItem.id!!, updateItem)
 
         // Assert
-        assertThat(updatedPerson.title).isEqualTo("Test updated")
+        assertThat(updatedItem.title).isEqualTo("Updated Title")
+        assertThat(updatedItem.content).isEqualTo("Updated Content")
     }
 
-    fun personProvider() = TestDataProvider.chapterProvider()
+    fun itemProvider() = ChapterTestDataProvider.itemProvider()
 }

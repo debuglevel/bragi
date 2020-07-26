@@ -15,34 +15,33 @@ class ChapterClientTests {
     lateinit var chapterClient: ChapterClient
 
     @ParameterizedTest
-    @MethodSource("personRequestProvider")
-    fun `save person`(addChapterRequest: AddChapterRequest) {
+    @MethodSource("addItemRequestProvider")
+    fun `add chapter`(addChapterRequest: AddChapterRequest) {
         // Arrange
 
         // Act
-        val savedPerson = chapterClient.postOne(addChapterRequest).blockingGet()
+        val addedItem = chapterClient.postOne(addChapterRequest).blockingGet()
 
         // Assert
-        Assertions.assertThat(savedPerson.title).isEqualTo(addChapterRequest.title)
+        Assertions.assertThat(addedItem.title).isEqualTo(addChapterRequest.title)
     }
 
     @ParameterizedTest
-    @MethodSource("personRequestProvider")
-    fun `retrieve person`(addChapterRequest: AddChapterRequest) {
+    @MethodSource("addItemRequestProvider")
+    fun `retrieve chapter`(addChapterRequest: AddChapterRequest) {
         // Arrange
-        val savedPerson = chapterClient.postOne(addChapterRequest).blockingGet()
+        val addedItem = chapterClient.postOne(addChapterRequest).blockingGet()
 
         // Act
-        val retrievedPerson = chapterClient.getOne(savedPerson.id!!).blockingGet()
+        val retrievedItem = chapterClient.getOne(addedItem.id!!).blockingGet()
 
         // Assert
-        Assertions.assertThat(retrievedPerson.id).isEqualTo(savedPerson.id)
-        Assertions.assertThat(retrievedPerson.title).isEqualTo(savedPerson.title)
-        Assertions.assertThat(retrievedPerson).isEqualTo(savedPerson)
+        Assertions.assertThat(retrievedItem.id).isEqualTo(addedItem.id)
+        Assertions.assertThat(retrievedItem.title).isEqualTo(addedItem.title)
     }
 
-    fun chapterRequestProvider() = TestDataProvider.chapterProvider()
+    fun addItemRequestProvider() = ChapterTestDataProvider.itemProvider()
         .map {
-            AddChapterRequest(it.id, it.title)
+            AddChapterRequest(it.title)
         }
 }
