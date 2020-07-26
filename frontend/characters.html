@@ -118,7 +118,7 @@
             evt.preventDefault()
             //alert(JSON.stringify(this.form))
             axios
-              .post("http://localhost:8080/characters/", { title: this.form.name })
+              .post("http://localhost:8080/characters/", { name: this.form.name })
               .then((response) => (this.characters.push(response.data)));
           },
         }
