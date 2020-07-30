@@ -1,9 +1,8 @@
 package de.debuglevel.bragi.chapter
 
-import de.debuglevel.bragi.entity.EntityService
+import de.debuglevel.bragi.entity.*
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.annotation.Controller
-import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.Post
 import io.micronaut.http.annotation.Put
 import io.micronaut.security.annotation.Secured
@@ -15,94 +14,61 @@ import java.util.*
 @Secured(SecurityRule.IS_ANONYMOUS)
 @Controller("/chapters")
 @Tag(name = "chapters")
-class ChapterController(private val chapterService: ChapterService) {
+class ChapterController(
+    private val chapterService: ChapterService
+) : EntityController<Chapter>(chapterService) {
     private val logger = KotlinLogging.logger {}
 
-    /**
-     * Get all chapters
-     * @return All chapters
-     */
-    @Get("/")
-    fun getAll(): HttpResponse<Set<GetChapterResponse>> {
-        logger.debug("Called getAll()")
-        return try {
-            val chapters = chapterService.list()
-            val chapterResponse = chapters
-                .map { GetChapterResponse(it) }
-                .toSet()
+    override fun createGetEntityResponse(entity: Chapter): GetEntityResponse {
+        return GetChapterResponse(entity)
+    }
 
-            HttpResponse.ok(chapterResponse)
-        } catch (e: Exception) {
-            logger.error(e) { "Unhandled exception" }
-            HttpResponse.serverError<Set<GetChapterResponse>>()
-        }
+    override fun createUpdateEntityResponse(entity: Chapter): UpdateEntityResponse {
+        return UpdateChapterResponse(entity)
+    }
+
+    override fun createAddEntityResponse(entity: Chapter): AddEntityResponse {
+        return AddChapterResponse(entity)
     }
 
     /**
-     * Get a chapter
-     * @param uuid ID of the chapter
-     * @return A chapter
-     */
-    @Get("/{uuid}")
-    fun getOne(uuid: UUID): HttpResponse<GetChapterResponse> {
-        logger.debug("Called getOne($uuid)")
-        return try {
-            val chapter = chapterService.get(uuid)
-            HttpResponse.ok(GetChapterResponse(chapter))
-        } catch (e: EntityService.ItemNotFoundException) {
-            HttpResponse.badRequest<GetChapterResponse>()
-        } catch (e: Exception) {
-            logger.error(e) { "Unhandled exception" }
-            HttpResponse.serverError<GetChapterResponse>()
-        }
-    }
-
-    /**
-     * Create a chapter.
-     * @return A chapter
+     * Create an item.
+     * @return An item
      */
     @Post("/")
-    fun postOne(addChapterRequest: AddChapterRequest): HttpResponse<AddChapterResponse> {
-        logger.debug("Called postOne($addChapterRequest)")
+    fun postOne(addEntityRequest: AddChapterRequest): HttpResponse<AddEntityResponse> {
+        logger.debug("Called postOne($addEntityRequest)")
 
         return try {
-            val chapter = Chapter(
-                id = null,
-                title = addChapterRequest.title,
-                content = ""
-            )
-            val addedChapter = chapterService.add(chapter)
+            val item = addEntityRequest.toEntity()
+            val addedItem = chapterService.add(item)
 
-            HttpResponse.created(AddChapterResponse(addedChapter))
+            HttpResponse.created(createAddEntityResponse(addedItem))
         } catch (e: Exception) {
             logger.error(e) { "Unhandled exception" }
-            HttpResponse.serverError<AddChapterResponse>()
+            HttpResponse.serverError<AddEntityResponse>()
         }
     }
 
     /**
-     * Update a chapter.
-     * @param uuid ID of the chapter
-     * @return The updated chapter
+     * Update an entity.
+     * @param uuid ID of the entity
+     * @return The updated entity
      */
     @Put("/{uuid}")
-    fun putOne(uuid: UUID, updateChapterRequest: UpdateChapterRequest): HttpResponse<UpdateChapterResponse> {
-        logger.debug("Called putOne($uuid, $updateChapterRequest)")
+    fun putOne(uuid: UUID, updateEntityRequest: UpdateChapterRequest): HttpResponse<UpdateEntityResponse> {
+        logger.debug("Called putOne($uuid, $updateEntityRequest)")
 
         return try {
-            val chapter = Chapter(
-                id = null,
-                title = updateChapterRequest.title,
-                content = updateChapterRequest.content
-            )
-            val updatedChapter = chapterService.update(uuid, chapter)
+            val item = updateEntityRequest.toEntity()
+            val updatedItem = chapterService.update(uuid, item)
 
-            HttpResponse.ok(UpdateChapterResponse(updatedChapter))
+            HttpResponse.ok(createUpdateEntityResponse(updatedItem))
         } catch (e: EntityService.ItemNotFoundException) {
-            HttpResponse.badRequest<UpdateChapterResponse>()
+            HttpResponse.badRequest<UpdateEntityResponse>()
         } catch (e: Exception) {
             logger.error(e) { "Unhandled exception" }
-            HttpResponse.serverError<UpdateChapterResponse>()
+            HttpResponse.serverError<UpdateEntityResponse>()
         }
     }
 }

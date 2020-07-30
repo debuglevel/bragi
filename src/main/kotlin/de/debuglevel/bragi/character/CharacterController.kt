@@ -1,9 +1,8 @@
 package de.debuglevel.bragi.character
 
-import de.debuglevel.bragi.entity.EntityService
+import de.debuglevel.bragi.entity.*
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.annotation.Controller
-import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.Post
 import io.micronaut.http.annotation.Put
 import io.micronaut.security.annotation.Secured
@@ -15,94 +14,61 @@ import java.util.*
 @Secured(SecurityRule.IS_ANONYMOUS)
 @Controller("/characters")
 @Tag(name = "characters")
-class CharacterController(private val characterService: CharacterService) {
+class CharacterController(
+    private val characterService: CharacterService
+) : EntityController<Character>(characterService) {
     private val logger = KotlinLogging.logger {}
 
-    /**
-     * Get all characters
-     * @return All characters
-     */
-    @Get("/")
-    fun getAll(): HttpResponse<Set<GetCharacterResponse>> {
-        logger.debug("Called getAll()")
-        return try {
-            val characters = characterService.list()
-            val characterResponse = characters
-                .map { GetCharacterResponse(it) }
-                .toSet()
+    override fun createGetEntityResponse(entity: Character): GetEntityResponse {
+        return GetCharacterResponse(entity)
+    }
 
-            HttpResponse.ok(characterResponse)
-        } catch (e: Exception) {
-            logger.error(e) { "Unhandled exception" }
-            HttpResponse.serverError<Set<GetCharacterResponse>>()
-        }
+    override fun createUpdateEntityResponse(entity: Character): UpdateEntityResponse {
+        return UpdateCharacterResponse(entity)
+    }
+
+    override fun createAddEntityResponse(entity: Character): AddEntityResponse {
+        return AddCharacterResponse(entity)
     }
 
     /**
-     * Get a character
-     * @param uuid ID of the character
-     * @return A character
-     */
-    @Get("/{uuid}")
-    fun getOne(uuid: UUID): HttpResponse<GetCharacterResponse> {
-        logger.debug("Called getOne($uuid)")
-        return try {
-            val character = characterService.get(uuid)
-            HttpResponse.ok(GetCharacterResponse(character))
-        } catch (e: EntityService.ItemNotFoundException) {
-            HttpResponse.badRequest<GetCharacterResponse>()
-        } catch (e: Exception) {
-            logger.error(e) { "Unhandled exception" }
-            HttpResponse.serverError<GetCharacterResponse>()
-        }
-    }
-
-    /**
-     * Create a character.
-     * @return A character
+     * Create an item.
+     * @return An item
      */
     @Post("/")
-    fun postOne(addCharacterRequest: AddCharacterRequest): HttpResponse<AddCharacterResponse> {
-        logger.debug("Called postOne($addCharacterRequest)")
+    fun postOne(addEntityRequest: AddCharacterRequest): HttpResponse<AddEntityResponse> {
+        logger.debug("Called postOne($addEntityRequest)")
 
         return try {
-            val character = Character(
-                id = null,
-                name = addCharacterRequest.name,
-                notes = ""
-            )
-            val addedCharacter = characterService.add(character)
+            val item = addEntityRequest.toEntity()
+            val addedItem = characterService.add(item)
 
-            HttpResponse.created(AddCharacterResponse(addedCharacter))
+            HttpResponse.created(createAddEntityResponse(addedItem))
         } catch (e: Exception) {
             logger.error(e) { "Unhandled exception" }
-            HttpResponse.serverError<AddCharacterResponse>()
+            HttpResponse.serverError<AddEntityResponse>()
         }
     }
 
     /**
-     * Update a character.
-     * @param uuid ID of the character
-     * @return The updated character
+     * Update an entity.
+     * @param uuid ID of the entity
+     * @return The updated entity
      */
     @Put("/{uuid}")
-    fun putOne(uuid: UUID, updateCharacterRequest: UpdateCharacterRequest): HttpResponse<UpdateCharacterResponse> {
-        logger.debug("Called putOne($uuid, $updateCharacterRequest)")
+    fun putOne(uuid: UUID, updateEntityRequest: UpdateCharacterRequest): HttpResponse<UpdateEntityResponse> {
+        logger.debug("Called putOne($uuid, $updateEntityRequest)")
 
         return try {
-            val character = Character(
-                id = null,
-                name = updateCharacterRequest.name,
-                notes = updateCharacterRequest.notes
-            )
-            val updatedCharacter = characterService.update(uuid, character)
+            val item = updateEntityRequest.toEntity()
+            val updatedItem = characterService.update(uuid, item)
 
-            HttpResponse.ok(UpdateCharacterResponse(updatedCharacter))
+            HttpResponse.ok(createUpdateEntityResponse(updatedItem))
         } catch (e: EntityService.ItemNotFoundException) {
-            HttpResponse.badRequest<UpdateCharacterResponse>()
+            HttpResponse.badRequest<UpdateEntityResponse>()
         } catch (e: Exception) {
             logger.error(e) { "Unhandled exception" }
-            HttpResponse.serverError<UpdateCharacterResponse>()
+            HttpResponse.serverError<UpdateEntityResponse>()
         }
     }
 }
