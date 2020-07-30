@@ -12,11 +12,11 @@ import javax.persistence.Id
 data class Chapter(
     @Id
     @GeneratedValue
-    var id: UUID?,
+    override var id: UUID?,
     var title: String,
     var content: String,
     @DateCreated
-    var createdOn: LocalDateTime = LocalDateTime.now(),
+    override var createdOn: LocalDateTime = LocalDateTime.now(),
     @DateUpdated
-    var lastModified: LocalDateTime = LocalDateTime.now()
-)
+    override var lastModified: LocalDateTime = LocalDateTime.now()
+) : de.debuglevel.bragi.entity.Entity

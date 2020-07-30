@@ -1,15 +1,16 @@
 package de.debuglevel.bragi.chapter
 
+import de.debuglevel.bragi.entity.GetEntityResponse
 import java.time.LocalDateTime
 import java.util.*
 
 data class GetChapterResponse(
-    var id: UUID?,
+    override var id: UUID?,
     var title: String,
     var content: String,
-    var createdOn: LocalDateTime,
-    var lastModified: LocalDateTime
-) {
+    override var createdOn: LocalDateTime,
+    override var lastModified: LocalDateTime
+) : GetEntityResponse {
     constructor(chapter: Chapter) : this(
         id = chapter.id,
         title = chapter.title,

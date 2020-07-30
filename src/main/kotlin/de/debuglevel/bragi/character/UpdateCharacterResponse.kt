@@ -1,15 +1,16 @@
 package de.debuglevel.bragi.character
 
+import de.debuglevel.bragi.entity.UpdateEntityResponse
 import java.time.LocalDateTime
 import java.util.*
 
 data class UpdateCharacterResponse(
-    var id: UUID?,
+    override var id: UUID?,
     var name: String,
     var notes: String,
-    var createdOn: LocalDateTime,
-    var lastModified: LocalDateTime
-) {
+    override var createdOn: LocalDateTime,
+    override var lastModified: LocalDateTime
+) : UpdateEntityResponse {
     constructor(character: Character) : this(
         id = character.id,
         name = character.name,

@@ -12,11 +12,11 @@ import javax.persistence.Id
 data class Character(
     @Id
     @GeneratedValue
-    var id: UUID?,
+    override var id: UUID?,
     var name: String,
     var notes: String,
     @DateCreated
-    var createdOn: LocalDateTime = LocalDateTime.now(),
+    override var createdOn: LocalDateTime = LocalDateTime.now(),
     @DateUpdated
-    var lastModified: LocalDateTime = LocalDateTime.now()
-)
+    override var lastModified: LocalDateTime = LocalDateTime.now()
+) : de.debuglevel.bragi.entity.Entity
