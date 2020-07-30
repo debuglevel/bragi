@@ -27,4 +27,16 @@ class CharacterService(
         logger.debug { "Updated character: $updatedCharacter with ID '$id'" }
         return updatedCharacter
     }
+
+    fun getSuggestedCharacters(text: String): Set<Character> {
+        logger.debug { "Suggesting characters for given text..." }
+
+        val allCharacters = this.list()
+        val nameOccurredInTextCharacters = allCharacters.filter { text.contains(it.name) }
+        val firstNamePartOccurredInTextCharacters = allCharacters.filter { text.contains(it.name.split(" ").first()) }
+        val foundCharacters = nameOccurredInTextCharacters.union(firstNamePartOccurredInTextCharacters)
+
+        logger.debug { "Suggested ${foundCharacters.size} characters for given text: ${foundCharacters.joinToString(", ")}" }
+        return foundCharacters
+    }
 }

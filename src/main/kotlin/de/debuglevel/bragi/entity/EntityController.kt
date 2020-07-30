@@ -40,7 +40,7 @@ abstract class EntityController<T>(private val entityService: EntityService<T>) 
      * @return An item
      */
     @Get("/{uuid}")
-    fun getOne(uuid: UUID): HttpResponse<GetEntityResponse> {
+    open fun getOne(uuid: UUID): HttpResponse<GetEntityResponse> {
         logger.debug("Called getOne($uuid)")
         return try {
             val item = entityService.get(uuid)

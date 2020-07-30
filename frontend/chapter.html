@@ -78,18 +78,60 @@
         <!--            <pre class="m-0">{{ form }}</pre>-->
         <!--        </b-card>-->
 
+        <h2>Suggested characters</h2>
+        <table class="table table-sm table-hover">
+            <thead class="thead-light">
+            <th>Name</th>
+            <!--            <th>ID</th> -->
+            <th>Show Notes</th>
+            </thead>
+            <tbody>
+            <tr
+                    is="character-item"
+                    v-bind:character="item"
+                    v-bind:key="item.id"
+                    v-for="item in suggestedCharacters"
+            ></tr>
+            </tbody>
+        </table>
+
+        <b-popover :key="item.id" placement="top" target="popover-target-1" triggers="hover"
+                   v-bind:target="'popover-target-' + item.id" v-for="item in suggestedCharacters">
+            <template v-slot:title>{{ item.name }}</template>
+            {{ item.notes }}
+        </b-popover>
 
     </b-container>
 </div>
 
 <!-- Start running your app -->
 <script>
+    Vue.component("character-item", {
+        props: ["character"],
+        template: `
+               <tr>
+                 <td>
+                   <a v-bind:href="'character.html?id=' + character.id">{{ character.name }}</a>
+                 </td>
+<!--                 <td>{{ character.id }}</td> -->
+                <td>
+                    <b-button v-bind:id="'popover-target-' + character.id">
+                        Hover Me
+                      </b-button>
+                </td>
+               </tr>
+            `,
+      });
 
       var vm = new Vue({
         el: '#app',
         data: {
             chapterId: null,
-            chapter: { "id": 12, "title": "blubb", "content": "blubbb blubb <b>bold</b>" },
+            chapter: { "id": 12, "title": "blubb", "content": "blubbb blubb <b>bold</b>", suggestedCharacters: [121, 122] },
+            suggestedCharacters : [
+                { "id": 121, "name": "Arya", "notes": "Little girl" },
+                { "id": 122, "name": "Jon", "notes": "Bearded guy" },
+             ],
             form: {
               title: '',
               content: '',
@@ -98,7 +140,20 @@
         mounted() {
           axios
             .get("http://localhost:8080/chapters/"+this.chapterId)
-            .then((response) => (this.chapter = response.data));
+            .then((chapterResponse) => {
+                  this.chapter = chapterResponse.data;
+
+                  // get all suggested characters
+                  this.suggestedCharacters = [];
+                  for (suggestedCharacterId of this.chapter.suggestedCharacters) {
+                    axios
+                      .get("http://localhost:8080/characters/"+suggestedCharacterId)
+                      .then((characterResponse) => (
+                        this.suggestedCharacters.push(characterResponse.data)
+                      ));
+                  }
+                }
+            );
         },
         created()
         {
@@ -113,7 +168,20 @@
             //alert(JSON.stringify(this.form))
             axios
               .put("http://localhost:8080/chapters/"+this.chapter.id, { title: this.chapter.title, content: this.chapter.content })
-              .then((response) => this.chapter = response.data);
+              .then((chapterResponse) => {
+                this.chapter = chapterResponse.data;
+
+                  // get all suggested characters
+                  this.suggestedCharacters = [];
+                  for (suggestedCharacterId of this.chapter.suggestedCharacters) {
+                    axios
+                      .get("http://localhost:8080/characters/"+suggestedCharacterId)
+                      .then((characterResponse) => (
+                        this.suggestedCharacters.push(characterResponse.data)
+                      ));
+                  }
+              }
+            );
           },
         }
       })

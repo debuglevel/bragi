@@ -94,11 +94,17 @@ class SampleDataLoader(
             title = "Simple life develops",
             content = "Unicellular organisms and stuff"
         )
+        val humanLife = Chapter(
+            id = null,
+            title = "Human life develops",
+            content = "Homo sapiens and stuff. Includes Arya and Jon Snow."
+        )
         chapterService.add(bigBang)
         chapterService.add(expandingUniverse)
         chapterService.add(coolDown)
         chapterService.add(matterGravitates)
         chapterService.add(unicellularLife)
+        chapterService.add(humanLife)
 
         logger.debug { "Populated database with sample data." }
     }
