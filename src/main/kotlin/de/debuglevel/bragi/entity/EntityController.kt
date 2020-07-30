@@ -53,7 +53,33 @@ abstract class EntityController<T>(private val entityService: EntityService<T>) 
         }
     }
 
-    //abstract fun postOne(addEntityRequest: AddEntityRequest<T>): HttpResponse<AddEntityResponse>
+    fun postOneBase(addEntityRequest: AddEntityRequest<T>): HttpResponse<AddEntityResponse> {
+        logger.debug("Called postOne($addEntityRequest)")
 
-    //abstract fun putOne(uuid: UUID, updateEntityRequest: UpdateEntityRequest<T>): HttpResponse<UpdateEntityResponse>
+        return try {
+            val item = addEntityRequest.toEntity()
+            val addedItem = entityService.add(item)
+
+            HttpResponse.created(createAddEntityResponse(addedItem))
+        } catch (e: Exception) {
+            logger.error(e) { "Unhandled exception" }
+            HttpResponse.serverError<AddEntityResponse>()
+        }
+    }
+
+    fun putOneBase(uuid: UUID, updateEntityRequest: UpdateEntityRequest<T>): HttpResponse<UpdateEntityResponse> {
+        logger.debug("Called putOne($uuid, $updateEntityRequest)")
+
+        return try {
+            val item = updateEntityRequest.toEntity()
+            val updatedItem = entityService.update(uuid, item)
+
+            HttpResponse.ok(createUpdateEntityResponse(updatedItem))
+        } catch (e: EntityService.ItemNotFoundException) {
+            HttpResponse.badRequest<UpdateEntityResponse>()
+        } catch (e: Exception) {
+            logger.error(e) { "Unhandled exception" }
+            HttpResponse.serverError<UpdateEntityResponse>()
+        }
+    }
 }

@@ -1,6 +1,9 @@
 package de.debuglevel.bragi.character
 
-import de.debuglevel.bragi.entity.*
+import de.debuglevel.bragi.entity.AddEntityResponse
+import de.debuglevel.bragi.entity.EntityController
+import de.debuglevel.bragi.entity.GetEntityResponse
+import de.debuglevel.bragi.entity.UpdateEntityResponse
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Post
@@ -37,17 +40,7 @@ class CharacterController(
      */
     @Post("/")
     fun postOne(addEntityRequest: AddCharacterRequest): HttpResponse<AddEntityResponse> {
-        logger.debug("Called postOne($addEntityRequest)")
-
-        return try {
-            val item = addEntityRequest.toEntity()
-            val addedItem = characterService.add(item)
-
-            HttpResponse.created(createAddEntityResponse(addedItem))
-        } catch (e: Exception) {
-            logger.error(e) { "Unhandled exception" }
-            HttpResponse.serverError<AddEntityResponse>()
-        }
+        return postOneBase(addEntityRequest)
     }
 
     /**
@@ -57,18 +50,6 @@ class CharacterController(
      */
     @Put("/{uuid}")
     fun putOne(uuid: UUID, updateEntityRequest: UpdateCharacterRequest): HttpResponse<UpdateEntityResponse> {
-        logger.debug("Called putOne($uuid, $updateEntityRequest)")
-
-        return try {
-            val item = updateEntityRequest.toEntity()
-            val updatedItem = characterService.update(uuid, item)
-
-            HttpResponse.ok(createUpdateEntityResponse(updatedItem))
-        } catch (e: EntityService.ItemNotFoundException) {
-            HttpResponse.badRequest<UpdateEntityResponse>()
-        } catch (e: Exception) {
-            logger.error(e) { "Unhandled exception" }
-            HttpResponse.serverError<UpdateEntityResponse>()
-        }
+        return putOneBase(uuid, updateEntityRequest)
     }
 }
