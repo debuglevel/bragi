@@ -1,5 +1,6 @@
 package de.debuglevel.bragi.character
 
+import de.debuglevel.bragi.entity.EntityService
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
@@ -48,7 +49,7 @@ class CharacterController(private val characterService: CharacterService) {
         return try {
             val character = characterService.get(uuid)
             HttpResponse.ok(GetCharacterResponse(character))
-        } catch (e: CharacterService.EntityNotFoundException) {
+        } catch (e: EntityService.ItemNotFoundException) {
             HttpResponse.badRequest<GetCharacterResponse>()
         } catch (e: Exception) {
             logger.error(e) { "Unhandled exception" }
@@ -97,7 +98,7 @@ class CharacterController(private val characterService: CharacterService) {
             val updatedCharacter = characterService.update(uuid, character)
 
             HttpResponse.ok(UpdateCharacterResponse(updatedCharacter))
-        } catch (e: CharacterService.EntityNotFoundException) {
+        } catch (e: EntityService.ItemNotFoundException) {
             HttpResponse.badRequest<UpdateCharacterResponse>()
         } catch (e: Exception) {
             logger.error(e) { "Unhandled exception" }

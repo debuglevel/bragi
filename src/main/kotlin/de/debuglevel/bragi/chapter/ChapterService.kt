@@ -1,5 +1,6 @@
 package de.debuglevel.bragi.chapter
 
+import de.debuglevel.bragi.entity.EntityService
 import mu.KotlinLogging
 import java.util.*
 import javax.inject.Singleton
@@ -7,37 +8,18 @@ import javax.inject.Singleton
 @Singleton
 class ChapterService(
     private val chapterRepository: ChapterRepository
-) {
+) : EntityService<Chapter>(chapterRepository) {
     private val logger = KotlinLogging.logger {}
+    override val entityName = "chapter"
 
-    fun get(id: UUID): Chapter {
-        logger.debug { "Getting chapter with ID '$id'..." }
-
-        val chapter: Chapter = chapterRepository.findById(id).orElseThrow {
-            EntityNotFoundException(id)
-        }
-
-        logger.debug { "Got chapter with ID '$id': $chapter" }
-        return chapter
-    }
-
-    fun add(chapter: Chapter): Chapter {
-        logger.debug { "Adding chapter '$chapter'..." }
-
-        val addedChapter = chapterRepository.save(chapter)
-
-        logger.debug { "Added chapter: $addedChapter" }
-        return addedChapter
-    }
-
-    fun update(id: UUID, chapter: Chapter): Chapter {
-        logger.debug { "Updating chapter '$chapter' with ID '$id'..." }
+    override fun update(id: UUID, item: Chapter): Chapter {
+        logger.debug { "Updating chapter '$item' with ID '$id'..." }
 
         // an object must be known to Hibernate (i.e. retrieved first) to get updated;
         // it would be a "detached entity" otherwise.
         val updateChapter = this.get(id).apply {
-            title = chapter.title
-            content = chapter.content
+            title = item.title
+            content = item.content
         }
 
         val updatedChapter = chapterRepository.update(updateChapter)
@@ -45,15 +27,4 @@ class ChapterService(
         logger.debug { "Updated chapter: $updatedChapter with ID '$id'" }
         return updatedChapter
     }
-
-    fun list(): Set<Chapter> {
-        logger.debug { "Getting all chapters..." }
-
-        val chapters = chapterRepository.findAll().toSet()
-
-        logger.debug { "Got all chapters" }
-        return chapters
-    }
-
-    class EntityNotFoundException(criteria: Any) : Exception("Entity '$criteria' does not exist.")
 }

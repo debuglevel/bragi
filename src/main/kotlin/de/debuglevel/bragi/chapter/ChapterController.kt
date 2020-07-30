@@ -1,5 +1,6 @@
 package de.debuglevel.bragi.chapter
 
+import de.debuglevel.bragi.entity.EntityService
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
@@ -48,7 +49,7 @@ class ChapterController(private val chapterService: ChapterService) {
         return try {
             val chapter = chapterService.get(uuid)
             HttpResponse.ok(GetChapterResponse(chapter))
-        } catch (e: ChapterService.EntityNotFoundException) {
+        } catch (e: EntityService.ItemNotFoundException) {
             HttpResponse.badRequest<GetChapterResponse>()
         } catch (e: Exception) {
             logger.error(e) { "Unhandled exception" }
@@ -97,7 +98,7 @@ class ChapterController(private val chapterService: ChapterService) {
             val updatedChapter = chapterService.update(uuid, chapter)
 
             HttpResponse.ok(UpdateChapterResponse(updatedChapter))
-        } catch (e: ChapterService.EntityNotFoundException) {
+        } catch (e: EntityService.ItemNotFoundException) {
             HttpResponse.badRequest<UpdateChapterResponse>()
         } catch (e: Exception) {
             logger.error(e) { "Unhandled exception" }
