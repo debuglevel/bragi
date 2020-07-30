@@ -10,6 +10,7 @@ data class UpdateCharacterRequest(
         return Character(
             id = null,
             name = this.name,
+            aliases = listOf(), // TODO
             notes = this.notes
         )
     }

@@ -4,9 +4,7 @@ import io.micronaut.data.annotation.DateCreated
 import io.micronaut.data.annotation.DateUpdated
 import java.time.LocalDateTime
 import java.util.*
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.Id
+import javax.persistence.*
 
 @Entity
 data class Character(
@@ -14,6 +12,8 @@ data class Character(
     @GeneratedValue
     override var id: UUID?,
     var name: String,
+    @ElementCollection(fetch = FetchType.EAGER)
+    var aliases: List<String>,
     var notes: String,
     @DateCreated
     override var createdOn: LocalDateTime = LocalDateTime.now(),
