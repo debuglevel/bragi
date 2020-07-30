@@ -1,10 +1,9 @@
 package de.debuglevel.bragi.chapter
 
+import de.debuglevel.bragi.entity.EntityRepository
 import io.micronaut.data.annotation.Repository
-import io.micronaut.data.repository.CrudRepository
-import java.util.*
 
 @Repository
-interface ChapterRepository : CrudRepository<Chapter, UUID> {
+interface ChapterRepository : EntityRepository<Chapter> {
     fun find(title: String): Chapter
 }
