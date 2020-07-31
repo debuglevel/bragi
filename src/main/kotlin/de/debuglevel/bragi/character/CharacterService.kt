@@ -19,6 +19,7 @@ class CharacterService(
         // it would be a "detached entity" otherwise.
         val updateCharacter = this.get(id).apply {
             name = item.name
+            aliases = item.aliases
             notes = item.notes
         }
 

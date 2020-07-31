@@ -71,6 +71,17 @@
                     v-model="character.notes"
             ></b-form-textarea>
 
+            <!-- TODO: just put the JSON in here for now instead of some proper processing -->
+            <b-form-group id="input-group-4" label="Aliases (don't mess up JSON)" label-for="input-4">
+                <b-form-textarea
+                        id="textarea"
+                        max-rows="20"
+                        placeholder="Here should be aliases of your character"
+                        rows="10"
+                        v-model="character.aliases"
+                ></b-form-textarea>
+            </b-form-group>
+
             <b-button type="submit" variant="primary">Update character</b-button>
         </b-form>
 
@@ -89,7 +100,7 @@
         el: '#app',
         data: {
             characterId: null,
-            character: { "id": 12, "name": "blubb", "notes": "blubbb blubb <b>bold</b>" },
+            character: { "id": 12, "name": "blubb", "notes": "blubbb blubb <b>bold</b>", aliases: ["Foo", "Bar"] },
             form: {
               name: '',
               notes: '',
@@ -112,7 +123,7 @@
             evt.preventDefault()
             //alert(JSON.stringify(this.form))
             axios
-              .put("http://localhost:8080/characters/"+this.character.id, { name: this.character.name, notes: this.character.notes })
+              .put("http://localhost:8080/characters/"+this.character.id, { name: this.character.name, notes: this.character.notes, aliases: JSON.parse(this.character.aliases) })
               .then((response) => this.character = response.data);
           },
         }
