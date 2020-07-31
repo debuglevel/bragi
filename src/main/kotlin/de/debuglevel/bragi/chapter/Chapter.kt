@@ -7,6 +7,7 @@ import java.util.*
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
+import javax.persistence.Lob
 
 @Entity
 data class Chapter(
@@ -14,6 +15,7 @@ data class Chapter(
     @GeneratedValue
     override var id: UUID?,
     var title: String,
+    @Lob
     var content: String,
     @DateCreated
     override var createdOn: LocalDateTime = LocalDateTime.now(),

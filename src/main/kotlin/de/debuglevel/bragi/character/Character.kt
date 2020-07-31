@@ -14,6 +14,7 @@ data class Character(
     var name: String,
     @ElementCollection(fetch = FetchType.EAGER)
     var aliases: List<String>,
+    @Lob
     var notes: String,
     @DateCreated
     override var createdOn: LocalDateTime = LocalDateTime.now(),
