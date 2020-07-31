@@ -46,7 +46,7 @@ class SampleDataLoader(
         val jonSnow = Character(
             id = null,
             name = "Jon Snow",
-            aliases = listOf(""),
+            aliases = listOf(),
             notes = "Way to good character. Kind of boring."
         )
         val joffreyBaratheon = Character(
