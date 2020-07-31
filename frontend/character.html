@@ -54,27 +54,29 @@
 
 
         <b-form @submit="onSubmit">
-            <b-form-group id="input-group-2" label="Title" label-for="input-2">
+            <b-form-group id="input-group-name" label="Name" label-for="input-name">
                 <b-form-input
-                        id="input-2"
+                        id="input-name"
                         placeholder="Enter name"
                         required
                         v-model="character.name"
                 ></b-form-input>
             </b-form-group>
 
-            <b-form-textarea
-                    id="textarea"
-                    max-rows="20"
-                    placeholder="Here should be your notes on the character"
-                    rows="10"
-                    v-model="character.notes"
-            ></b-form-textarea>
+            <b-form-group id="input-group-notes" label="Notes" label-for="input-notes">
+                <b-form-textarea
+                        id="input-notes"
+                        max-rows="20"
+                        placeholder="Here should be your notes on the character"
+                        rows="10"
+                        v-model="character.notes"
+                ></b-form-textarea>
+            </b-form-group>
 
             <!-- TODO: just put the JSON in here for now instead of some proper processing -->
-            <b-form-group id="input-group-4" label="Aliases (don't mess up JSON)" label-for="input-4">
+            <b-form-group id="input-group-aliases" label="Aliases (don't mess up JSON)" label-for="input-aliases">
                 <b-form-textarea
-                        id="textarea"
+                        id="input-aliases"
                         max-rows="20"
                         placeholder="Here should be aliases of your character"
                         rows="10"
