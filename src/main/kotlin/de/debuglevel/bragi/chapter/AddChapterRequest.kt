@@ -9,7 +9,8 @@ data class AddChapterRequest(
         return Chapter(
             id = null,
             title = this.title,
-            content = ""
+            content = "",
+            summary = ""
         )
     }
 }

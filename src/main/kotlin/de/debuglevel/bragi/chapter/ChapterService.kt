@@ -20,6 +20,7 @@ class ChapterService(
         val updateChapter = this.get(id).apply {
             title = item.title
             content = item.content
+            summary = item.summary
         }
 
         val updatedChapter = chapterRepository.update(updateChapter)

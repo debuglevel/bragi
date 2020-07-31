@@ -8,6 +8,7 @@ data class UpdateChapterResponse(
     override var id: UUID?,
     var title: String,
     var content: String,
+    var summary: String,
     var suggestedCharacters: MutableSet<UUID>,
     override var createdOn: LocalDateTime,
     override var lastModified: LocalDateTime
@@ -16,6 +17,7 @@ data class UpdateChapterResponse(
         id = chapter.id,
         title = chapter.title,
         content = chapter.content,
+        summary = chapter.summary,
         suggestedCharacters = mutableSetOf<UUID>(),
         createdOn = chapter.createdOn,
         lastModified = chapter.lastModified

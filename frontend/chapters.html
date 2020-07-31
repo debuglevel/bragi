@@ -69,7 +69,7 @@
         <b-popover :key="item.id" placement="top" target="popover-target-1" triggers="hover"
                    v-bind:target="'popover-target-' + item.id" v-for="item in chapters">
             <template v-slot:title>{{ item.title }}</template>
-            {{ item.content }}
+            {{ item.summary }}
         </b-popover>
 
 
