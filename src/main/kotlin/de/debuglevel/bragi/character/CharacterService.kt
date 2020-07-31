@@ -35,7 +35,12 @@ class CharacterService(
         val allCharacters = this.list()
         val nameOccurredInTextCharacters = allCharacters.filter { text.contains(it.name) }
         val firstNamePartOccurredInTextCharacters = allCharacters.filter { text.contains(it.name.split(" ").first()) }
-        val foundCharacters = nameOccurredInTextCharacters.union(firstNamePartOccurredInTextCharacters)
+        val aliasesOccurredInTextCharacters =
+            allCharacters.filter { character -> character.aliases.any { alias -> text.contains(alias) } }
+
+        val foundCharacters = nameOccurredInTextCharacters
+            .union(firstNamePartOccurredInTextCharacters)
+            .union(aliasesOccurredInTextCharacters)
 
         logger.debug { "Suggested ${foundCharacters.size} characters for given text: ${foundCharacters.joinToString(", ")}" }
         return foundCharacters
