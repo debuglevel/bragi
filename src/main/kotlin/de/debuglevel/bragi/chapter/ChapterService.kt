@@ -21,6 +21,7 @@ class ChapterService(
             title = item.title
             content = item.content
             summary = item.summary
+            notes = item.notes
         }
 
         val updatedChapter = chapterRepository.update(updateChapter)

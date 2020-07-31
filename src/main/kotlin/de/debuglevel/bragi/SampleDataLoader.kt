@@ -80,37 +80,43 @@ class SampleDataLoader(
             id = null,
             title = "Big Bang",
             content = "Well, in the beginning there was nothing. And then the big bang happened. We do not really know why.",
-            summary = ""
+            summary = "",
+            notes = ""
         )
         val expandingUniverse = Chapter(
             id = null,
             title = "Universe expands",
             content = "The universe started expanding (and still does).",
-            summary = ""
+            summary = "",
+            notes = ""
         )
         val coolDown = Chapter(
             id = null,
             title = "Matter cools down",
             content = "The freaking hot matter cools down slowly.",
-            summary = ""
+            summary = "",
+            notes = ""
         )
         val matterGravitates = Chapter(
             id = null,
             title = "Matter gravitates towards another",
             content = "This way some stars and planets form (and galaxies).",
-            summary = ""
+            summary = "",
+            notes = ""
         )
         val unicellularLife = Chapter(
             id = null,
             title = "Simple life develops",
             content = "Unicellular organisms and stuff",
-            summary = ""
+            summary = "",
+            notes = ""
         )
         val humanLife = Chapter(
             id = null,
             title = "Human life develops",
             content = "Homo sapiens and stuff. Includes Arya and Jon Snow.",
-            summary = ""
+            summary = "",
+            notes = ""
         )
         chapterService.add(bigBang)
         chapterService.add(expandingUniverse)

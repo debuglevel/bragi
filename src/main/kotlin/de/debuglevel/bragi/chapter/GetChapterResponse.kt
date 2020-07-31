@@ -9,6 +9,7 @@ data class GetChapterResponse(
     var title: String,
     var content: String,
     var summary: String,
+    var notes: String,
     var suggestedCharacters: MutableSet<UUID>,
     override var createdOn: LocalDateTime,
     override var lastModified: LocalDateTime
@@ -18,6 +19,7 @@ data class GetChapterResponse(
         title = chapter.title,
         content = chapter.content,
         summary = chapter.summary,
+        notes = chapter.notes,
         suggestedCharacters = mutableSetOf<UUID>(),
         createdOn = chapter.createdOn,
         lastModified = chapter.lastModified

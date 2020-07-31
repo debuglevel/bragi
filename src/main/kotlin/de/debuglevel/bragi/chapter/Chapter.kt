@@ -19,6 +19,8 @@ data class Chapter(
     var content: String,
     @Lob
     var summary: String,
+    @Lob
+    var notes: String,
     @DateCreated
     override var createdOn: LocalDateTime = LocalDateTime.now(),
     @DateUpdated

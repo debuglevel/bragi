@@ -99,7 +99,8 @@ class Book2GraphDataLoader(
                 id = null,
                 title = it.title,
                 content = it.textAsString,
-                summary = it.summaryAsString
+                summary = it.summaryAsString,
+                notes = it.commentAsString
             )
         }
         chapters.forEach { chapterService.add(it) }
