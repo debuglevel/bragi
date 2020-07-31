@@ -57,9 +57,9 @@ mainClassName = _mainClass
 repositories {
     jcenter()
 //    mavenLocal()
-//    maven {
-//        url "https://jitpack.io"
-//    }
+    maven {
+        url "https://jitpack.io"
+    }
 }
 
 dependencies {
@@ -135,6 +135,10 @@ dependencies {
     // Micronaut OpenAPI integration
     kapt "io.micronaut.configuration:micronaut-openapi"
     implementation "io.swagger.core.v3:swagger-annotations"
+
+
+    // Book2Graph library
+    implementation 'com.github.debuglevel:Book2Graph:77ff21e321'
 }
 
 // Java configuration
