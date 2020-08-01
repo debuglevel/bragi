@@ -11,7 +11,8 @@ abstract class EntityService<T>(private val entityRepository: EntityRepository<T
         logger.debug { "Getting $entityName with ID '$id'..." }
 
         val item: T = entityRepository.findById(id).orElseThrow {
-            ItemNotFoundException(id)
+            logger.warn { "$entityName with ID '$id' was not found" }
+            ItemNotFoundException("id=$id")
         }
 
         logger.debug { "Got $entityName with ID '$id': $item" }
