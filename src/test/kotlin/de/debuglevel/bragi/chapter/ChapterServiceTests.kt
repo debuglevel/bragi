@@ -43,7 +43,13 @@ class ChapterServiceTests {
     @Test
     fun `update chapter`() {
         // Arrange
-        val item = Chapter(null, "Original Title", content = "Original Content")
+        val item = Chapter(
+            null,
+            "Original Title",
+            content = "Original Content",
+            notes = "Original Notes",
+            summary = "Original Summary"
+        )
         val addedItem = chapterService.add(item)
 
         // Act
@@ -51,12 +57,16 @@ class ChapterServiceTests {
         retrievedItem.apply {
             title = "Updated Title"
             content = "Updated Content"
+            summary = "Updated Summary"
+            notes = "Updated Notes"
         }
         val updatedItem = chapterService.update(retrievedItem.id!!, retrievedItem)
 
         // Assert
         assertThat(updatedItem.title).isEqualTo("Updated Title")
         assertThat(updatedItem.content).isEqualTo("Updated Content")
+        assertThat(updatedItem.summary).isEqualTo("Updated Summary")
+        assertThat(updatedItem.notes).isEqualTo("Updated Notes")
     }
 
     /**
@@ -65,20 +75,30 @@ class ChapterServiceTests {
     @Test
     fun `update chapter detached with copy()`() {
         // Arrange
-        val item = Chapter(null, "Original Title", content = "Original Content")
+        val item = Chapter(
+            null,
+            "Original Title",
+            content = "Original Content",
+            notes = "Original Notes",
+            summary = "Original Summary"
+        )
         val savedItem = chapterService.add(item)
 
         // Act
         val retrievedItem = chapterService.get(savedItem.id!!)
         val updateItem = retrievedItem.copy(
             title = "Updated Title",
-            content = "Updated Content"
+            content = "Updated Content",
+            summary = "Updated Summary",
+            notes = "Updated Notes"
         )
         val updatedItem = chapterService.update(updateItem.id!!, updateItem)
 
         // Assert
         assertThat(updatedItem.title).isEqualTo("Updated Title")
         assertThat(updatedItem.content).isEqualTo("Updated Content")
+        assertThat(updatedItem.summary).isEqualTo("Updated Summary")
+        assertThat(updatedItem.notes).isEqualTo("Updated Notes")
     }
 
     fun itemProvider() = ChapterTestDataProvider.itemProvider()

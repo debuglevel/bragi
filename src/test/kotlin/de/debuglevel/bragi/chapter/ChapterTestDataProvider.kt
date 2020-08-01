@@ -7,17 +7,30 @@ object ChapterTestDataProvider {
         Chapter(
             id = null,
             title = "Chapter 1",
-            content = ""
+            content = "Content",
+            summary = "Summary",
+            notes = "Notes"
+        ),
+        Chapter(
+            id = null,
+            title = "Short Title",
+            content = "LongContentLongContentLongContentLongContentLongContentLongContentLongContentLongContentLongContentLongContentLongContentLongContentLongContentLongContentLongContentLongContentLongContentLongContentLongContentLongContentLongContentLongContentLongContentLongContentLongContentLongContent",
+            summary = "LongSummaryLongSummaryLongSummaryLongSummaryLongSummaryLongSummaryLongSummaryLongSummaryLongSummaryLongSummaryLongSummaryLongSummaryLongSummaryLongSummaryLongSummaryLongSummaryLongSummaryLongSummaryLongSummaryLongSummaryLongSummaryLongSummaryLongSummaryLongSummaryLongSummaryLongSummary",
+            notes = "LongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotes"
         ),
         Chapter(
             id = null,
             title = "Chapter ÖÜÄß",
-            content = ""
+            content = "",
+            summary = "",
+            notes = ""
         ),
         Chapter(
             id = null,
             title = "コハウプト マルク",
-            content = ""
+            content = "",
+            summary = "",
+            notes = ""
         )
     )
 }
