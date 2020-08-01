@@ -28,7 +28,7 @@ class Book2GraphDataLoader(
     private val logger = KotlinLogging.logger {}
 
     override fun onApplicationEvent(event: ServiceReadyEvent) {
-        //return // remove if you've got the necessary data ;)
+        return // remove if you've got the necessary data ;)
         logger.debug { "Populating database with sample data..." }
 
         val mrPreston = Character(
