@@ -1,6 +1,7 @@
 package de.debuglevel.bragi.character
 
 import de.debuglevel.bragi.entity.EntityService
+import de.debuglevel.bragi.suggestion.SuggestionService
 import mu.KotlinLogging
 import java.util.*
 import javax.inject.Singleton
@@ -8,7 +9,7 @@ import javax.inject.Singleton
 @Singleton
 class CharacterService(
     private val characterRepository: CharacterRepository
-) : EntityService<Character>(characterRepository) {
+) : EntityService<Character>(characterRepository), SuggestionService<Character> {
     private val logger = KotlinLogging.logger {}
     override val entityName = "character"
 
@@ -29,7 +30,7 @@ class CharacterService(
         return updatedCharacter
     }
 
-    fun getSuggested(text: String): Set<Character> {
+    override fun getSuggested(text: String): Set<Character> {
         logger.debug { "Suggesting characters for given text..." }
 
         val allCharacters = this.list()
