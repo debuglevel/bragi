@@ -43,6 +43,7 @@
                 <b-navbar-nav>
                     <b-nav-item href="chapters.html">Chapters</b-nav-item>
                     <b-nav-item href="characters.html">Characters</b-nav-item>
+                    <b-nav-item href="places.html">Places</b-nav-item>
                 </b-navbar-nav>
             </b-collapse>
         </b-navbar>
@@ -124,6 +125,29 @@
             {{ item.notes }}
         </b-popover>
 
+        <h2>Suggested places</h2>
+        <table class="table table-sm table-hover">
+            <thead class="thead-light">
+            <th>Name</th>
+            <!--            <th>ID</th> -->
+            <th>Show Notes</th>
+            </thead>
+            <tbody>
+            <tr
+                    is="place-item"
+                    v-bind:key="item.id"
+                    v-bind:place="item"
+                    v-for="item in suggestedPlaces"
+            ></tr>
+            </tbody>
+        </table>
+
+        <b-popover :key="item.id" placement="top" target="popover-target-2" triggers="hover"
+                   v-bind:target="'popover-target-' + item.id" v-for="item in suggestedPlaces">
+            <template v-slot:title>{{ item.name }}</template>
+            {{ item.notes }}
+        </b-popover>
+
     </b-container>
 </div>
 
@@ -146,15 +170,37 @@
             `,
       });
 
+    Vue.component("place-item", {
+        props: ["place"],
+        template: `
+               <tr>
+                 <td>
+                   <a v-bind:href="'place.html?id=' + place.id">{{ place.name }}</a>
+                 </td>
+<!--                 <td>{{ place.id }}</td> -->
+                <td>
+                    <b-button v-bind:id="'popover-target-' + place.id">
+                        Hover Me
+                      </b-button>
+                </td>
+               </tr>
+            `,
+      });
+
       var vm = new Vue({
         el: '#app',
         data: {
             chapterId: null,
-            chapter: { "id": 12, "title": "blubb", "content": "blubbb blubb <b>bold</b>", "summary": "sum sum summary", "notes": "saddsads", suggestedCharacters: [121, 122] },
+            chapter: { "id": 12, "title": "blubb", "content": "blubbb blubb <b>bold</b>", "summary": "sum sum summary", "notes": "saddsads", suggestedCharacters: [121, 122], suggestedPlaces: [221, 222] },
             suggestedCharacters : [
                 { "id": 121, "name": "Arya", "notes": "Little girl" },
                 { "id": 122, "name": "Jon", "notes": "Bearded guy" },
              ],
+             suggestedPlaces : [
+                { "id": 221, "name": "Winterfell", "notes": "Cold." },
+                { "id": 222, "name": "Iron Thrones", "notes": "Uncomfortable thing" },
+             ],
+
             form: {
               title: '',
               content: '',
@@ -173,6 +219,16 @@
                       .get("http://localhost:8080/characters/"+suggestedCharacterId)
                       .then((characterResponse) => (
                         this.suggestedCharacters.push(characterResponse.data)
+                      ));
+                  }
+
+                  // get all suggested places
+                  this.suggestedPlaces = [];
+                  for (suggestedPlaceId of this.chapter.suggestedPlaces) {
+                    axios
+                      .get("http://localhost:8080/places/"+suggestedPlaceId)
+                      .then((placeResponse) => (
+                        this.suggestedPlaces.push(placeResponse.data)
                       ));
                   }
                 }
@@ -201,6 +257,16 @@
                       .get("http://localhost:8080/characters/"+suggestedCharacterId)
                       .then((characterResponse) => (
                         this.suggestedCharacters.push(characterResponse.data)
+                      ));
+                  }
+
+                  // get all suggested places
+                  this.suggestedPlaces = [];
+                  for (suggestedPlaceId of this.chapter.suggestedPlaces) {
+                    axios
+                      .get("http://localhost:8080/places/"+suggestedPlaceId)
+                      .then((placeResponse) => (
+                        this.suggestedPlaces.push(placeResponse.data)
                       ));
                   }
               }

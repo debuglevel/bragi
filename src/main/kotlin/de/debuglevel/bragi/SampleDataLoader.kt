@@ -23,6 +23,7 @@ class SampleDataLoader(
     private val logger = KotlinLogging.logger {}
 
     override fun onApplicationEvent(event: ServiceReadyEvent) {
+        return
         logger.debug { "Populating database with sample data..." }
 
         val eddardStark = Character(

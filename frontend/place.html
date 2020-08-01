@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
+
+    <title>Bragi - Place</title>
+
+    <!-- Required Stylesheets -->
+    <link
+            href="https://unpkg.com/bootstrap@4.5/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            type="text/css"
+    />
+    <link
+            href="https://unpkg.com/bootstrap-vue@2.15/dist/bootstrap-vue.css"
+            rel="stylesheet"
+            type="text/css"
+    />
+
+    <!-- Load polyfills to support older browsers -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es2015%2CIntersectionObserver"></script>
+
+    <!-- Required scripts -->
+    <script src="https://unpkg.com/vue@2.6/dist/vue.js"></script>
+    <script src="https://unpkg.com/bootstrap-vue@2.15/dist/bootstrap-vue.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
+</head>
+<body>
+<!-- Our application root element -->
+<div id="app">
+    <b-container>
+        <!-- Navigation -->
+        <b-navbar toggleable="lg" type="dark" variant="info">
+            <b-navbar-brand href="#">Bragi</b-navbar-brand>
+
+            <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+            <b-collapse id="nav-collapse" is-nav>
+                <b-navbar-nav>
+                    <b-nav-item href="chapters.html">Chapters</b-nav-item>
+                    <b-nav-item href="places.html">Places</b-nav-item>
+                </b-navbar-nav>
+            </b-collapse>
+        </b-navbar>
+        <!-- /Navigation -->
+
+        <b-jumbotron header="Place">
+            It has the ID {{ place.id }}, was created on {{ place.createdOn }} and last modified on {{
+            place.lastModified }}.
+        </b-jumbotron>
+
+
+        <b-form @submit="onSubmit">
+            <b-form-group id="input-group-name" label="Name" label-for="input-name">
+                <b-form-input
+                        id="input-name"
+                        placeholder="Enter name"
+                        required
+                        v-model="place.name"
+                ></b-form-input>
+            </b-form-group>
+
+            <b-form-group id="input-group-notes" label="Notes" label-for="input-notes">
+                <b-form-textarea
+                        id="input-notes"
+                        max-rows="20"
+                        placeholder="Here should be your notes on the place"
+                        rows="10"
+                        v-model="place.notes"
+                ></b-form-textarea>
+            </b-form-group>
+
+            <!-- TODO: just put the JSON in here for now instead of some proper processing -->
+            <b-form-group id="input-group-aliases" label="Aliases (don't mess up JSON)" label-for="input-aliases">
+                <b-form-textarea
+                        id="input-aliases"
+                        max-rows="20"
+                        placeholder="Here should be aliases of your place"
+                        rows="10"
+                        v-model="place.aliases"
+                ></b-form-textarea>
+            </b-form-group>
+
+            <b-button type="submit" variant="primary">Update place</b-button>
+        </b-form>
+
+        <!--        <b-card class="mt-3" header="Form Data Result">-->
+        <!--            <pre class="m-0">{{ form }}</pre>-->
+        <!--        </b-card>-->
+
+
+    </b-container>
+</div>
+
+<!-- Start running your app -->
+<script>
+
+      var vm = new Vue({
+        el: '#app',
+        data: {
+            placeId: null,
+            place: { "id": 12, "name": "blubb", "notes": "blubbb blubb <b>bold</b>", aliases: ["Foo", "Bar"] },
+            form: {
+              name: '',
+              notes: '',
+            },
+        },
+        mounted() {
+          axios
+            .get("http://localhost:8080/places/"+this.placeId)
+            .then((response) => (this.place = response.data));
+        },
+        created()
+        {
+          let uri = window.location.search.substring(1);
+          let params = new URLSearchParams(uri);
+          console.log(params.get("id"));
+          this.placeId = params.get("id");
+        },
+        methods: {
+          onSubmit(evt) {
+            evt.preventDefault()
+            //alert(JSON.stringify(this.form))
+            axios
+              .put("http://localhost:8080/places/"+this.place.id, { name: this.place.name, notes: this.place.notes, aliases: JSON.parse(this.place.aliases) })
+              .then((response) => this.place = response.data);
+          },
+        }
+      })
+
+
+
+
+
+</script>
+</body>
+</html>

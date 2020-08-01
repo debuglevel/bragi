@@ -5,6 +5,8 @@ import de.debuglevel.bragi.chapter.Chapter
 import de.debuglevel.bragi.chapter.ChapterService
 import de.debuglevel.bragi.character.Character
 import de.debuglevel.bragi.character.CharacterService
+import de.debuglevel.bragi.places.Place
+import de.debuglevel.bragi.places.PlaceService
 import io.micronaut.context.annotation.Requires
 import io.micronaut.context.env.Environment
 import io.micronaut.context.event.ApplicationEventListener
@@ -20,12 +22,13 @@ import javax.inject.Singleton
 @Requires(notEnv = [Environment.TEST]) // Do not load data in tests.
 class Book2GraphDataLoader(
     private val characterService: CharacterService,
+    private val placeService: PlaceService,
     private val chapterService: ChapterService
 ) : ApplicationEventListener<ServiceReadyEvent> {
     private val logger = KotlinLogging.logger {}
 
     override fun onApplicationEvent(event: ServiceReadyEvent) {
-        return // remove if you've got the necessary data ;)
+        //return // remove if you've got the necessary data ;)
         logger.debug { "Populating database with sample data..." }
 
         val mrPreston = Character(
@@ -92,6 +95,28 @@ class Book2GraphDataLoader(
         characterService.add(sirrus)
         characterService.add(joey)
         characterService.add(amrai)
+
+        val plasa = Place(
+            id = null,
+            name = "Die Plasa",
+            aliases = listOf("Plasa"),
+            notes = ""
+        )
+        val komplex = Place(
+            id = null,
+            name = "Der Komplex",
+            aliases = listOf("Komplex"),
+            notes = ""
+        )
+        val ebeneNull = Place(
+            id = null,
+            name = "Ebene Null",
+            aliases = listOf(),
+            notes = ""
+        )
+        placeService.add(plasa)
+        placeService.add(komplex)
+        placeService.add(ebeneNull)
 
         val book = FodtParser.parse(File("Buch.fodt"))
         val chapters = book.chapters.map {
