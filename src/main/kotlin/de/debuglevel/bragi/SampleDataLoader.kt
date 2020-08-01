@@ -182,7 +182,8 @@ class SampleDataLoader(
                 Will turns his head away for a long time before looking back to see that the Others are gone. When he finally dares, Will climbs down, examines Royce's body, then picks up the knight's twisted and broken sword. He decides to bring it back to show to their commanders, hoping Gared is still with the horses. When Will stands up again, Waymar has risen and is standing over him. His remaining eye has turned blue. With an icy cold touch, Waymar's hands go around Will's throat.
             """.trimIndent(),
             summary = "Three rangers of the Night's Watch are tracking a group of wildling raiders beyond the Wall, and encounter the Others, who had not been seen for eight thousand years.",
-            notes = ""
+            notes = "",
+            characters = listOf()
         )
         val bran1 = Chapter(
             id = null,
@@ -203,7 +204,8 @@ class SampleDataLoader(
                 Robb and Bran both declare that they are willing to nurse their pups by hand themselves. Eddard stresses that the children must feed and raise the pups themselves, not pass them off to the servants, and must treat them well lest they become dangerous. Both Robb and Bran state they will not allow the pups to die. As they begin to ride away, Jon hears a noise and goes back to discover a sixth pup, an albino with red eyes, that had crawled away from its mother. Bran finds it curious that it is the only pup that has opened its eyes. Theon claims that the albino will die quicker than the others, but Jon disagrees, claiming it for himself.
             """.trimIndent(),
             summary = "Lord Eddard Stark dispenses justice to a Night's Watch deserter. When they are on their way back to Winterfell, and Jon Snow and Robb Stark find six orphaned direwolf pups.",
-            notes = ""
+            notes = "",
+            characters = listOf(branStark)
         )
         val catelyn1 = Chapter(
             id = null,
@@ -218,7 +220,8 @@ class SampleDataLoader(
                 With Robert coming, Catelyn confirms with Ned that they should send word to his brother Benjen on the Wall. Then Catelyn informs Ned that Robert's wife Cersei Lannister, their children, and her Lannister brothers are also coming. Ned does not like the Lannisters because they came to Robert’s cause only after victory was certain. Eddard is looking forward to seeing the children and then announces his worry about feeding them all.
             """.trimIndent(),
             summary = "Lady Catelyn Tully seeks out her husband, Lord Eddard Stark, in the godswood of Winterfell to inform him of the news that his foster father, Lord Jon Arryn, the Hand of the King, is dead and that King Robert I Baratheon, his family, and half his court are on their way to Winterfell.",
-            notes = ""
+            notes = "",
+            characters = listOf(catelynStark)
         )
         val daenerys1 = Chapter(
             id = null,
@@ -242,7 +245,8 @@ class SampleDataLoader(
                 Illyrio says that Drogo’s mansion was a gift from the magisters of Pentos, to help win Drogo's friendship. They arrive at the mansion and are announced as King Viserys III and Princess Daenerys. Illyrio points out several prominent guests, including Ser Jorah Mormont, who had fled the Seven Kingdoms under sentence of death several years before, and has since spent much time among the Dothraki. Illyrio then points out Khal Drogo himself, who is as graceful as a panther, and younger than Daenerys had expected. Viserys notes his long braid, which means he has never been defeated in combat. Daenerys only notes his cold, hard face and is afraid of him. She asks to go home, provoking a rant from Viserys about how their home has been taken away from them. Daenerys only meant their rooms in Illyrio’s estate, but none of the places they have stayed in have been Viserys' home. Viserys also assures Daenerys that he would let Khal Drogo's whole khalasar, including their horses, rape her if it would win him back the Seven Kingdoms. He then tells her to stop crying, because Illyrio is leading Khal Drogo over to meet them. Daenerys stops crying, stands up straight, and smiles.
             """.trimIndent(),
             summary = "The exiled Princess Daenerys Targaryen prepares to be presented to the Dothraki khal, Drogo, as her brother, King Viserys Targaryen, hopes to gain a Dothraki army by making such a marriage alliance.",
-            notes = ""
+            notes = "",
+            characters = listOf(daenerysTargaryen)
         )
         val eddard1 = Chapter(
             id = null,
@@ -265,7 +269,8 @@ class SampleDataLoader(
                 King Robert also offers to marry his son, Prince Joffrey, to Ned's eleven-year-old daughter Sansa Stark to join the Houses of Stark and Baratheon as he and Lyanna were supposed to. Ned hesitates to make this decision, wishing to speak to his wife, but Robert asks him not to take too long. Ned is filled with a sense of foreboding, knowing that Winterfell is where he belongs, and that winter is coming.
             """.trimIndent(),
             summary = "King Robert I Baratheon arrives with his party at Winterfell, where he offers Lord Eddard Stark the position of Hand of the King and proposes a betrothal between Eddard's daughter Sansa and his own son, Prince Joffrey.",
-            notes = ""
+            notes = "",
+            characters = listOf(eddardStark)
         )
         val jon1 = Chapter(
             id = null,
@@ -284,7 +289,8 @@ class SampleDataLoader(
                 As Jon is leaving, Tyrion Lannister speaks to him from a ledge in the deserted yard and asks if he can take a look at Ghost. Jon offers to help him down, but Tyrion jumps down, acrobatically landing on his hands and vaulting to his feet. Ghost is uncertain about Tyrion, but submits to examination at Jon's command. Tyrion asks if Jon is Eddard's bastard. Jon bridles and Tyrion apologizes that as a dwarf he can usually speak as he pleases, like a jester. He comments that Jon seems to have more of the North in him than his half-siblings. Tyrion advises Jon never to forget who and what he is so that no one can use it against him. When Jon questions what Tyrion would know about being a bastard, Tyrion replies that all dwarfs are bastards in their father’s eyes and that, although all dwarfs are bastards, not all bastards need to be dwarfs.
             """.trimIndent(),
             summary = "Jon Snow attends the feast Winterfell is holding for the royal guests and speaks with both Benjen Stark and Tyrion Lannister.",
-            notes = ""
+            notes = "",
+            characters = listOf(jonSnow)
         )
         val catelyn2 = Chapter(
             id = null,
@@ -303,7 +309,8 @@ class SampleDataLoader(
                 Maester Luwin asks about Jon Snow and Catelyn's anger flashes. She remembers the bastard child that Ned brought back with him in the early days of their marriage. She understood Ned fathering a bastard son, but could not understand raising a bastard in the castle. There were rumors that Ashara Dayne was the boy's mother, but Ned forbade Catelyn to ask about it, insisting that all she needed to know was that Jon was his blood. Ned would never send Jon away though, and Catelyn could never forgive him that. Catelyn insists that Jon must leave Winterfell, but Ned argues that there will be no place for Jon at court. Maester Luwin mentions Jon's ambitions to join the Night's Watch. Ned considers this for a while and finally agrees to let Jon take the black, though not until they are ready to leave for the south; he wants Jon to enjoy his last few days. Ned decides that when it is time, he will tell Jon himself.
             """.trimIndent(),
             summary = "A secret letter from her sister leads Catelyn to convince Ned to go to King's Landing and become the Hand of the King.",
-            notes = ""
+            notes = "",
+            characters = listOf(catelynStark)
         )
         val arya1 = Chapter(
             id = null,
@@ -324,7 +331,8 @@ class SampleDataLoader(
                 Below, Bran has knocked Tommen down and Ser Rodrik calls Robb and Joffrey for a bout. Joffrey acts as if it is beneath his dignity to fight Starks with practice swords. He suggests real swords and Robb readily accepts. Jon comments to Arya that Joffrey truly is a "little shit". Ser Rodrik states that he will only allow blunted tourney swords. Joffrey's scarred bodyguard Sandor Clegane remarks that he killed a man with a real sword when he was only twelve. Joffrey makes a few more condescending remarks that enrage Robb, then feigns a yawn and leaves with Tommen. Jon encourages Arya to go to her room and face her punishment. Arya insists it is not fair, but Jon says that nothing is fair as he walks away with Ghost. Arya returns to her room to find not only Septa Mordane, but also her mother.
             """.trimIndent(),
             summary = "Arya runs out on her needlework session to watch the boys practice with swords in the yard.",
-            notes = ""
+            notes = "",
+            characters = listOf(aryaStark)
         )
         val bran2 = Chapter(
             id = null,
@@ -351,7 +359,8 @@ class SampleDataLoader(
                 As Bran begins to relax, Jaime asks him how old he is. Bran tells him he is seven. Then Jaime loathingly says, “The things I do for love,” and shoves Bran backwards out the window into the empty air.
             """.trimIndent(),
             summary = "Bran is climbing the towers of Winterfell when he discovers Cersei and Jaime Lannister making love and talking about the danger his father poses. Eventually, he is discovered and Jaime shoves him out the window.",
-            notes = ""
+            notes = "",
+            characters = listOf(branStark)
         )
         val tyrion1 = Chapter(
             id = null,
@@ -370,7 +379,8 @@ class SampleDataLoader(
                 Jaime declares that if he were Eddard, he would end Bran's torment and save him from being a cripple. Tyrion, himself less than able-bodied, advises Jaime not to say as much to Eddard before wondering out loud what tale Bran might tell if he wakes up. Jaime is not amused and wonders aloud about Tyrion's loyalty. Tyrion replies that Jaime knows how much he loves his family.
             """.trimIndent(),
             summary = "Tyrion meets up with his nephew Joffrey and insists he pay his sympathies to the Starks, before joining his brother and sister for breakfast with news that Bran Stark will probably survive.",
-            notes = ""
+            notes = "",
+            characters = listOf(tyrionLannister)
         )
         val jon2 = Chapter(
             id = null,
@@ -385,7 +395,8 @@ class SampleDataLoader(
                 Next, Jon goes to see Arya, who is repacking her things with help from Nymeria, not having folded them well enough for Septa Mordane the first time. Jon says he has a secret present for her. After Arya closes the door and sets Nymeria to guard it, Jon gives her a small sword made specially for her, one like the swords from Braavos. He explains to her that she will have to practise every day, shows her how to hold it, and then gives her her first lesson: stick them with the pointy end. He then warns her not to tell Sansa. Arya runs to him for a last hug. Just before he leaves, Jon tells Arya that all the best swords have a name. When she asks what her sword's name is he explains that it’s her very favorite thing. Then say the name together: "Needle".
             """.trimIndent(),
             summary = "Jon says his last goodbyes, first to the comatose Bran, then to Robb, and finally to Arya, to whom he gives a Braavosi-type sword.",
-            notes = ""
+            notes = "",
+            characters = listOf(jonSnow)
         )
         chapterService.add(prologue)
         chapterService.add(eddard1)
