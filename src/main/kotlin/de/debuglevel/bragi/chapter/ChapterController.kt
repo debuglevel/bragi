@@ -26,8 +26,8 @@ class ChapterController(
     private val logger = KotlinLogging.logger {}
 
     override fun createGetEntityResponse(entity: Chapter): GetChapterResponse {
-        val suggestedCharacters = characterService.getSuggestedCharacters(entity.content)
-        val suggestedPlaces = placeService.getSuggestedPlaces(entity.content)
+        val suggestedCharacters = characterService.getSuggested(entity.content)
+        val suggestedPlaces = placeService.getSuggested(entity.content)
 
         val getEntityResponse = GetChapterResponse(entity)
         getEntityResponse.suggestedCharacters.addAll(suggestedCharacters.map { it.id!! })
@@ -37,8 +37,8 @@ class ChapterController(
     }
 
     override fun createUpdateEntityResponse(entity: Chapter): UpdateChapterResponse {
-        val suggestedCharacters = characterService.getSuggestedCharacters(entity.content)
-        val suggestedPlaces = placeService.getSuggestedPlaces(entity.content)
+        val suggestedCharacters = characterService.getSuggested(entity.content)
+        val suggestedPlaces = placeService.getSuggested(entity.content)
 
         val getEntityResponse = UpdateChapterResponse(entity)
         getEntityResponse.suggestedCharacters.addAll(suggestedCharacters.map { it.id!! })

@@ -29,7 +29,7 @@ class CharacterService(
         return updatedCharacter
     }
 
-    fun getSuggestedCharacters(text: String): Set<Character> {
+    fun getSuggested(text: String): Set<Character> {
         logger.debug { "Suggesting characters for given text..." }
 
         val allCharacters = this.list()

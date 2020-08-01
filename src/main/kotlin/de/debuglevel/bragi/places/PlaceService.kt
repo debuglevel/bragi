@@ -29,7 +29,7 @@ class PlaceService(
         return updatedPlace
     }
 
-    fun getSuggestedPlaces(text: String): Set<Place> {
+    fun getSuggested(text: String): Set<Place> {
         logger.debug { "Suggesting places for given text..." }
 
         val allPlaces = this.list()
