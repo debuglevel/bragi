@@ -1,13 +1,11 @@
 package de.debuglevel.bragi.chapter
 
+import de.debuglevel.bragi.character.Character
 import io.micronaut.data.annotation.DateCreated
 import io.micronaut.data.annotation.DateUpdated
 import java.time.LocalDateTime
 import java.util.*
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.Id
-import javax.persistence.Lob
+import javax.persistence.*
 
 @Entity
 data class Chapter(
@@ -21,6 +19,8 @@ data class Chapter(
     var summary: String,
     @Lob
     var notes: String,
+    @ManyToMany()
+    var characters: List<Character>,
     @DateCreated
     override var createdOn: LocalDateTime = LocalDateTime.now(),
     @DateUpdated

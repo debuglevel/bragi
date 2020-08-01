@@ -28,62 +28,71 @@ class Book2GraphDataLoader(
     private val logger = KotlinLogging.logger {}
 
     override fun onApplicationEvent(event: ServiceReadyEvent) {
-        return // remove if you've got the necessary data ;)
+        //return // remove if you've got the necessary data ;)
         logger.debug { "Populating database with sample data..." }
 
         val mrPreston = Character(
             id = null,
             name = "Mr. Preston",
             aliases = listOf("Preston"),
-            notes = ""
+            notes = "",
+            chapters = listOf()
         )
         val mrsPreston = Character(
             id = null,
             name = "Mrs. Preston",
             aliases = listOf(),
-            notes = ""
+            notes = "",
+            chapters = listOf()
         )
         val iraPreston = Character(
             id = null,
             name = "Ira Preston",
             aliases = listOf("Ira"),
-            notes = ""
+            notes = "",
+            chapters = listOf()
         )
         val charly = Character(
             id = null,
             name = "Charly",
             aliases = listOf(),
-            notes = ""
+            notes = "",
+            chapters = listOf()
         )
         val kayne = Character(
             id = null,
             name = "Kayne",
             aliases = listOf(),
-            notes = ""
+            notes = "",
+            chapters = listOf()
         )
         val sandra = Character(
             id = null,
             name = "Sandra",
             aliases = listOf("San"),
-            notes = ""
+            notes = "",
+            chapters = listOf()
         )
         val sirrus = Character(
             id = null,
             name = "Sirrus",
             aliases = listOf(),
-            notes = ""
+            notes = "",
+            chapters = listOf()
         )
         val joey = Character(
             id = null,
             name = "Joey",
             aliases = listOf(),
-            notes = ""
+            notes = "",
+            chapters = listOf()
         )
         val amrai = Character(
             id = null,
             name = "Amrai",
             aliases = listOf(),
-            notes = ""
+            notes = "",
+            chapters = listOf()
         )
 
         characterService.add(mrPreston)
@@ -125,9 +134,14 @@ class Book2GraphDataLoader(
                 title = it.title,
                 content = it.textAsString,
                 summary = it.summaryAsString,
-                notes = it.commentAsString
+                notes = it.commentAsString,
+                characters = mutableListOf()
             )
         }
+        chapters[0].characters = listOf(iraPreston)
+        chapters[1].characters = listOf(iraPreston, mrPreston, charly)
+        chapters[2].characters = listOf(iraPreston, amrai)
+        chapters[3].characters = listOf(charly, mrPreston)
         chapters.forEach { chapterService.add(it) }
 
         logger.debug { "Populated database with sample data." }

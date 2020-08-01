@@ -29,4 +29,13 @@ class ChapterService(
         logger.debug { "Updated chapter: $updatedChapter with ID '$id'" }
         return updatedChapter
     }
+
+    override fun list(): Set<Chapter> {
+        logger.debug { "Getting all ${entityName}s..." }
+
+        val items = chapterRepository.list().toSet()
+
+        logger.debug { "Got all ${entityName}s" }
+        return items
+    }
 }

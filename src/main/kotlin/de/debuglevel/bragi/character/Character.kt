@@ -1,5 +1,6 @@
 package de.debuglevel.bragi.character
 
+import de.debuglevel.bragi.chapter.Chapter
 import io.micronaut.data.annotation.DateCreated
 import io.micronaut.data.annotation.DateUpdated
 import java.time.LocalDateTime
@@ -16,6 +17,8 @@ data class Character(
     var aliases: List<String>,
     @Lob
     var notes: String,
+    @ManyToMany(mappedBy = "characters")
+    var chapters: List<Chapter>,
     @DateCreated
     override var createdOn: LocalDateTime = LocalDateTime.now(),
     @DateUpdated

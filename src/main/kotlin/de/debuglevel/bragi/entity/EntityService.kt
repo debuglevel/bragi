@@ -29,7 +29,7 @@ abstract class EntityService<T>(private val entityRepository: EntityRepository<T
 
     abstract fun update(id: UUID, item: T): T
 
-    fun list(): Set<T> {
+    open fun list(): Set<T> {
         logger.debug { "Getting all ${entityName}s..." }
 
         val items = entityRepository.findAll().toSet()

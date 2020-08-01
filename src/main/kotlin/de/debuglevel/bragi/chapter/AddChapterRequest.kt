@@ -11,7 +11,8 @@ data class AddChapterRequest(
             title = this.title,
             content = "",
             summary = "",
-            notes = ""
+            notes = "",
+            characters = listOf()
         )
     }
 }

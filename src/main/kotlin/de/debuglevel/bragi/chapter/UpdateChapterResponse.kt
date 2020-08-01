@@ -11,6 +11,7 @@ data class UpdateChapterResponse(
     var summary: String,
     var notes: String,
     var suggestedCharacters: MutableSet<UUID>,
+    var characters: MutableSet<UUID>,
     var suggestedPlaces: MutableSet<UUID>,
     override var createdOn: LocalDateTime,
     override var lastModified: LocalDateTime
@@ -22,6 +23,7 @@ data class UpdateChapterResponse(
         summary = chapter.summary,
         notes = chapter.notes,
         suggestedCharacters = mutableSetOf<UUID>(),
+        characters = mutableSetOf<UUID>(),
         suggestedPlaces = mutableSetOf<UUID>(),
         createdOn = chapter.createdOn,
         lastModified = chapter.lastModified

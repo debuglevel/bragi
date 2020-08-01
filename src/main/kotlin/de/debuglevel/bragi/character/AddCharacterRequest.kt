@@ -10,7 +10,8 @@ data class AddCharacterRequest(
             id = null,
             name = this.name,
             aliases = listOf(),
-            notes = ""
+            notes = "",
+            chapters = listOf()
         )
     }
 }

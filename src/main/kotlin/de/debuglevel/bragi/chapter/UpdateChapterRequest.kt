@@ -14,7 +14,8 @@ data class UpdateChapterRequest(
             title = this.title,
             content = this.content,
             summary = this.summary,
-            notes = this.notes
+            notes = this.notes,
+            characters = listOf() // TODO
         )
     }
 }

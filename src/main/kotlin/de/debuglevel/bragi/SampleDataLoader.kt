@@ -33,61 +33,71 @@ class SampleDataLoader(
             id = null,
             name = "Eddard Stark",
             aliases = listOf("Ned"),
-            notes = "Really likable person. Might become king or something."
+            notes = "Really likable person. Might become king or something.",
+            chapters = listOf()
         )
         val aryaStark = Character(
             id = null,
             name = "Arya Stark",
             aliases = listOf(),
-            notes = "Cute little girl. Will never hurt anybody."
+            notes = "Cute little girl. Will never hurt anybody.",
+            chapters = listOf()
         )
         val sansaStark = Character(
             id = null,
             name = "Sansa Stark",
             aliases = listOf(),
-            notes = "Just an annoying supporting character."
+            notes = "Just an annoying supporting character.",
+            chapters = listOf()
         )
         val branStark = Character(
             id = null,
             name = "Bran Stark",
             aliases = listOf(),
-            notes = "Another Stark character."
+            notes = "Another Stark character.",
+            chapters = listOf()
         )
         val catelynStark = Character(
             id = null,
             name = "Catelyn Stark",
             aliases = listOf("Catelyn Tully"),
-            notes = "No idea."
+            notes = "No idea.",
+            chapters = listOf()
         )
         val daenerysTargaryen = Character(
             id = null,
             name = "Daenerys Targaryen",
             aliases = listOf(),
-            notes = "Way too cool."
+            notes = "Way too cool.",
+            chapters = listOf()
         )
         val jonSnow = Character(
             id = null,
             name = "Jon Snow",
             aliases = listOf("Aegon Targaryen", "Aegon"),
-            notes = "Way too good character. Kind of boring."
+            notes = "Way too good character. Kind of boring.",
+            chapters = listOf()
         )
         val joffreyBaratheon = Character(
             id = null,
             name = "Joffrey Baratheon",
             aliases = listOf(),
-            notes = "Ambitious likable fella."
+            notes = "Ambitious likable fella.",
+            chapters = listOf()
         )
         val tyrionLannister = Character(
             id = null,
             name = "Tyrion Lannister",
             aliases = listOf(),
-            notes = "Actually the only respectable character in the whole story."
+            notes = "Actually the only respectable character in the whole story.",
+            chapters = listOf()
         )
         val samwellTarly = Character(
             id = null,
             name = "Samwell Tarly",
             aliases = listOf("Sam"),
-            notes = "Huge nerd."
+            notes = "Huge nerd.",
+            chapters = listOf()
         )
 
         characterService.add(eddardStark)

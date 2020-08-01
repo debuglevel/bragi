@@ -12,7 +12,8 @@ data class UpdateCharacterRequest(
             id = null,
             name = this.name,
             aliases = this.aliases,
-            notes = this.notes
+            notes = this.notes,
+            chapters = listOf() // TODO
         )
     }
 }
