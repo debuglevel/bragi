@@ -13,7 +13,7 @@ data class Character(
     override var id: UUID?,
     var name: String,
     @ElementCollection(fetch = FetchType.EAGER)
-    var aliases: List<String>,
+    var aliases: MutableList<String>,
     @Lob
     var notes: String,
     @DateCreated

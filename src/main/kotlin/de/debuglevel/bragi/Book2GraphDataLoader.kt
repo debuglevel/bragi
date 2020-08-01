@@ -34,55 +34,55 @@ class Book2GraphDataLoader(
         val mrPreston = Character(
             id = null,
             name = "Mr. Preston",
-            aliases = listOf("Preston"),
+            aliases = mutableListOf("Preston"),
             notes = ""
         )
         val mrsPreston = Character(
             id = null,
             name = "Mrs. Preston",
-            aliases = listOf(),
+            aliases = mutableListOf(),
             notes = ""
         )
         val iraPreston = Character(
             id = null,
             name = "Ira Preston",
-            aliases = listOf("Ira"),
+            aliases = mutableListOf("Ira"),
             notes = ""
         )
         val charly = Character(
             id = null,
             name = "Charly",
-            aliases = listOf(),
+            aliases = mutableListOf(),
             notes = ""
         )
         val kayne = Character(
             id = null,
             name = "Kayne",
-            aliases = listOf(),
+            aliases = mutableListOf(),
             notes = ""
         )
         val sandra = Character(
             id = null,
             name = "Sandra",
-            aliases = listOf("San"),
+            aliases = mutableListOf("San"),
             notes = ""
         )
         val sirrus = Character(
             id = null,
             name = "Sirrus",
-            aliases = listOf(),
+            aliases = mutableListOf(),
             notes = ""
         )
         val joey = Character(
             id = null,
             name = "Joey",
-            aliases = listOf(),
+            aliases = mutableListOf(),
             notes = ""
         )
         val amrai = Character(
             id = null,
             name = "Amrai",
-            aliases = listOf(),
+            aliases = mutableListOf(),
             notes = ""
         )
 

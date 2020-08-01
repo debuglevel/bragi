@@ -32,61 +32,61 @@ class SampleDataLoader(
         val eddardStark = Character(
             id = null,
             name = "Eddard Stark",
-            aliases = listOf("Ned"),
+            aliases = mutableListOf("Ned"),
             notes = "Really likable person. Might become king or something."
         )
         val aryaStark = Character(
             id = null,
             name = "Arya Stark",
-            aliases = listOf(),
+            aliases = mutableListOf(),
             notes = "Cute little girl. Will never hurt anybody."
         )
         val sansaStark = Character(
             id = null,
             name = "Sansa Stark",
-            aliases = listOf(),
+            aliases = mutableListOf(),
             notes = "Just an annoying supporting character."
         )
         val branStark = Character(
             id = null,
             name = "Bran Stark",
-            aliases = listOf(),
+            aliases = mutableListOf(),
             notes = "Another Stark character."
         )
         val catelynStark = Character(
             id = null,
             name = "Catelyn Stark",
-            aliases = listOf("Catelyn Tully"),
+            aliases = mutableListOf("Catelyn Tully"),
             notes = "No idea."
         )
         val daenerysTargaryen = Character(
             id = null,
             name = "Daenerys Targaryen",
-            aliases = listOf(),
+            aliases = mutableListOf(),
             notes = "Way too cool."
         )
         val jonSnow = Character(
             id = null,
             name = "Jon Snow",
-            aliases = listOf("Aegon Targaryen", "Aegon"),
+            aliases = mutableListOf("Aegon Targaryen", "Aegon"),
             notes = "Way too good character. Kind of boring."
         )
         val joffreyBaratheon = Character(
             id = null,
             name = "Joffrey Baratheon",
-            aliases = listOf(),
+            aliases = mutableListOf(),
             notes = "Ambitious likable fella."
         )
         val tyrionLannister = Character(
             id = null,
             name = "Tyrion Lannister",
-            aliases = listOf(),
+            aliases = mutableListOf(),
             notes = "Actually the only respectable character in the whole story."
         )
         val samwellTarly = Character(
             id = null,
             name = "Samwell Tarly",
-            aliases = listOf("Sam"),
+            aliases = mutableListOf("Sam"),
             notes = "Huge nerd."
         )
 

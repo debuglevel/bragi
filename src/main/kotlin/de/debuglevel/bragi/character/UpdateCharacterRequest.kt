@@ -4,7 +4,7 @@ import de.debuglevel.bragi.entity.UpdateEntityRequest
 
 data class UpdateCharacterRequest(
     var name: String,
-    var aliases: List<String>,
+    var aliases: MutableList<String>,
     var notes: String
 ) : UpdateEntityRequest<Character> {
     override fun toEntity(): Character {
