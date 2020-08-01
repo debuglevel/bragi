@@ -18,6 +18,9 @@ class CharacterServiceTests {
     @Inject
     lateinit var characterService: CharacterService
 
+    @Inject
+    lateinit var characterRepository: CharacterRepository
+
     @ParameterizedTest
     @MethodSource("itemProvider")
     fun `add character`(character: Character) {
@@ -127,5 +130,22 @@ class CharacterServiceTests {
         assertThat(updatedItem.aliases).containsAll(listOf("Updated Alias1", "Updated Alias2", "Updated Alias3"))
     }
 
+    @ParameterizedTest
+    @MethodSource("suggestionItemProvider")
+    fun `suggest characters`(suggestionTestData: CharacterTestDataProvider.SuggestionTestData) {
+        // Arrange
+        characterRepository.deleteAll()
+        suggestionTestData.existingCharacters.forEach {
+            characterService.add(it)
+        }
+
+        // Act
+        val suggestedCharacters = characterService.getSuggested(suggestionTestData.text)
+
+        // Assert
+        assertThat(suggestedCharacters).containsExactlyInAnyOrderElementsOf(suggestionTestData.occurringCharacters)
+    }
+
     fun itemProvider() = CharacterTestDataProvider.itemProvider()
+    fun suggestionItemProvider() = CharacterTestDataProvider.suggestionItemProvider()
 }
