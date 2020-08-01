@@ -1,11 +1,14 @@
 package de.debuglevel.bragi.character
 
+import de.debuglevel.bragi.entity.EntityService
 import io.micronaut.test.annotation.MicronautTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
+import java.util.*
 import javax.inject.Inject
 
 @MicronautTest
@@ -29,7 +32,7 @@ class CharacterServiceTests {
 
     @ParameterizedTest
     @MethodSource("itemProvider")
-    fun `retrieve character`(character: Character) {
+    fun `get character`(character: Character) {
         // Arrange
         val addedItem = characterService.add(character)
 
@@ -38,6 +41,35 @@ class CharacterServiceTests {
 
         // Assert
         assertThat(retrievedItem).isEqualTo(addedItem)
+    }
+
+    @Test
+    fun `get invalid character`() {
+        // Arrange
+
+        // Act & Assert
+        assertThrows<EntityService.ItemNotFoundException> { characterService.get(UUID.randomUUID()) }
+    }
+
+    @Test
+    fun `list characters`() {
+        // Arrange
+        val addedItems = (1..5).map {
+            characterService.add(
+                Character(
+                    id = null,
+                    name = "Item $it",
+                    aliases = mutableListOf(),
+                    notes = "Notes $it"
+                )
+            )
+        }
+
+        // Act
+        val listedItems = characterService.list()
+
+        // Assert
+        assertThat(listedItems).containsAll(addedItems)
     }
 
     @Test
