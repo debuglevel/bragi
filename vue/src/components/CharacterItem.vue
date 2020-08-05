@@ -1,17 +1,17 @@
 <template>
   <tr>
     <td>
-      <router-link :to="'chapters/' + chapter.id">{{
-        chapter.title
+      <router-link :to="'characters/' + character.id">{{
+        character.name
       }}</router-link>
     </td>
-    <!-- <td>{{ chapter.id }}</td> -->
+    <!-- <td>{{ character.id }}</td> -->
     <td>
       <v-tooltip bottom>
         <template v-slot:activator="{ on, attrs }">
           <span v-bind="attrs" v-on="on">Hover me</span>
         </template>
-        <span>{{ chapter.summary }}</span>
+        <span>{{ character.notes }}</span>
       </v-tooltip>
     </td>
   </tr>
@@ -19,10 +19,10 @@
 
 <script>
 export default {
-  name: "ChapterItem",
+  name: "CharacterItem",
 
   props: {
-    chapter: {},
+    character: {},
   },
   data: () => ({
     //

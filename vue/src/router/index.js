@@ -28,6 +28,14 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "chapters" */ "../views/Chapters.vue"),
   },
+  // dynamic segments start with a colon
+  {
+    path: "/chapters/:id",
+    //component: User
+    component: () =>
+      import(/* webpackChunkName: "chapter" */ "../views/Chapter.vue"),
+    props: true,
+  },
   // {
   //   path: "/characters",
   //   name: "Characters",
