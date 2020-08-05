@@ -29,52 +29,24 @@
     <!--        </b-card>-->
 
     <h2>Suggested characters</h2>
-    <v-simple-table>
-      <thead>
-        <th class="text-left">Name</th>
-        <!-- <th>ID</th> -->
-        <th class="text-left">Show Notes</th>
-      </thead>
-      <tbody>
-        <tr
-          is="character-item"
-          v-bind:character="item"
-          v-bind:key="item.id"
-          v-for="item in suggestedCharacters"
-        ></tr>
-      </tbody>
-    </v-simple-table>
+    <character-table v-bind:characters="suggestedCharacters"></character-table>
 
     <h2>Suggested places</h2>
-    <v-simple-table>
-      <thead>
-        <th class="text-left">Name</th>
-        <!-- <th>ID</th> -->
-        <th class="text-left">Show Notes</th>
-      </thead>
-      <tbody>
-        <tr
-          is="place-item"
-          v-bind:key="item.id"
-          v-bind:place="item"
-          v-for="item in suggestedPlaces"
-        ></tr>
-      </tbody>
-    </v-simple-table>
+    <place-table v-bind:places="suggestedPlaces"></place-table>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import CharacterItem from "@/components/CharacterItem.vue";
-import PlaceItem from "@/components/PlaceItem.vue";
+import CharacterTable from "@/components/CharacterTable.vue";
+import PlaceTable from "@/components/PlaceTable.vue";
 import axios from "axios";
 
 export default {
   name: "Chapter",
   components: {
-    CharacterItem,
-    PlaceItem,
+    CharacterTable,
+    PlaceTable,
   },
 
   props: ["id"],
