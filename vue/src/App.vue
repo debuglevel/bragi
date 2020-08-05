@@ -1,56 +1,66 @@
 <template>
   <v-app>
-    <v-app-bar app color="primary" dark>
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
+    <!--<v-system-bar app></v-system-bar> -->
 
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
+    <v-navigation-drawer app expand-on-hover>
+      <v-list dense nav>
+        <v-list-item
+          v-for="item in navigationItems"
+          :key="item.title"
+          :to="item.link"
+          link
+        >
+          <v-list-item-icon>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-item-icon>
 
+          <v-list-item-content>
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
+
+    <v-app-bar app>
+      <v-toolbar-title>Bragi</v-toolbar-title>
       <v-spacer></v-spacer>
-
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
     </v-app-bar>
 
+    <!-- Sizes your content based upon application components -->
     <v-main>
-      <HelloWorld />
+      <!-- Provides the application the proper gutter -->
+      <v-container fluid>
+        <!-- If using vue-router -->
+        <router-view />
+      </v-container>
     </v-main>
+
+    <v-footer app>Built with ❤ by debuglevel.</v-footer>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld";
-
 export default {
   name: "App",
 
-  components: {
-    HelloWorld
-  },
+  components: {},
 
   data: () => ({
-    //
-  })
+    navigationItems: [
+      { title: "Home", icon: "mdi-home", link: "/" },
+      {
+        title: "Chapters",
+        icon: "mdi-text-box-outline",
+        link: "/chapters",
+      },
+      { title: "Characters", icon: "mdi-account", link: "/characters" },
+      {
+        title: "Locations",
+        icon: "mdi-map-marker",
+        link: "/locations",
+      },
+      { title: "About", icon: "mdi-information", link: "/about" },
+    ],
+  }),
 };
 </script>
