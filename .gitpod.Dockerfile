@@ -6,4 +6,4 @@ FROM gitpod/workspace-full
 #
 # More information: https://www.gitpod.io/docs/config-docker/
 RUN brew install kotlin
-RUN npm i -g vue-cli
+RUN npm i -g @vue/cli
