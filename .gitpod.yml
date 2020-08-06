@@ -9,7 +9,7 @@ tasks:
 #    command: vue ui
 #    name: Vue UI
   - init: cd vue && npm install
-    command: npm run serve
+    command: cd vue && npm run serve
     name: Frontend
 
 ports:
