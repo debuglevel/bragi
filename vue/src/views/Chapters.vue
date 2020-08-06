@@ -1,20 +1,6 @@
 <template>
   <div class="chapters">
-    <v-simple-table>
-      <thead>
-        <th class="text-left">Title</th>
-        <!-- <th class="text-left">ID</th> -->
-        <th class="text-left">Show Content</th>
-      </thead>
-      <tbody>
-        <tr
-          is="chapter-item"
-          v-bind:chapter="item"
-          v-bind:key="item.id"
-          v-for="item in chapters"
-        ></tr>
-      </tbody>
-    </v-simple-table>
+    <chapter-table v-bind:chapters="chapters" />
 
     <v-form>
       <v-container>
@@ -42,13 +28,13 @@
 
 <script>
 // @ is an alias to /src
-import ChapterItem from "@/components/ChapterItem.vue";
+import ChapterTable from "@/components/ChapterTable.vue";
 import axios from "axios";
 
 export default {
   name: "Chapters",
   components: {
-    ChapterItem,
+    ChapterTable,
   },
 
   data: () => ({
