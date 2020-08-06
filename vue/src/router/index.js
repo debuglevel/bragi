@@ -52,15 +52,22 @@ const routes = [
       import(/* webpackChunkName: "chapter" */ "../views/Character.vue"),
     props: true,
   },
-  // {
-  //   path: "/locations",
-  //   name: "Locations",
-  //   // route level code-splitting
-  //   // this generates a separate chunk (locations.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-  //   component: () =>
-  //     import(/* webpackChunkName: "locations" */ "../views/Locations.vue"),
-  // },
+  {
+    path: "/places",
+    name: "Places",
+    // route level code-splitting
+    // this generates a separate chunk (places.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () =>
+      import(/* webpackChunkName: "places" */ "../views/Places.vue"),
+  },
+    // dynamic segments start with a colon
+  {
+    path: "/places/:id",
+    component: () =>
+      import(/* webpackChunkName: "places" */ "../views/Place.vue"),
+    props: true,
+  },
 ];
 
 const router = new VueRouter({

@@ -1,6 +1,6 @@
 <template>
-  <div class="characters">
-    <character-table v-bind:characters="characters" />
+  <div class="places">
+    <place-table v-bind:places="places" />
 
     <v-form>
       <v-container>
@@ -9,12 +9,12 @@
             <v-text-field
               v-model="form.name"
               :rules="nameRules"
-              label="Character name"
+              label="Place name"
               required
             ></v-text-field>
           </v-col>
           <v-col cols="12" md="4">
-            <v-btn class="mr-4" @click="onSubmit">Add character</v-btn>
+            <v-btn class="mr-4" @click="onSubmit">Add place</v-btn>
           </v-col>
         </v-row>
       </v-container>
@@ -28,20 +28,20 @@
 
 <script>
 // @ is an alias to /src
-import CharacterTable from "@/components/CharacterTable.vue";
+import PlaceTable from "@/components/PlaceTable.vue";
 import axios from "axios";
 
 export default {
-  name: "Characters",
+  name: "Places",
   components: {
-    CharacterTable,
+    PlaceTable,
   },
 
   data: () => ({
-    characters: [
-      { id: 1, name: "Character 1", notes: "Notes 1" },
-      { id: 2, name: "Character 2", notes: "Notes 2" },
-      { id: 3, name: "Character 3", notes: "Notes 3" },
+    places: [
+      { id: 1, name: "Place 1", notes: "Notes 1" },
+      { id: 2, name: "Place 2", notes: "Notes 2" },
+      { id: 3, name: "Place 3", notes: "Notes 3" },
     ],
     form: {
       name: "",
@@ -50,16 +50,16 @@ export default {
   }),
   mounted() {
     axios
-      .get("http://localhost:8080/characters/")
-      .then((response) => (this.characters = response.data));
+      .get("http://localhost:8080/places/")
+      .then((response) => (this.places = response.data));
   },
   methods: {
     onSubmit(evt) {
       evt.preventDefault();
       //alert(JSON.stringify(this.form))
       axios
-        .post("http://localhost:8080/characters/", { name: this.form.name })
-        .then((response) => this.characters.push(response.data));
+        .post("http://localhost:8080/places/", { name: this.form.name })
+        .then((response) => this.places.push(response.data));
     },
   },
 };

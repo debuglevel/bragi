@@ -55,9 +55,9 @@ export default {
       },
       { title: "Characters", icon: "mdi-account", link: "/characters" },
       {
-        title: "Locations",
+        title: "Places",
         icon: "mdi-map-marker",
-        link: "/locations",
+        link: "/places",
       },
       { title: "About", icon: "mdi-information", link: "/about" },
     ],
