@@ -4,12 +4,7 @@
 
     <v-navigation-drawer app expand-on-hover>
       <v-list dense nav>
-        <v-list-item
-          v-for="item in navigationItems"
-          :key="item.title"
-          :to="item.link"
-          link
-        >
+        <v-list-item v-for="item in navigationItems" :key="item.title" :to="item.link" link>
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-icon>
@@ -23,7 +18,7 @@
 
     <!--
     <v-app-bar app>
-      <v-toolbar-title>Bragi</v-toolbar-title>
+      <v-toolbar-title>{{ title }}</v-toolbar-title>
       <v-spacer></v-spacer>
     </v-app-bar>
     -->
@@ -47,22 +42,30 @@ export default {
 
   components: {},
 
+  watch: {
+    $route(to) {
+      this.title = "Bragi: " + to.meta.title || "Bragi";
+      document.title = this.title;
+    }
+  },
+
   data: () => ({
+    title: "Bragi",
     navigationItems: [
       { title: "Home", icon: "mdi-home", link: "/" },
       {
         title: "Chapters",
         icon: "mdi-text-box-outline",
-        link: "/chapters",
+        link: "/chapters"
       },
       { title: "Characters", icon: "mdi-account", link: "/characters" },
       {
         title: "Places",
         icon: "mdi-map-marker",
-        link: "/places",
+        link: "/places"
       },
-      { title: "About", icon: "mdi-information", link: "/about" },
-    ],
-  }),
+      { title: "About", icon: "mdi-information", link: "/about" }
+    ]
+  })
 };
 </script>

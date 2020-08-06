@@ -9,6 +9,9 @@ const routes = [
     path: "/",
     name: "Home",
     component: Home,
+    meta: {
+      title: "Home",
+    },
   },
   {
     path: "/about",
@@ -18,6 +21,9 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/About.vue"),
+    meta: {
+      title: "About",
+    },
   },
   {
     path: "/chapters",
@@ -27,6 +33,9 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "chapters" */ "../views/Chapters.vue"),
+    meta: {
+      title: "Chapters",
+    },
   },
   // dynamic segments start with a colon
   {
@@ -35,6 +44,9 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "chapter" */ "../views/Chapter.vue"),
     props: true,
+    meta: {
+      title: "Chapter",
+    },
   },
   {
     path: "/characters",
@@ -44,6 +56,9 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "characters" */ "../views/Characters.vue"),
+    meta: {
+      title: "Characters",
+    },
   },
   // dynamic segments start with a colon
   {
@@ -51,6 +66,9 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "chapter" */ "../views/Character.vue"),
     props: true,
+    meta: {
+      title: "Character",
+    },
   },
   {
     path: "/places",
@@ -60,13 +78,19 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "places" */ "../views/Places.vue"),
+    meta: {
+      title: "Places",
+    },
   },
-    // dynamic segments start with a colon
+  // dynamic segments start with a colon
   {
     path: "/places/:id",
     component: () =>
       import(/* webpackChunkName: "places" */ "../views/Place.vue"),
     props: true,
+    meta: {
+      title: "Place",
+    },
   },
 ];
 
