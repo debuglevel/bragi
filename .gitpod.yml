@@ -3,11 +3,13 @@ image:
 
 tasks:
   - init: ./gradlew build
-#name: Gradle Build
     command: ./gradlew run
     name: Application Server
+#  - init: cd vue && npm install
+#    command: vue ui
+#    name: Vue UI
   - init: cd vue && npm install
-    command: cd vue && vue ui
+    command: npm run serve
     name: Frontend
 
 ports:
