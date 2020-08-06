@@ -4,18 +4,20 @@ image:
 tasks:
   - init: ./gradlew build
     command: ./gradlew run
-    name: Application Server
-#  - init: cd vue && npm install
-#    command: vue ui
-#    name: Vue UI
-  - init: cd vue && npm install
-    command: cd vue && npm run serve
+    name: backend
+
+  - init: cd vue && npm install && gp sync-done npmInstalled
+    command: npm run serve
     name: Frontend
+
+  - command: gp sync-await npmInstalled && cd vue && vue ui
+    name: Vue UI
 
 ports:
   - port: 8080
-#onOpen: open-preview # do not open preview, because there is nothing served on /
+    onOpen: ignore
   - port: 8081
+    onOpen: open-browser
 
 vscode:
   extensions:
