@@ -10,24 +10,25 @@
     <!-- <td>{{ chapter.id }}</td> -->
     <td>
       <!--
-      TODO: dialog should be used instead of tooltip (https://vuetifyjs.com/en/components/dialogs/) 
-      TODO: same for Character and Place
-      XXX: create an own ShowNotes component or something like that for consistent usage
       TODO: maybe a expension panel would also be good (https://vuetifyjs.com/en/components/expansion-panels/)
       -->
-      <v-tooltip bottom>
-        <template v-slot:activator="{ on, attrs }">
-          <span v-bind="attrs" v-on="on">Hover me</span>
-        </template>
-        <span>{{ chapter.summary }}</span>
-      </v-tooltip>
+      <text-preview
+        v-bind:caption="'Show summary'"
+        v-bind:title="chapter.title"
+        v-bind:text="chapter.summary"
+      />
     </td>
   </tr>
 </template>
 
 <script>
+import TextPreview from "@/components/TextPreview.vue";
+
 export default {
   name: "ChapterItem",
+  components: {
+    TextPreview
+  },
 
   props: {
     chapter: {}

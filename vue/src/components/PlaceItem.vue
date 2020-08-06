@@ -5,19 +5,23 @@
     </td>
     <!-- <td>{{ place.id }}</td> -->
     <td>
-      <v-tooltip bottom>
-        <template v-slot:activator="{ on, attrs }">
-          <span v-bind="attrs" v-on="on">Hover me</span>
-        </template>
-        <span>{{ place.notes }}</span>
-      </v-tooltip>
+      <text-preview
+        v-bind:caption="'Show notes'"
+        v-bind:title="place.name"
+        v-bind:text="place.notes"
+      />
     </td>
   </tr>
 </template>
 
 <script>
+import TextPreview from "@/components/TextPreview.vue";
+
 export default {
   name: "PlaceItem",
+  components: {
+    TextPreview
+  },
 
   props: {
     place: {}
