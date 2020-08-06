@@ -36,15 +36,22 @@ const routes = [
       import(/* webpackChunkName: "chapter" */ "../views/Chapter.vue"),
     props: true,
   },
-  // {
-  //   path: "/characters",
-  //   name: "Characters",
-  //   // route level code-splitting
-  //   // this generates a separate chunk (characters.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-  //   component: () =>
-  //     import(/* webpackChunkName: "characters" */ "../views/Characters.vue"),
-  // },
+  {
+    path: "/characters",
+    name: "Characters",
+    // route level code-splitting
+    // this generates a separate chunk (characters.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () =>
+      import(/* webpackChunkName: "characters" */ "../views/Characters.vue"),
+  },
+  // dynamic segments start with a colon
+  {
+    path: "/characters/:id",
+    component: () =>
+      import(/* webpackChunkName: "chapter" */ "../views/Character.vue"),
+    props: true,
+  },
   // {
   //   path: "/locations",
   //   name: "Locations",
