@@ -8,12 +8,7 @@
     </div>
 
     <v-form>
-      <v-text-field
-        v-model="chapter.title"
-        :rules="titleRules"
-        label="Title"
-        required
-      ></v-text-field>
+      <v-text-field v-model="chapter.title" :rules="titleRules" label="Title" required></v-text-field>
 
       <v-textarea v-model="chapter.content" label="Content"></v-textarea>
 
@@ -29,9 +24,11 @@
     <!--        </b-card>-->
 
     <h2>Suggested characters</h2>
+    <!-- TODO: v-chips could be nice for suggesting characters (https://vuetifyjs.com/en/components/chips/) -->
     <character-table v-bind:characters="suggestedCharacters"></character-table>
 
     <h2>Suggested places</h2>
+    <!-- TODO: v-chips could be nice for suggesting places (https://vuetifyjs.com/en/components/chips/) -->
     <place-table v-bind:places="suggestedPlaces"></place-table>
   </div>
 </template>
@@ -46,7 +43,7 @@ export default {
   name: "Chapter",
   components: {
     CharacterTable,
-    PlaceTable,
+    PlaceTable
   },
 
   props: ["id"],
@@ -59,17 +56,17 @@ export default {
       summary: "sum sum summary",
       notes: "saddsads",
       suggestedCharacters: [121, 122],
-      suggestedPlaces: [221, 222],
+      suggestedPlaces: [221, 222]
     },
     suggestedCharacters: [
       { id: 121, name: "Arya", notes: "Little girl" },
-      { id: 122, name: "Jon", notes: "Bearded guy" },
+      { id: 122, name: "Jon", notes: "Bearded guy" }
     ],
     suggestedPlaces: [
       { id: 221, name: "Winterfell", notes: "Cold." },
-      { id: 222, name: "Iron Thrones", notes: "Uncomfortable thing" },
+      { id: 222, name: "Iron Thrones", notes: "Uncomfortable thing" }
     ],
-    titleRules: [(v) => !!v || "Title is required"],
+    titleRules: [v => !!v || "Title is required"]
   }),
 
   mounted() {
@@ -150,9 +147,9 @@ export default {
           title: this.chapter.title,
           content: this.chapter.content,
           summary: this.chapter.summary,
-          notes: this.chapter.notes,
+          notes: this.chapter.notes
         })
-        .then((chapterResponse) => {
+        .then(chapterResponse => {
           this.chapter = chapterResponse.data;
 
           // TODO: proper axios.then/catch etc handling
@@ -161,7 +158,7 @@ export default {
           for (var suggestedCharacterId of this.chapter.suggestedCharacters) {
             axios
               .get("http://localhost:8080/characters/" + suggestedCharacterId)
-              .then((characterResponse) =>
+              .then(characterResponse =>
                 this.suggestedCharacters.push(characterResponse.data)
               );
           }
@@ -172,12 +169,12 @@ export default {
           for (var suggestedPlaceId of this.chapter.suggestedPlaces) {
             axios
               .get("http://localhost:8080/places/" + suggestedPlaceId)
-              .then((placeResponse) =>
+              .then(placeResponse =>
                 this.suggestedPlaces.push(placeResponse.data)
               );
           }
         });
-    },
-  },
+    }
+  }
 };
 </script>
