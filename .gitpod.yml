@@ -4,10 +4,10 @@ image:
 tasks:
   - init: ./gradlew build
     command: ./gradlew run
-    name: backend
+    name: Backend
 
-  - init: cd vue && npm install && gp sync-done npmInstalled && cd .. # go back one directory because "command" starts in default state for restarted workspaces
-    command: cd vue && npm run serve
+  - init: cd vue && npm install && cd .. # go back one directory because "command" starts in default state for restarted workspaces
+    command: gp sync-done npmInstalled && cd vue && npm run serve # sync-done would not get signaled after workspace restart in "init"; so it is in "command"
     name: Frontend
 
   - command: gp sync-await npmInstalled && cd vue && vue ui
