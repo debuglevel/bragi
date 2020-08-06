@@ -8,12 +8,7 @@
     </div>
 
     <v-form>
-      <v-text-field
-        v-model="place.name"
-        :rules="nameRules"
-        label="Name"
-        required
-      ></v-text-field>
+      <v-text-field v-model="place.name" :rules="nameRules" label="Name" required></v-text-field>
 
       <v-textarea v-model="place.notes" label="Notes"></v-textarea>
 
@@ -34,37 +29,36 @@ import axios from "axios";
 
 export default {
   name: "Place",
-  components: {
-  },
+  components: {},
 
   props: ["id"],
 
   data: () => ({
-    place: { 
-        "id": 12, 
-        "name": "The Wall", 
-        "notes": "Some large bricks of ice.", 
-        aliases: ["Wall"] 
-        },
-    nameRules: [(v) => !!v || "Name is required"],
+    place: {
+      id: 12,
+      name: "The Wall",
+      notes: "Some large bricks of ice.",
+      aliases: ["Wall"]
+    },
+    nameRules: [v => !!v || "Name is required"]
   }),
 
   mounted() {
     axios
       .get("http://localhost:8080/places/" + this.id)
-      .then(function(placeResponse) {
+      .then(placeResponse => {
         // handle success
         console.log("Axios Success for Place");
         console.log(placeResponse);
 
         this.place = placeResponse.data;
       })
-      .catch(function(error) {
+      .catch(error => {
         // handle error
         console.log("Axios Error for Place");
         console.log(error);
       })
-      .then(function() {
+      .then(() => {
         // always executed
         console.log("Axios Always for Place");
       });
@@ -80,12 +74,12 @@ export default {
         .put("http://localhost:8080/places/" + this.place.id, {
           name: this.place.name,
           notes: this.place.notes,
-          aliases: this.place.aliases,
+          aliases: this.place.aliases
         })
-        .then((placeResponse) => {
+        .then(placeResponse => {
           this.place = placeResponse.data;
         });
-    },
-  },
+    }
+  }
 };
 </script>

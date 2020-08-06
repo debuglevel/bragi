@@ -8,12 +8,7 @@
     </div>
 
     <v-form>
-      <v-text-field
-        v-model="character.name"
-        :rules="nameRules"
-        label="Name"
-        required
-      ></v-text-field>
+      <v-text-field v-model="character.name" :rules="nameRules" label="Name" required></v-text-field>
 
       <v-textarea v-model="character.notes" label="Notes"></v-textarea>
 
@@ -34,37 +29,36 @@ import axios from "axios";
 
 export default {
   name: "Character",
-  components: {
-  },
+  components: {},
 
   props: ["id"],
 
   data: () => ({
-    character: { 
-        "id": 12, 
-        "name": "Arya Stark", 
-        "notes": "Arya is jst a <b>little</b> girl.", 
-        aliases: ["Arya", "Little girl"] 
-        },
-    nameRules: [(v) => !!v || "Name is required"],
+    character: {
+      id: 12,
+      name: "Arya Stark",
+      notes: "Arya is jst a <b>little</b> girl.",
+      aliases: ["Arya", "Little girl"]
+    },
+    nameRules: [v => !!v || "Name is required"]
   }),
 
   mounted() {
     axios
       .get("http://localhost:8080/characters/" + this.id)
-      .then(function(characterResponse) {
+      .then(characterResponse => {
         // handle success
         console.log("Axios Success for Character");
         console.log(characterResponse);
 
         this.character = characterResponse.data;
       })
-      .catch(function(error) {
+      .catch(error => {
         // handle error
         console.log("Axios Error for Character");
         console.log(error);
       })
-      .then(function() {
+      .then(() => {
         // always executed
         console.log("Axios Always for Character");
       });
@@ -80,12 +74,12 @@ export default {
         .put("http://localhost:8080/characters/" + this.character.id, {
           name: this.character.name,
           notes: this.character.notes,
-          aliases: this.character.aliases,
+          aliases: this.character.aliases
         })
-        .then((characterResponse) => {
+        .then(characterResponse => {
           this.character = characterResponse.data;
         });
-    },
-  },
+    }
+  }
 };
 </script>

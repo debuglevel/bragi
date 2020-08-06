@@ -72,7 +72,7 @@ export default {
   mounted() {
     axios
       .get("http://localhost:8080/chapters/" + this.id)
-      .then(function(chapterResponse) {
+      .then(chapterResponse => {
         // handle success
         console.log("Axios Success for Chapter");
         console.log(chapterResponse);
@@ -84,19 +84,19 @@ export default {
         for (var suggestedCharacterId of this.chapter.suggestedCharacters) {
           axios
             .get("http://localhost:8080/characters/" + suggestedCharacterId)
-            .then(function(characterResponse) {
+            .then(characterResponse => {
               // handle success
               console.log("Axios Success for Character");
               console.log(characterResponse);
 
               this.suggestedCharacters.push(characterResponse.data);
             })
-            .catch(function(error) {
+            .catch(error => {
               // handle error
               console.log("Axios Error for Character");
               console.log(error);
             })
-            .then(function() {
+            .then(() => {
               // always executed
               console.log("Axios Always for Character");
             });
@@ -107,30 +107,30 @@ export default {
         for (var suggestedPlaceId of this.chapter.suggestedPlaces) {
           axios
             .get("http://localhost:8080/places/" + suggestedPlaceId)
-            .then(function(placeResponse) {
+            .then(placeResponse => {
               // handle success
               console.log("Axios Success for Place");
               console.log(placeResponse);
 
               this.suggestedPlaces.push(placeResponse.data);
             })
-            .catch(function(error) {
+            .catch(error => {
               // handle error
               console.log("Axios Error for Place");
               console.log(error);
             })
-            .then(function() {
+            .then(() => {
               // always executed
               console.log("Axios Always for Place");
             });
         }
       })
-      .catch(function(error) {
+      .catch(error => {
         // handle error
         console.log("Axios Error for Chapter");
         console.log(error);
       })
-      .then(function() {
+      .then(() => {
         // always executed
         console.log("Axios Always for Chapter");
       });
