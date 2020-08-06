@@ -10,11 +10,11 @@
     <v-form>
       <v-text-field v-model="chapter.title" :rules="titleRules" label="Title" required></v-text-field>
 
-      <v-textarea v-model="chapter.content" label="Content"></v-textarea>
+      <v-textarea v-model="chapter.content" label="Content" auto-grow></v-textarea>
 
-      <v-textarea v-model="chapter.summary" label="Summary"></v-textarea>
+      <v-textarea v-model="chapter.summary" label="Summary" auto-grow></v-textarea>
 
-      <v-textarea v-model="chapter.notes" label="Notes"></v-textarea>
+      <v-textarea v-model="chapter.notes" label="Notes" auto-grow></v-textarea>
 
       <v-btn class="mr-4" @click="onSubmit">Update chapter</v-btn>
     </v-form>

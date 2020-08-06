@@ -10,7 +10,7 @@
     <v-form>
       <v-text-field v-model="place.name" :rules="nameRules" label="Name" required></v-text-field>
 
-      <v-textarea v-model="place.notes" label="Notes"></v-textarea>
+      <v-textarea v-model="place.notes" label="Notes" auto-grow></v-textarea>
 
       <v-textarea v-model="place.aliases" label="Aliases"></v-textarea>
 
