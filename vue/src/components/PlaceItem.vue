@@ -1,7 +1,7 @@
 <template>
   <tr>
     <td>
-      <router-link :to="'places/' + place.id">{{ place.name }}</router-link>
+      <router-link :to="'/places/' + place.id">{{ place.name }}</router-link>
     </td>
     <!-- <td>{{ place.id }}</td> -->
     <td>
@@ -20,10 +20,10 @@ export default {
   name: "PlaceItem",
 
   props: {
-    place: {},
+    place: {}
   },
   data: () => ({
     //
-  }),
+  })
 };
 </script>

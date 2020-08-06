@@ -1,9 +1,11 @@
 <template>
   <tr>
     <td>
-      <router-link :to="'characters/' + character.id">{{
+      <router-link :to="'/characters/' + character.id">
+        {{
         character.name
-      }}</router-link>
+        }}
+      </router-link>
     </td>
     <!-- <td>{{ character.id }}</td> -->
     <td>
@@ -22,10 +24,10 @@ export default {
   name: "CharacterItem",
 
   props: {
-    character: {},
+    character: {}
   },
   data: () => ({
     //
-  }),
+  })
 };
 </script>

@@ -1,7 +1,7 @@
 <template>
   <tr>
     <td>
-      <router-link :to="'chapters/' + chapter.id">
+      <router-link :to="'/chapters/' + chapter.id">
         {{
         chapter.title
         }}
