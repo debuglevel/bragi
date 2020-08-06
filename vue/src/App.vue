@@ -21,10 +21,12 @@
       </v-list>
     </v-navigation-drawer>
 
+    <!--
     <v-app-bar app>
       <v-toolbar-title>Bragi</v-toolbar-title>
       <v-spacer></v-spacer>
     </v-app-bar>
+    -->
 
     <!-- Sizes your content based upon application components -->
     <v-main>
