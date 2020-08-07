@@ -24,26 +24,24 @@
     <!--        </b-card>-->
 
     <h2>Suggested characters</h2>
-    <!-- TODO: v-chips could be nice for suggesting characters (https://vuetifyjs.com/en/components/chips/) -->
-    <character-table v-bind:characters="suggestedCharacters"></character-table>
+    <character-chips v-bind:characters="suggestedCharacters" />
 
     <h2>Suggested places</h2>
-    <!-- TODO: v-chips could be nice for suggesting places (https://vuetifyjs.com/en/components/chips/) -->
-    <place-table v-bind:places="suggestedPlaces"></place-table>
+    <place-chips v-bind:places="suggestedPlaces" />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import CharacterTable from "@/components/CharacterTable.vue";
-import PlaceTable from "@/components/PlaceTable.vue";
+import CharacterChips from "@/components/CharacterChips.vue";
+import PlaceChips from "@/components/PlaceChips.vue";
 import axios from "axios";
 
 export default {
   name: "Chapter",
   components: {
-    CharacterTable,
-    PlaceTable
+    CharacterChips,
+    PlaceChips
   },
 
   props: ["id"],
