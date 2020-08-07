@@ -1,7 +1,7 @@
 <template>
   <v-menu v-model="menu" bottom right transition="scale-transition" origin="top left">
     <template v-slot:activator="{ on }">
-      <v-chip pill v-on="on">{{character.name}}</v-chip>
+      <v-chip class="ma-1" pill v-on="on">{{character.name}}</v-chip>
     </template>
 
     <v-card width="600">
