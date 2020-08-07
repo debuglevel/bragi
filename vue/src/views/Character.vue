@@ -3,16 +3,33 @@
     <!-- TODO: migrate this as well-->
     <h1>Character</h1>
     <div>
-      It has the ID {{ character.id }}, was created on {{ character.createdOn }} and
-      last modified on {{ character.lastModified }}.
+      It has the ID {{ character.id }}, was created on
+      {{ character.createdOn }} and last modified on
+      {{ character.lastModified }}.
     </div>
 
     <v-form>
-      <v-text-field v-model="character.name" :rules="nameRules" label="Name" required></v-text-field>
+      <v-text-field
+        v-model="character.name"
+        :rules="nameRules"
+        label="Name"
+        required
+      ></v-text-field>
 
-      <v-textarea v-model="character.notes" label="Notes" auto-grow rows="1"></v-textarea>
+      <v-textarea
+        v-model="character.notes"
+        label="Notes"
+        auto-grow
+        rows="1"
+      ></v-textarea>
 
-      <v-textarea v-model="character.aliases" label="Aliases"></v-textarea>
+      <!-- TODO: better than textarea, but not ideal (can be edited, but adding new items is not possible) -->
+      <tree-view
+        :data="character.aliases"
+        :options="{ modifiable: true }"
+      ></tree-view>
+
+      <!-- <v-textarea v-model="character.aliases" label="Aliases"></v-textarea> -->
 
       <v-btn class="mr-4" @click="onSubmit">Update character</v-btn>
     </v-form>
@@ -25,11 +42,14 @@
 
 <script>
 // @ is an alias to /src
+import { TreeView } from "vue-json-tree-view"; // { } is somehow needed: https://github.com/michaelfitzhavey/vue-json-tree-view/issues/21#issuecomment-641537049
 import axios from "axios";
 
 export default {
   name: "Character",
-  components: {},
+  components: {
+    TreeView,
+  },
 
   props: ["id"],
 
@@ -38,22 +58,22 @@ export default {
       id: 12,
       name: "Arya Stark",
       notes: "Arya is jst a <b>little</b> girl.",
-      aliases: ["Arya", "Little girl"]
+      aliases: ["Arya", "Little girl"],
     },
-    nameRules: [v => !!v || "Name is required"]
+    nameRules: [(v) => !!v || "Name is required"],
   }),
 
   mounted() {
     axios
       .get("http://localhost:8080/characters/" + this.id)
-      .then(characterResponse => {
+      .then((characterResponse) => {
         // handle success
         console.log("Axios Success for Character");
         console.log(characterResponse);
 
         this.character = characterResponse.data;
       })
-      .catch(error => {
+      .catch((error) => {
         // handle error
         console.log("Axios Error for Character");
         console.log(error);
@@ -74,12 +94,12 @@ export default {
         .put("http://localhost:8080/characters/" + this.character.id, {
           name: this.character.name,
           notes: this.character.notes,
-          aliases: this.character.aliases
+          aliases: this.character.aliases,
         })
-        .then(characterResponse => {
+        .then((characterResponse) => {
           this.character = characterResponse.data;
         });
-    }
-  }
+    },
+  },
 };
 </script>

@@ -8,11 +8,27 @@
     </div>
 
     <v-form>
-      <v-text-field v-model="place.name" :rules="nameRules" label="Name" required></v-text-field>
+      <v-text-field
+        v-model="place.name"
+        :rules="nameRules"
+        label="Name"
+        required
+      ></v-text-field>
 
-      <v-textarea v-model="place.notes" label="Notes" auto-grow rows="1"></v-textarea>
+      <v-textarea
+        v-model="place.notes"
+        label="Notes"
+        auto-grow
+        rows="1"
+      ></v-textarea>
 
-      <v-textarea v-model="place.aliases" label="Aliases"></v-textarea>
+      <!-- TODO: better than textarea, but not ideal (can be edited, but adding new items is not possible) -->
+      <tree-view
+        :data="place.aliases"
+        :options="{ modifiable: true }"
+      ></tree-view>
+
+      <!-- <v-textarea v-model="place.aliases" label="Aliases"></v-textarea> -->
 
       <v-btn class="mr-4" @click="onSubmit">Update place</v-btn>
     </v-form>
@@ -25,11 +41,14 @@
 
 <script>
 // @ is an alias to /src
+import { TreeView } from "vue-json-tree-view"; // { } is somehow needed: https://github.com/michaelfitzhavey/vue-json-tree-view/issues/21#issuecomment-641537049
 import axios from "axios";
 
 export default {
   name: "Place",
-  components: {},
+  components: {
+    TreeView,
+  },
 
   props: ["id"],
 
@@ -38,22 +57,22 @@ export default {
       id: 12,
       name: "The Wall",
       notes: "Some large bricks of ice.",
-      aliases: ["Wall"]
+      aliases: ["Wall"],
     },
-    nameRules: [v => !!v || "Name is required"]
+    nameRules: [(v) => !!v || "Name is required"],
   }),
 
   mounted() {
     axios
       .get("http://localhost:8080/places/" + this.id)
-      .then(placeResponse => {
+      .then((placeResponse) => {
         // handle success
         console.log("Axios Success for Place");
         console.log(placeResponse);
 
         this.place = placeResponse.data;
       })
-      .catch(error => {
+      .catch((error) => {
         // handle error
         console.log("Axios Error for Place");
         console.log(error);
@@ -74,12 +93,12 @@ export default {
         .put("http://localhost:8080/places/" + this.place.id, {
           name: this.place.name,
           notes: this.place.notes,
-          aliases: this.place.aliases
+          aliases: this.place.aliases,
         })
-        .then(placeResponse => {
+        .then((placeResponse) => {
           this.place = placeResponse.data;
         });
-    }
-  }
+    },
+  },
 };
 </script>
