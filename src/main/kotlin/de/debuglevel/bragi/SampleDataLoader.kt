@@ -12,6 +12,7 @@ import io.micronaut.context.event.ApplicationEventListener
 import io.micronaut.discovery.event.ServiceReadyEvent
 import mu.KotlinLogging
 import java.io.File
+import java.util.*
 import javax.inject.Singleton
 
 /**
@@ -42,6 +43,17 @@ class SampleDataLoader(
                     }
                 } catch (e: IndexOutOfBoundsException) {
                     mutableListOf<String>()
+                }
+
+                val base64image = try {
+                    val base64 = it.split(";")[2]
+                    if (base64.isNotBlank()) {
+                        Base64.getDecoder().decode(base64)
+                    } else {
+                        null
+                    }
+                } catch (e: IndexOutOfBoundsException) {
+                    null
                 }
 
                 characterService.add(
