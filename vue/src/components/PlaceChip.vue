@@ -1,7 +1,9 @@
 <template>
   <v-menu bottom right transition="scale-transition" origin="top left">
     <template v-slot:activator="{ on }">
-      <v-chip class="ma-1" pill v-on="on">{{ place.name }}</v-chip>
+      <v-chip class="ma-1" pill v-on="on" :color="background">{{
+        place.name
+      }}</v-chip>
     </template>
 
     <v-card width="600">
@@ -28,6 +30,8 @@
 </template>
 
 <script>
+import ColorService from "@/services/ColorService";
+
 export default {
   name: "PlaceChip",
   components: {},
@@ -38,5 +42,10 @@ export default {
   data: () => ({
     //
   }),
+  computed: {
+    background: function() {
+      return ColorService.generateRandomHexColor(this.place.id);
+    },
+  },
 };
 </script>
