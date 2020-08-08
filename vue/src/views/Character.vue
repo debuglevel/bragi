@@ -16,6 +16,9 @@
         required
       ></v-text-field>
 
+      <!-- TODO: image is larger than it should be -->
+      <v-img :src="character.picture" max-height="150px" contain />
+
       <v-textarea
         v-model="character.notes"
         label="Notes"
@@ -93,6 +96,7 @@ export default {
         name: this.character.name,
         notes: this.character.notes,
         aliases: this.character.aliases,
+        picture: this.character.picture,
       }).then((characterResponse) => {
         this.character = characterResponse.data;
       });
