@@ -19,6 +19,9 @@
     <td>
       <character-chips v-bind:characters="suggestedCharacters" />
     </td>
+    <td>
+      <place-chips v-bind:places="suggestedPlaces" />
+    </td>
   </tr>
 </template>
 
@@ -26,17 +29,21 @@
 import TextPreview from "@/components/TextPreview.vue";
 import CharacterChips from "@/components/CharacterChips.vue";
 import CharacterService from "@/api-services/CharacterService";
+import PlaceChips from "@/components/PlaceChips.vue";
+import PlaceService from "@/api-services/PlaceService";
 
 export default {
   name: "ChapterItem",
   components: {
     TextPreview,
     CharacterChips,
+    PlaceChips,
   },
 
   props: {
     chapter: {},
     suggestedCharacters: [],
+    suggestedPlaces: [],
   },
   data: () => ({
     //
@@ -61,6 +68,28 @@ export default {
         .then(() => {
           // always executed
           console.log("Axios Always for Character");
+        });
+    }
+
+    // get all suggested places
+    this.suggestedPlaces = [];
+    for (var suggestedPlaceId of this.chapter.suggestedPlaces) {
+      PlaceService.get(suggestedPlaceId)
+        .then((placeResponse) => {
+          // handle success
+          console.log("Axios Success for Place");
+          console.log(placeResponse);
+
+          this.suggestedPlaces.push(placeResponse.data);
+        })
+        .catch((error) => {
+          // handle error
+          console.log("Axios Error for Place");
+          console.log(error);
+        })
+        .then(() => {
+          // always executed
+          console.log("Axios Always for Place");
         });
     }
   },

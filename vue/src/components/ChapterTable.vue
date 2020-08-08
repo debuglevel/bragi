@@ -5,6 +5,7 @@
       <!-- <th class="text-left">ID</th> -->
       <th class="text-left">Show Content</th>
       <th class="text-left">Suggested Characters</th>
+      <th class="text-left">Suggested Places</th>
     </thead>
     <tbody>
       <tr
