@@ -28,6 +28,7 @@
 
 <script>
 // @ is an alias to /src
+import CharacterService from "@/api-services/CharacterService";
 import CharacterTable from "@/components/CharacterTable.vue";
 import axios from "axios";
 
@@ -49,9 +50,13 @@ export default {
     nameRules: [(v) => !!v || "Name is required"],
   }),
   mounted() {
-    axios
-      .get("http://localhost:8080/characters/")
-      .then((response) => (this.characters = response.data));
+    CharacterService.getAll()
+      .then((response) => {
+        this.characters = response.data;
+      })
+      .catch((error) => {
+        console.log(error.response.data);
+      });
   },
   methods: {
     onSubmit(evt) {

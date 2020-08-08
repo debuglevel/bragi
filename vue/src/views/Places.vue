@@ -28,6 +28,7 @@
 
 <script>
 // @ is an alias to /src
+import PlaceService from "@/api-services/PlaceService";
 import PlaceTable from "@/components/PlaceTable.vue";
 import axios from "axios";
 
@@ -49,9 +50,13 @@ export default {
     nameRules: [(v) => !!v || "Name is required"],
   }),
   mounted() {
-    axios
-      .get("http://localhost:8080/places/")
-      .then((response) => (this.places = response.data));
+    PlaceService.getAll()
+      .then((response) => {
+        this.places = response.data;
+      })
+      .catch((error) => {
+        console.log(error.response.data);
+      });
   },
   methods: {
     onSubmit(evt) {
