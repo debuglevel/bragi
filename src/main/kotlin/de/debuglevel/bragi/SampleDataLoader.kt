@@ -89,6 +89,90 @@ class SampleDataLoader(
             aliases = mutableListOf("Sam"),
             notes = "Huge nerd."
         )
+        val cerseiLannister = Character(
+            id = null,
+            name = "Cersei Lannister",
+            aliases = mutableListOf(),
+            notes = "Awkward."
+        )
+        val jaimeLannister = Character(
+            id = null,
+            name = "Jaime Lannister",
+            aliases = mutableListOf(),
+            notes = "Awkward's husband."
+        )
+        val theonGreyjoy = Character(
+            id = null,
+            name = "Theon Greyjoy",
+            aliases = mutableListOf(),
+            notes = "Weirdo."
+        )
+        val jorahMormont = Character(
+            id = null,
+            name = "Jorah Mormont",
+            aliases = mutableListOf(),
+            notes = "Actually cool."
+        )
+        val petyrBaelish = Character(
+            id = null,
+            name = "Petyr Baelish",
+            aliases = mutableListOf("Littlefinger"),
+            notes = "Cool name, but not so cool dude."
+        )
+        val brienneTarth = Character(
+            id = null,
+            name = "Brienne of Tarth",
+            aliases = mutableListOf("Brienne of Tarth"),
+            notes = "Actually another cool person."
+        )
+        val davosSeaworth = Character(
+            id = null,
+            name = "Davos Seaworth",
+            aliases = mutableListOf(),
+            notes = ""
+        )
+        val lordVarys = Character(
+            id = null,
+            name = "Lord Varys",
+            aliases = mutableListOf("Varys"),
+            notes = ""
+        )
+        val tywinLannister = Character(
+            id = null,
+            name = "Tywin Lannister",
+            aliases = mutableListOf(),
+            notes = ""
+        )
+        val margaeryTyrell = Character(
+            id = null,
+            name = "Margaery Tyrell",
+            aliases = mutableListOf(),
+            notes = ""
+        )
+        val robbStark = Character(
+            id = null,
+            name = "Robb Stark",
+            aliases = mutableListOf(),
+            notes = ""
+        )
+        val stannisBaratheon = Character(
+            id = null,
+            name = "Stannis Baratheon",
+            aliases = mutableListOf(),
+            notes = ""
+        )
+        val sandorClegane = Character(
+            id = null,
+            name = "Sandor Clegane",
+            aliases = mutableListOf("The Hound"),
+            notes = ""
+        )
+        val ramsayBolton = Character(
+            id = null,
+            name = "Ramsay Bolton",
+            aliases = mutableListOf(),
+            notes = ""
+        )
 
         characterService.add(eddardStark)
         characterService.add(aryaStark)
@@ -100,6 +184,20 @@ class SampleDataLoader(
         characterService.add(samwellTarly)
         characterService.add(branStark)
         characterService.add(daenerysTargaryen)
+        characterService.add(cerseiLannister)
+        characterService.add(jaimeLannister)
+        characterService.add(theonGreyjoy)
+        characterService.add(jorahMormont)
+        characterService.add(petyrBaelish)
+        characterService.add(brienneTarth)
+        characterService.add(davosSeaworth)
+        characterService.add(lordVarys)
+        characterService.add(tywinLannister)
+        characterService.add(margaeryTyrell)
+        characterService.add(robbStark)
+        characterService.add(stannisBaratheon)
+        characterService.add(sandorClegane)
+        characterService.add(ramsayBolton)
 
         val wall = Place(
             id = null,
