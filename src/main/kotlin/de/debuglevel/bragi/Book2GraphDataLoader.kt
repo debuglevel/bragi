@@ -35,73 +35,85 @@ class Book2GraphDataLoader(
             id = null,
             name = "Mr. Preston",
             aliases = mutableListOf("Preston", "Senator Preston"),
-            notes = ""
+            notes = "",
+            picture = null
         )
         val mrsPreston = Character(
             id = null,
             name = "Mrs. Preston",
             aliases = mutableListOf(),
-            notes = ""
+            notes = "",
+            picture = null
         )
         val iraPreston = Character(
             id = null,
             name = "Ira Preston",
             aliases = mutableListOf("Ira"),
-            notes = ""
+            notes = "",
+            picture =null
         )
         val charly = Character(
             id = null,
             name = "Charly",
             aliases = mutableListOf(),
-            notes = ""
+            notes = "",
+            picture =null
         )
         val kayne = Character(
             id = null,
             name = "Kayne",
             aliases = mutableListOf(),
-            notes = ""
+            notes = "",
+            picture =null
         )
         val sandra = Character(
             id = null,
             name = "Sandra",
             aliases = mutableListOf("San"),
-            notes = ""
+            notes = "",
+            picture =null
         )
         val sirrus = Character(
             id = null,
             name = "Sirrus",
             aliases = mutableListOf(),
-            notes = ""
+            notes = "",
+            picture =null
         )
         val joey = Character(
             id = null,
             name = "Joey",
             aliases = mutableListOf(),
-            notes = ""
+            notes = "",
+            picture =null
         )
         val amrai = Character(
             id = null,
             name = "Amrai",
             aliases = mutableListOf(),
-            notes = ""
+            notes = "",
+            picture =null
         )
         val dave = Character(
             id = null,
             name = "Dave",
             aliases = mutableListOf(),
-            notes = ""
+            notes = "",
+            picture =null
         )
         val floyd = Character(
             id = null,
             name = "Floyd",
             aliases = mutableListOf(),
-            notes = ""
+            notes = "",
+            picture =null
         )
         val edward = Character(
             id = null,
             name = "Edward",
             aliases = mutableListOf(),
-            notes = ""
+            notes = "",
+            picture =null
         )
 
         characterService.add(mrPreston)

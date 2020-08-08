@@ -10,20 +10,23 @@ object CharacterTestDataProvider {
         Character(
             id = null,
             name = "Character 1",
+            aliases = mutableListOf(),
             notes = "LongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotes",
-            aliases = mutableListOf()
+            picture = null
         ),
         Character(
             id = null,
             name = "Character ÖÜÄß",
+            aliases = mutableListOf(),
             notes = "Notes",
-            aliases = mutableListOf()
+            picture = null
         ),
         Character(
             id = null,
             name = "コハウプト マルク",
+            aliases = mutableListOf(),
             notes = "",
-            aliases = mutableListOf()
+            picture = null
         )
     )
 
@@ -37,14 +40,16 @@ object CharacterTestDataProvider {
         val arya = Character(
             id = null,
             name = "Arya Stark",
+            aliases = mutableListOf(),
             notes = "",
-            aliases = mutableListOf()
+            picture = null
         )
         val eddard = Character(
             id = null,
             name = "Eddard Stark",
+            aliases = mutableListOf("Ned"),
             notes = "",
-            aliases = mutableListOf("Ned")
+            picture = null
         )
 
         //return listOf<SuggestionTestData>(

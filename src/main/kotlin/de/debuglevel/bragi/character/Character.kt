@@ -16,6 +16,11 @@ data class Character(
     var aliases: MutableList<String>,
     @Lob
     var notes: String,
+    /**
+     * Picture as Base64
+     */
+    @Lob
+    var picture: String?,
     @DateCreated
     override var createdOn: LocalDateTime = LocalDateTime.now(),
     @DateUpdated

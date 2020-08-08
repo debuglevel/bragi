@@ -9,6 +9,7 @@ data class UpdateCharacterResponse(
     var name: String,
     var aliases: List<String>,
     var notes: String,
+    var picture: String?,
     override var createdOn: LocalDateTime,
     override var lastModified: LocalDateTime
 ) : UpdateEntityResponse {
@@ -17,6 +18,7 @@ data class UpdateCharacterResponse(
         name = character.name,
         aliases = character.aliases.toList(),
         notes = character.notes,
+        picture = if (character.picture != null) { "data:image/png;base64,${character.picture}" } else { null },
         createdOn = character.createdOn,
         lastModified = character.lastModified
     )

@@ -22,6 +22,7 @@ class CharacterService(
             name = item.name
             aliases = item.aliases
             notes = item.notes
+            picture = item.picture
         }
 
         val updatedCharacter = characterRepository.update(updateCharacter)

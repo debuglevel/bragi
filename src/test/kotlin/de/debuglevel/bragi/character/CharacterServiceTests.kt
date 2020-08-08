@@ -63,7 +63,8 @@ class CharacterServiceTests {
                     id = null,
                     name = "Item $it",
                     aliases = mutableListOf(),
-                    notes = "Notes $it"
+                    notes = "Notes $it",
+                    picture = null
                 )
             )
         }
@@ -81,8 +82,9 @@ class CharacterServiceTests {
         val item = Character(
             null,
             name = "Original Name",
+            aliases = mutableListOf("Original Alias1", "Original Alias2"),
             notes = "Original Notes",
-            aliases = mutableListOf("Original Alias1", "Original Alias2")
+            picture = null
         )
         val addedItem = characterService.add(item)
 
@@ -110,8 +112,9 @@ class CharacterServiceTests {
         val item = Character(
             null,
             name = "Original Title",
+            aliases = mutableListOf("Original Alias1", "Original Alias2"),
             notes = "Original Notes",
-            aliases = mutableListOf("Original Alias1", "Original Alias2")
+            picture = null
         )
         val savedItem = characterService.add(item)
 

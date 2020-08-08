@@ -48,7 +48,7 @@ class SampleDataLoader(
                 val base64image = try {
                     val base64 = it.split(";")[2]
                     if (base64.isNotBlank()) {
-                        Base64.getDecoder().decode(base64)
+                        base64
                     } else {
                         null
                     }
@@ -61,7 +61,8 @@ class SampleDataLoader(
                         id = null,
                         name = name,
                         aliases = alias,
-                        notes = ""
+                        notes = "",
+                        picture = base64image
                     )
                 )
             }
