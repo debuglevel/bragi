@@ -2,9 +2,7 @@
   <tr>
     <td>
       <router-link :to="'/chapters/' + chapter.id">
-        {{
-        chapter.title
-        }}
+        {{ chapter.title }}
       </router-link>
     </td>
     <!-- <td>{{ chapter.id }}</td> -->
@@ -18,23 +16,53 @@
         v-bind:text="chapter.summary"
       />
     </td>
+    <td>
+      <character-chips v-bind:characters="suggestedCharacters" />
+    </td>
   </tr>
 </template>
 
 <script>
 import TextPreview from "@/components/TextPreview.vue";
+import CharacterChips from "@/components/CharacterChips.vue";
+import CharacterService from "@/api-services/CharacterService";
 
 export default {
   name: "ChapterItem",
   components: {
-    TextPreview
+    TextPreview,
+    CharacterChips,
   },
 
   props: {
-    chapter: {}
+    chapter: {},
+    suggestedCharacters: [],
   },
   data: () => ({
     //
-  })
+  }),
+  mounted() {
+    // get all suggested characters
+    this.suggestedCharacters = [];
+    for (var suggestedCharacterId of this.chapter.suggestedCharacters) {
+      CharacterService.get(suggestedCharacterId)
+        .then((characterResponse) => {
+          // handle success
+          console.log("Axios Success for Character");
+          console.log(characterResponse);
+
+          this.suggestedCharacters.push(characterResponse.data);
+        })
+        .catch((error) => {
+          // handle error
+          console.log("Axios Error for Character");
+          console.log(error);
+        })
+        .then(() => {
+          // always executed
+          console.log("Axios Always for Character");
+        });
+    }
+  },
 };
 </script>
