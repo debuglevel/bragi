@@ -41,6 +41,7 @@
 
 <script>
 // @ is an alias to /src
+import PlaceService from "@/api-services/PlaceService";
 import { TreeView } from "vue-json-tree-view"; // { } is somehow needed: https://github.com/michaelfitzhavey/vue-json-tree-view/issues/21#issuecomment-641537049
 import axios from "axios";
 
@@ -63,8 +64,7 @@ export default {
   }),
 
   mounted() {
-    axios
-      .get("http://localhost:8080/places/" + this.id)
+    PlaceService.get(this.id)
       .then((placeResponse) => {
         // handle success
         console.log("Axios Success for Place");

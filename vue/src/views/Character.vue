@@ -42,6 +42,7 @@
 
 <script>
 // @ is an alias to /src
+import CharacterService from "@/api-services/CharacterService";
 import { TreeView } from "vue-json-tree-view"; // { } is somehow needed: https://github.com/michaelfitzhavey/vue-json-tree-view/issues/21#issuecomment-641537049
 import axios from "axios";
 
@@ -64,8 +65,7 @@ export default {
   }),
 
   mounted() {
-    axios
-      .get("http://localhost:8080/characters/" + this.id)
+    CharacterService.get(this.id)
       .then((characterResponse) => {
         // handle success
         console.log("Axios Success for Character");

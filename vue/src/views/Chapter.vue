@@ -8,13 +8,33 @@
     </div>
 
     <v-form>
-      <v-text-field v-model="chapter.title" :rules="titleRules" label="Title" required></v-text-field>
+      <v-text-field
+        v-model="chapter.title"
+        :rules="titleRules"
+        label="Title"
+        required
+      ></v-text-field>
 
-      <v-textarea v-model="chapter.content" label="Content" auto-grow rows="1"></v-textarea>
+      <v-textarea
+        v-model="chapter.content"
+        label="Content"
+        auto-grow
+        rows="1"
+      ></v-textarea>
 
-      <v-textarea v-model="chapter.summary" label="Summary" auto-grow rows="1"></v-textarea>
+      <v-textarea
+        v-model="chapter.summary"
+        label="Summary"
+        auto-grow
+        rows="1"
+      ></v-textarea>
 
-      <v-textarea v-model="chapter.notes" label="Notes" auto-grow rows="1"></v-textarea>
+      <v-textarea
+        v-model="chapter.notes"
+        label="Notes"
+        auto-grow
+        rows="1"
+      ></v-textarea>
 
       <v-btn class="mr-4" @click="onSubmit">Update chapter</v-btn>
     </v-form>
@@ -33,6 +53,9 @@
 
 <script>
 // @ is an alias to /src
+import ChapterService from "@/api-services/ChapterService";
+import CharacterService from "@/api-services/CharacterService";
+import PlaceService from "@/api-services/PlaceService";
 import CharacterChips from "@/components/CharacterChips.vue";
 import PlaceChips from "@/components/PlaceChips.vue";
 import axios from "axios";
@@ -41,7 +64,7 @@ export default {
   name: "Chapter",
   components: {
     CharacterChips,
-    PlaceChips
+    PlaceChips,
   },
 
   props: ["id"],
@@ -54,23 +77,22 @@ export default {
       summary: "sum sum summary",
       notes: "saddsads",
       suggestedCharacters: [121, 122],
-      suggestedPlaces: [221, 222]
+      suggestedPlaces: [221, 222],
     },
     suggestedCharacters: [
       { id: 121, name: "Arya", notes: "Little girl" },
-      { id: 122, name: "Jon", notes: "Bearded guy" }
+      { id: 122, name: "Jon", notes: "Bearded guy" },
     ],
     suggestedPlaces: [
       { id: 221, name: "Winterfell", notes: "Cold." },
-      { id: 222, name: "Iron Thrones", notes: "Uncomfortable thing" }
+      { id: 222, name: "Iron Thrones", notes: "Uncomfortable thing" },
     ],
-    titleRules: [v => !!v || "Title is required"]
+    titleRules: [(v) => !!v || "Title is required"],
   }),
 
   mounted() {
-    axios
-      .get("http://localhost:8080/chapters/" + this.id)
-      .then(chapterResponse => {
+    ChapterService.get(this.id)
+      .then((chapterResponse) => {
         // handle success
         console.log("Axios Success for Chapter");
         console.log(chapterResponse);
@@ -80,16 +102,15 @@ export default {
         // get all suggested characters
         this.suggestedCharacters = [];
         for (var suggestedCharacterId of this.chapter.suggestedCharacters) {
-          axios
-            .get("http://localhost:8080/characters/" + suggestedCharacterId)
-            .then(characterResponse => {
+          CharacterService.get(suggestedCharacterId)
+            .then((characterResponse) => {
               // handle success
               console.log("Axios Success for Character");
               console.log(characterResponse);
 
               this.suggestedCharacters.push(characterResponse.data);
             })
-            .catch(error => {
+            .catch((error) => {
               // handle error
               console.log("Axios Error for Character");
               console.log(error);
@@ -103,16 +124,15 @@ export default {
         // get all suggested places
         this.suggestedPlaces = [];
         for (var suggestedPlaceId of this.chapter.suggestedPlaces) {
-          axios
-            .get("http://localhost:8080/places/" + suggestedPlaceId)
-            .then(placeResponse => {
+          PlaceService.get(suggestedPlaceId)
+            .then((placeResponse) => {
               // handle success
               console.log("Axios Success for Place");
               console.log(placeResponse);
 
               this.suggestedPlaces.push(placeResponse.data);
             })
-            .catch(error => {
+            .catch((error) => {
               // handle error
               console.log("Axios Error for Place");
               console.log(error);
@@ -123,7 +143,7 @@ export default {
             });
         }
       })
-      .catch(error => {
+      .catch((error) => {
         // handle error
         console.log("Axios Error for Chapter");
         console.log(error);
@@ -145,9 +165,9 @@ export default {
           title: this.chapter.title,
           content: this.chapter.content,
           summary: this.chapter.summary,
-          notes: this.chapter.notes
+          notes: this.chapter.notes,
         })
-        .then(chapterResponse => {
+        .then((chapterResponse) => {
           this.chapter = chapterResponse.data;
 
           // TODO: proper axios.then/catch etc handling
@@ -156,7 +176,7 @@ export default {
           for (var suggestedCharacterId of this.chapter.suggestedCharacters) {
             axios
               .get("http://localhost:8080/characters/" + suggestedCharacterId)
-              .then(characterResponse =>
+              .then((characterResponse) =>
                 this.suggestedCharacters.push(characterResponse.data)
               );
           }
@@ -167,12 +187,12 @@ export default {
           for (var suggestedPlaceId of this.chapter.suggestedPlaces) {
             axios
               .get("http://localhost:8080/places/" + suggestedPlaceId)
-              .then(placeResponse =>
+              .then((placeResponse) =>
                 this.suggestedPlaces.push(placeResponse.data)
               );
           }
         });
-    }
-  }
+    },
+  },
 };
 </script>
