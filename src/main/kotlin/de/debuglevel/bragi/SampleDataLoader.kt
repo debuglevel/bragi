@@ -110,7 +110,7 @@ class SampleDataLoader(
         val westeros = Place(
             id = null,
             name = "Westeros",
-            aliases = listOf(""),
+            aliases = listOf(),
             notes = ""
         )
         val winterfell = Place(
