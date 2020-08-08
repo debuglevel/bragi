@@ -30,7 +30,6 @@
 // @ is an alias to /src
 import CharacterService from "@/api-services/CharacterService";
 import CharacterTable from "@/components/CharacterTable.vue";
-import axios from "axios";
 
 export default {
   name: "Characters",
@@ -62,9 +61,9 @@ export default {
     onSubmit(evt) {
       evt.preventDefault();
       //alert(JSON.stringify(this.form))
-      axios
-        .post("http://localhost:8080/characters/", { name: this.form.name })
-        .then((response) => this.characters.push(response.data));
+      CharacterService.create({ name: this.form.name }).then((response) =>
+        this.characters.push(response.data)
+      );
     },
   },
 };

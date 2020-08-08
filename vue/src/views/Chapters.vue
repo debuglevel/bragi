@@ -30,7 +30,6 @@
 // @ is an alias to /src
 import ChapterService from "@/api-services/ChapterService";
 import ChapterTable from "@/components/ChapterTable.vue";
-import axios from "axios";
 
 export default {
   name: "Chapters",
@@ -62,9 +61,9 @@ export default {
     onSubmit(evt) {
       evt.preventDefault();
       //alert(JSON.stringify(this.form))
-      axios
-        .post("http://localhost:8080/chapters/", { title: this.form.title })
-        .then((response) => this.chapters.push(response.data));
+      ChapterService.create({ title: this.form.title }).then((response) =>
+        this.chapters.push(response.data)
+      );
     },
   },
 };

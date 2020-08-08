@@ -30,7 +30,6 @@
 // @ is an alias to /src
 import PlaceService from "@/api-services/PlaceService";
 import PlaceTable from "@/components/PlaceTable.vue";
-import axios from "axios";
 
 export default {
   name: "Places",
@@ -62,9 +61,9 @@ export default {
     onSubmit(evt) {
       evt.preventDefault();
       //alert(JSON.stringify(this.form))
-      axios
-        .post("http://localhost:8080/places/", { name: this.form.name })
-        .then((response) => this.places.push(response.data));
+      PlaceService.create({ name: this.form.name }).then((response) =>
+        this.places.push(response.data)
+      );
     },
   },
 };

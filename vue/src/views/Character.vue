@@ -44,7 +44,6 @@
 // @ is an alias to /src
 import CharacterService from "@/api-services/CharacterService";
 import { TreeView } from "vue-json-tree-view"; // { } is somehow needed: https://github.com/michaelfitzhavey/vue-json-tree-view/issues/21#issuecomment-641537049
-import axios from "axios";
 
 export default {
   name: "Character",
@@ -90,15 +89,13 @@ export default {
     onSubmit(evt) {
       evt.preventDefault();
       //alert(JSON.stringify(this.form))
-      axios
-        .put("http://localhost:8080/characters/" + this.character.id, {
-          name: this.character.name,
-          notes: this.character.notes,
-          aliases: this.character.aliases,
-        })
-        .then((characterResponse) => {
-          this.character = characterResponse.data;
-        });
+      CharacterService.update(this.character.id, {
+        name: this.character.name,
+        notes: this.character.notes,
+        aliases: this.character.aliases,
+      }).then((characterResponse) => {
+        this.character = characterResponse.data;
+      });
     },
   },
 };

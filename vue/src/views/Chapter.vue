@@ -58,7 +58,6 @@ import CharacterService from "@/api-services/CharacterService";
 import PlaceService from "@/api-services/PlaceService";
 import CharacterChips from "@/components/CharacterChips.vue";
 import PlaceChips from "@/components/PlaceChips.vue";
-import axios from "axios";
 
 export default {
   name: "Chapter",
@@ -160,38 +159,32 @@ export default {
     onSubmit(evt) {
       evt.preventDefault();
       //alert(JSON.stringify(this.form))
-      axios
-        .put("http://localhost:8080/chapters/" + this.chapter.id, {
-          title: this.chapter.title,
-          content: this.chapter.content,
-          summary: this.chapter.summary,
-          notes: this.chapter.notes,
-        })
-        .then((chapterResponse) => {
-          this.chapter = chapterResponse.data;
+      ChapterService.update(this.chapter.id, {
+        title: this.chapter.title,
+        content: this.chapter.content,
+        summary: this.chapter.summary,
+        notes: this.chapter.notes,
+      }).then((chapterResponse) => {
+        this.chapter = chapterResponse.data;
 
-          // TODO: proper axios.then/catch etc handling
-          // get all suggested characters
-          this.suggestedCharacters = [];
-          for (var suggestedCharacterId of this.chapter.suggestedCharacters) {
-            axios
-              .get("http://localhost:8080/characters/" + suggestedCharacterId)
-              .then((characterResponse) =>
-                this.suggestedCharacters.push(characterResponse.data)
-              );
-          }
+        // TODO: proper axios.then/catch etc handling
+        // get all suggested characters
+        this.suggestedCharacters = [];
+        for (var suggestedCharacterId of this.chapter.suggestedCharacters) {
+          CharacterService.get(suggestedCharacterId).then((characterResponse) =>
+            this.suggestedCharacters.push(characterResponse.data)
+          );
+        }
 
-          // TODO: proper axios.then/catch etc handling
-          // get all suggested places
-          this.suggestedPlaces = [];
-          for (var suggestedPlaceId of this.chapter.suggestedPlaces) {
-            axios
-              .get("http://localhost:8080/places/" + suggestedPlaceId)
-              .then((placeResponse) =>
-                this.suggestedPlaces.push(placeResponse.data)
-              );
-          }
-        });
+        // TODO: proper axios.then/catch etc handling
+        // get all suggested places
+        this.suggestedPlaces = [];
+        for (var suggestedPlaceId of this.chapter.suggestedPlaces) {
+          PlaceService.get(suggestedPlaceId).then((placeResponse) =>
+            this.suggestedPlaces.push(placeResponse.data)
+          );
+        }
+      });
     },
   },
 };

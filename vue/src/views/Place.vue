@@ -43,7 +43,6 @@
 // @ is an alias to /src
 import PlaceService from "@/api-services/PlaceService";
 import { TreeView } from "vue-json-tree-view"; // { } is somehow needed: https://github.com/michaelfitzhavey/vue-json-tree-view/issues/21#issuecomment-641537049
-import axios from "axios";
 
 export default {
   name: "Place",
@@ -89,15 +88,13 @@ export default {
     onSubmit(evt) {
       evt.preventDefault();
       //alert(JSON.stringify(this.form))
-      axios
-        .put("http://localhost:8080/places/" + this.place.id, {
-          name: this.place.name,
-          notes: this.place.notes,
-          aliases: this.place.aliases,
-        })
-        .then((placeResponse) => {
-          this.place = placeResponse.data;
-        });
+      PlaceService.update(this.place.id, {
+        name: this.place.name,
+        notes: this.place.notes,
+        aliases: this.place.aliases,
+      }).then((placeResponse) => {
+        this.place = placeResponse.data;
+      });
     },
   },
 };
