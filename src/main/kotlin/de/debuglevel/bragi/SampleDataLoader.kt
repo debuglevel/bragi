@@ -11,6 +11,7 @@ import io.micronaut.context.env.Environment
 import io.micronaut.context.event.ApplicationEventListener
 import io.micronaut.discovery.event.ServiceReadyEvent
 import mu.KotlinLogging
+import java.io.File
 import javax.inject.Singleton
 
 /**
@@ -29,225 +30,41 @@ class SampleDataLoader(
         //return
         logger.debug { "Populating database with sample data..." }
 
-        val eddardStark = Character(
-            id = null,
-            name = "Eddard Stark",
-            aliases = mutableListOf("Ned"),
-            notes = "Really likable person. Might become king or something."
-        )
-        val aryaStark = Character(
-            id = null,
-            name = "Arya Stark",
-            aliases = mutableListOf(),
-            notes = "Cute little girl. Will never hurt anybody."
-        )
-        val sansaStark = Character(
-            id = null,
-            name = "Sansa Stark",
-            aliases = mutableListOf(),
-            notes = "Just an annoying supporting character."
-        )
-        val branStark = Character(
-            id = null,
-            name = "Bran Stark",
-            aliases = mutableListOf(),
-            notes = "Another Stark character."
-        )
-        val catelynStark = Character(
-            id = null,
-            name = "Catelyn Stark",
-            aliases = mutableListOf("Catelyn Tully"),
-            notes = "No idea."
-        )
-        val daenerysTargaryen = Character(
-            id = null,
-            name = "Daenerys Targaryen",
-            aliases = mutableListOf(),
-            notes = "Way too cool."
-        )
-        val jonSnow = Character(
-            id = null,
-            name = "Jon Snow",
-            aliases = mutableListOf("Aegon Targaryen", "Aegon"),
-            notes = "Way too good character. Kind of boring."
-        )
-        val joffreyBaratheon = Character(
-            id = null,
-            name = "Joffrey Baratheon",
-            aliases = mutableListOf(),
-            notes = "Ambitious likable fella."
-        )
-        val tyrionLannister = Character(
-            id = null,
-            name = "Tyrion Lannister",
-            aliases = mutableListOf(),
-            notes = "Actually the only respectable character in the whole story."
-        )
-        val samwellTarly = Character(
-            id = null,
-            name = "Samwell Tarly",
-            aliases = mutableListOf("Sam"),
-            notes = "Huge nerd."
-        )
-        val cerseiLannister = Character(
-            id = null,
-            name = "Cersei Lannister",
-            aliases = mutableListOf(),
-            notes = "Awkward."
-        )
-        val jaimeLannister = Character(
-            id = null,
-            name = "Jaime Lannister",
-            aliases = mutableListOf(),
-            notes = "Awkward's husband."
-        )
-        val theonGreyjoy = Character(
-            id = null,
-            name = "Theon Greyjoy",
-            aliases = mutableListOf(),
-            notes = "Weirdo."
-        )
-        val jorahMormont = Character(
-            id = null,
-            name = "Jorah Mormont",
-            aliases = mutableListOf(),
-            notes = "Actually cool."
-        )
-        val petyrBaelish = Character(
-            id = null,
-            name = "Petyr Baelish",
-            aliases = mutableListOf("Littlefinger"),
-            notes = "Cool name, but not so cool dude."
-        )
-        val brienneTarth = Character(
-            id = null,
-            name = "Brienne of Tarth",
-            aliases = mutableListOf("Brienne of Tarth"),
-            notes = "Actually another cool person."
-        )
-        val davosSeaworth = Character(
-            id = null,
-            name = "Davos Seaworth",
-            aliases = mutableListOf(),
-            notes = ""
-        )
-        val lordVarys = Character(
-            id = null,
-            name = "Lord Varys",
-            aliases = mutableListOf("Varys"),
-            notes = ""
-        )
-        val tywinLannister = Character(
-            id = null,
-            name = "Tywin Lannister",
-            aliases = mutableListOf(),
-            notes = ""
-        )
-        val margaeryTyrell = Character(
-            id = null,
-            name = "Margaery Tyrell",
-            aliases = mutableListOf(),
-            notes = ""
-        )
-        val robbStark = Character(
-            id = null,
-            name = "Robb Stark",
-            aliases = mutableListOf(),
-            notes = ""
-        )
-        val stannisBaratheon = Character(
-            id = null,
-            name = "Stannis Baratheon",
-            aliases = mutableListOf(),
-            notes = ""
-        )
-        val sandorClegane = Character(
-            id = null,
-            name = "Sandor Clegane",
-            aliases = mutableListOf("The Hound"),
-            notes = ""
-        )
-        val ramsayBolton = Character(
-            id = null,
-            name = "Ramsay Bolton",
-            aliases = mutableListOf(),
-            notes = ""
-        )
+        File("sample-data/got/characters.csv").readLines()
+            .forEach {
+                val name = it.split(";")[0]
+                val alias = try {
+                    val x = it.split(";")[1]
+                    if (x.isBlank()) {
+                        mutableListOf<String>()
+                    }else{
+                        mutableListOf(x)
+                    }
+                } catch (e: IndexOutOfBoundsException) {
+                    mutableListOf<String>()
+                }
 
-        characterService.add(eddardStark)
-        characterService.add(aryaStark)
-        characterService.add(sansaStark)
-        characterService.add(catelynStark)
-        characterService.add(jonSnow)
-        characterService.add(joffreyBaratheon)
-        characterService.add(tyrionLannister)
-        characterService.add(samwellTarly)
-        characterService.add(branStark)
-        characterService.add(daenerysTargaryen)
-        characterService.add(cerseiLannister)
-        characterService.add(jaimeLannister)
-        characterService.add(theonGreyjoy)
-        characterService.add(jorahMormont)
-        characterService.add(petyrBaelish)
-        characterService.add(brienneTarth)
-        characterService.add(davosSeaworth)
-        characterService.add(lordVarys)
-        characterService.add(tywinLannister)
-        characterService.add(margaeryTyrell)
-        characterService.add(robbStark)
-        characterService.add(stannisBaratheon)
-        characterService.add(sandorClegane)
-        characterService.add(ramsayBolton)
+                characterService.add(
+                    Character(
+                        id = null,
+                        name = name,
+                        aliases = alias,
+                        notes = ""
+                    )
+                )
+            }
 
-        val wall = Place(
-            id = null,
-            name = "The Wall",
-            aliases = listOf("Wall"),
-            notes = ""
-        )
-        val westeros = Place(
-            id = null,
-            name = "Westeros",
-            aliases = listOf(),
-            notes = ""
-        )
-        val winterfell = Place(
-            id = null,
-            name = "Winterfell",
-            aliases = listOf(),
-            notes = ""
-        )
-        val eyrie = Place(
-            id = null,
-            name = "Eryie",
-            aliases = listOf(),
-            notes = ""
-        )
-        val riverrun = Place(
-            id = null,
-            name = "Riverrun",
-            aliases = listOf(),
-            notes = ""
-        )
-        val casterlyRock = Place(
-            id = null,
-            name = "Casterly Rock",
-            aliases = listOf(),
-            notes = ""
-        )
-        val kingsLanding = Place(
-            id = null,
-            name = "King's Landing",
-            aliases = listOf(),
-            notes = ""
-        )
-        placeService.add(wall)
-        placeService.add(westeros)
-        placeService.add(winterfell)
-        placeService.add(eyrie)
-        placeService.add(riverrun)
-        placeService.add(casterlyRock)
-        placeService.add(kingsLanding)
+        File("sample-data/got/locations.csv").readLines()
+            .forEach {
+                placeService.add(
+                    Place(
+                        id = null,
+                        name = it,
+                        aliases = listOf(),
+                        notes = ""
+                    )
+                )
+            }
 
         val prologue = Chapter(
             id = null,
