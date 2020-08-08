@@ -13,6 +13,8 @@ def print_template(character):
     try:
         characterImageThumb = character["characterImageThumb"]
         base64image = get_as_base64(characterImageThumb)
+        if base64image == "Tm90IEZvdW5k": # "Not Found"
+            base64image = ""
     except KeyError:
         base64image = ""
     except:
