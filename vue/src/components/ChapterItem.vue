@@ -42,11 +42,11 @@ export default {
 
   props: {
     chapter: {},
+  },
+
+  data: () => ({
     suggestedCharacters: [],
     suggestedPlaces: [],
-  },
-  data: () => ({
-    //
   }),
   mounted() {
     // get all suggested characters
