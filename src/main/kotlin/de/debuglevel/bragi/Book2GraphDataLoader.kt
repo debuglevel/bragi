@@ -34,7 +34,7 @@ class Book2GraphDataLoader(
         val mrPreston = Character(
             id = null,
             name = "Mr. Preston",
-            aliases = mutableListOf("Preston"),
+            aliases = mutableListOf("Preston", "Senator Preston"),
             notes = ""
         )
         val mrsPreston = Character(
@@ -85,6 +85,24 @@ class Book2GraphDataLoader(
             aliases = mutableListOf(),
             notes = ""
         )
+        val dave = Character(
+            id = null,
+            name = "Dave",
+            aliases = mutableListOf(),
+            notes = ""
+        )
+        val floyd = Character(
+            id = null,
+            name = "Floyd",
+            aliases = mutableListOf(),
+            notes = ""
+        )
+        val edward = Character(
+            id = null,
+            name = "Edward",
+            aliases = mutableListOf(),
+            notes = ""
+        )
 
         characterService.add(mrPreston)
         characterService.add(mrsPreston)
@@ -95,6 +113,9 @@ class Book2GraphDataLoader(
         characterService.add(sirrus)
         characterService.add(joey)
         characterService.add(amrai)
+        characterService.add(dave)
+        characterService.add(floyd)
+        characterService.add(edward)
 
         val plasa = Place(
             id = null,
@@ -114,9 +135,79 @@ class Book2GraphDataLoader(
             aliases = listOf(),
             notes = ""
         )
+        val evil = Place(
+            id = null,
+            name = "Evil",
+            aliases = listOf(),
+            notes = ""
+        )
+        val stMarysHospital = Place(
+            id = null,
+            name = "St. Mary's Hospital",
+            aliases = listOf("St. Mary's", "Mary's"),
+            notes = ""
+        )
+        val aufzug = Place(
+            id = null,
+            name = "Aufzug",
+            aliases = listOf(),
+            notes = ""
+        )
+        val skt = Place(
+            id = null,
+            name = "SKT",
+            aliases = listOf("Shared Knowledge Technology", "Shared-Knowledge-Technology"),
+            notes = ""
+        )
+        val landhaus = Place(
+            id = null,
+            name = "Landhaus",
+            aliases = listOf(),
+            notes = ""
+        )
+        val funkhaus = Place(
+            id = null,
+            name = "Funkhaus",
+            aliases = listOf(),
+            notes = ""
+        )
+        val auffanglager = Place(
+            id = null,
+            name = "Auffanglager",
+            aliases = listOf(),
+            notes = ""
+        )
+        val schreibzimmer = Place(
+            id = null,
+            name = "Schreibzimmer",
+            aliases = listOf(),
+            notes = ""
+        )
+        val ministerium = Place(
+            id = null,
+            name = "Ministerium",
+            aliases = listOf(),
+            notes = ""
+        )
+        val krankenfluegel = Place(
+            id = null,
+            name = "Krankenflügel",
+            aliases = listOf(),
+            notes = ""
+        )
         placeService.add(plasa)
         placeService.add(komplex)
         placeService.add(ebeneNull)
+        placeService.add(evil)
+        placeService.add(stMarysHospital)
+        placeService.add(aufzug)
+        placeService.add(skt)
+        placeService.add(landhaus)
+        placeService.add(funkhaus)
+        placeService.add(auffanglager)
+        placeService.add(schreibzimmer)
+        placeService.add(ministerium)
+        placeService.add(krankenfluegel)
 
         val book = FodtParser.parse(File("Buch.fodt"))
         val chapters = book.chapters.map {
