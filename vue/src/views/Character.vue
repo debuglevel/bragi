@@ -18,6 +18,12 @@
 
       <!-- TODO: image is larger than it should be -->
       <v-img :src="character.picture" max-height="150px" contain />
+      <v-file-input
+        accept="image/*"
+        placeholder="Change picture"
+        label="Picture"
+        @change="changePicture"
+      />
 
       <v-textarea
         v-model="character.notes"
@@ -100,6 +106,19 @@ export default {
       }).then((characterResponse) => {
         this.character = characterResponse.data;
       });
+    },
+    changePicture(file) {
+      this.convertPictureToBase64(file);
+    },
+    convertPictureToBase64(file) {
+      console.log("Converting file to Base64 data URL...");
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        console.log("Read file as data URL.");
+        this.character.picture = e.target.result;
+      };
+      reader.readAsDataURL(file);
     },
   },
 };

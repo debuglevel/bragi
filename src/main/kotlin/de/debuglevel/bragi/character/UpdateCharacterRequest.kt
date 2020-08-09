@@ -1,5 +1,6 @@
 package de.debuglevel.bragi.character
 
+import de.debuglevel.bragi.DataUrlUtils
 import de.debuglevel.bragi.entity.UpdateEntityRequest
 
 data class UpdateCharacterRequest(
@@ -14,7 +15,7 @@ data class UpdateCharacterRequest(
             name = this.name,
             aliases = this.aliases,
             notes = this.notes,
-            picture = this.picture
+            picture = DataUrlUtils.getBase64Part(this.picture)
         )
     }
 }
