@@ -1,13 +1,9 @@
 package de.debuglevel.bragi.character
 
-import de.debuglevel.bragi.entity.AddEntityResponse
-import de.debuglevel.bragi.entity.EntityController
-import de.debuglevel.bragi.entity.GetEntityResponse
-import de.debuglevel.bragi.entity.UpdateEntityResponse
+import de.debuglevel.bragi.entity.*
 import io.micronaut.http.HttpResponse
-import io.micronaut.http.annotation.Controller
-import io.micronaut.http.annotation.Post
-import io.micronaut.http.annotation.Put
+import io.micronaut.http.MediaType
+import io.micronaut.http.annotation.*
 import io.micronaut.security.annotation.Secured
 import io.micronaut.security.rules.SecurityRule
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -51,5 +47,25 @@ class CharacterController(
     @Put("/{uuid}")
     fun putOne(uuid: UUID, updateEntityRequest: UpdateCharacterRequest): HttpResponse<UpdateEntityResponse> {
         return putOneBase(uuid, updateEntityRequest)
+    }
+
+    /**
+     * Get picture
+     * @param uuid ID of the item
+     * @return An item
+     */
+    @Get("/{uuid}/picture")
+    @Produces(MediaType.IMAGE_PNG)
+    fun getPicture(uuid: UUID): HttpResponse<ByteArray> {
+        logger.debug("Called getPicture($uuid)")
+        return try {
+            val picture = characterService.getPicture(uuid)
+            HttpResponse.ok(picture)
+        } catch (e: EntityService.ItemNotFoundException) {
+            HttpResponse.badRequest<ByteArray>()
+        } catch (e: Exception) {
+            logger.error(e) { "Unhandled exception" }
+            HttpResponse.serverError<ByteArray>()
+        }
     }
 }

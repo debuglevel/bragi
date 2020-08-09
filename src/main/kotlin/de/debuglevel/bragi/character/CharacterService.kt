@@ -1,6 +1,7 @@
 package de.debuglevel.bragi.character
 
 import de.debuglevel.bragi.entity.EntityService
+import de.debuglevel.bragi.picture.PictureService
 import de.debuglevel.bragi.suggestion.SuggestionService
 import mu.KotlinLogging
 import java.util.*
@@ -9,7 +10,7 @@ import javax.inject.Singleton
 @Singleton
 class CharacterService(
     private val characterRepository: CharacterRepository
-) : EntityService<Character>(characterRepository), SuggestionService<Character> {
+) : EntityService<Character>(characterRepository), SuggestionService<Character>, PictureService {
     private val logger = KotlinLogging.logger {}
     override val entityName = "character"
 
@@ -51,5 +52,18 @@ class CharacterService(
 
         logger.debug { "Suggested ${foundCharacters.size} characters for given text: ${foundCharacters.joinToString(", ")}" }
         return foundCharacters
+    }
+
+    override fun getPicture(id: UUID): ByteArray {
+        logger.debug { "Getting picture for id='$id'..." }
+
+        val base64picture = this.get(id).picture
+        val byteArrayPicture = when {
+            !base64picture.isNullOrBlank() -> Base64.getDecoder().decode(base64picture)!!
+            else -> throw PictureService.PictureNotFoundException(id)
+        }
+
+        logger.debug { "Got picture for id='$id'" }
+        return byteArrayPicture
     }
 }
