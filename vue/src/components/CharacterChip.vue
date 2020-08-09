@@ -22,7 +22,9 @@
         </v-list-item>
 
         <v-list-item>
-          <v-list-item-content>{{ character.notes }}</v-list-item-content>
+          <v-list-item-content class="preformatted-newlines">{{
+            character.notes
+          }}</v-list-item-content>
         </v-list-item>
 
         <v-list-item :to="'/characters/' + character.id">
@@ -64,3 +66,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.preformatted-newlines {
+  white-space: pre-wrap;
+}
+</style>
