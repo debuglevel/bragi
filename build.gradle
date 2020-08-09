@@ -139,6 +139,9 @@ dependencies {
 
     // Book2Graph library
     implementation 'com.github.debuglevel:Book2Graph:77ff21e321'
+
+    // Generate random texts as samples
+    implementation 'com.thedeanda:lorem:2.1'
 }
 
 // Java configuration

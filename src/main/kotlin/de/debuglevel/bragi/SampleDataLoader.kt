@@ -1,5 +1,6 @@
 package de.debuglevel.bragi
 
+import com.thedeanda.lorem.LoremIpsum
 import de.debuglevel.bragi.chapter.Chapter
 import de.debuglevel.bragi.chapter.ChapterService
 import de.debuglevel.bragi.character.Character
@@ -12,7 +13,6 @@ import io.micronaut.context.event.ApplicationEventListener
 import io.micronaut.discovery.event.ServiceReadyEvent
 import mu.KotlinLogging
 import java.io.File
-import java.util.*
 import javax.inject.Singleton
 
 /**
@@ -30,6 +30,8 @@ class SampleDataLoader(
     override fun onApplicationEvent(event: ServiceReadyEvent) {
         //return
         logger.debug { "Populating database with sample data..." }
+
+        val loremIpsum = LoremIpsum.getInstance()
 
         File("sample-data/got/characters.csv").readLines()
             .forEach {
@@ -56,12 +58,14 @@ class SampleDataLoader(
                     null
                 }
 
+                val notes = loremIpsum.getParagraphs(0, 6)
+
                 characterService.add(
                     Character(
                         id = null,
                         name = name,
                         aliases = alias,
-                        notes = "",
+                        notes = notes,
                         picture = base64image
                     )
                 )
@@ -69,12 +73,14 @@ class SampleDataLoader(
 
         File("sample-data/got/locations.csv").readLines()
             .forEach {
+                val notes = loremIpsum.getParagraphs(0, 6)
+
                 placeService.add(
                     Place(
                         id = null,
                         name = it,
                         aliases = listOf(),
-                        notes = ""
+                        notes = notes
                     )
                 )
             }
