@@ -22,7 +22,7 @@
 
         <v-list-item :to="'/places/' + place.id">
           <v-list-item-action>
-            <v-icon>mdi-account</v-icon>
+            <v-icon>mdi-map-marker</v-icon>
           </v-list-item-action>
           <v-list-item-subtitle>Go to place</v-list-item-subtitle>
         </v-list-item>
