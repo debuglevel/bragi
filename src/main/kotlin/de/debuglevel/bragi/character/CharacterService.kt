@@ -5,6 +5,7 @@ import de.debuglevel.bragi.picture.ImageService
 import de.debuglevel.bragi.picture.PictureService
 import de.debuglevel.bragi.suggestion.SuggestionService
 import mu.KotlinLogging
+import java.awt.Dimension
 import java.util.*
 import javax.inject.Singleton
 
@@ -70,28 +71,34 @@ class CharacterService(
         return byteArrayPicture
     }
 
-    fun getPicture(id: UUID, width: Int?, height: Int?): ByteArray {
-        return if (height == null || width == null) {
+    /**
+     * Gets the picture if available. Resizes the picture if maxWidth or maxHeight is given while maintaining the aspect ratio.
+     */
+    fun getPicture(id: UUID, maxWidth: Int?, maxHeight: Int?): ByteArray {
+        return if (maxHeight == null && maxWidth == null) {
             getPicture(id)
         } else {
-            getPicture(id, width, height)
+            getResizedPicture(id, maxWidth = maxWidth, maxHeight = maxHeight)
         }
     }
 
-    override fun getPicture(id: UUID, width: Int, height: Int): ByteArray {
-        logger.debug { "Getting picture for id='$id' with maxWidth=$width, maxHeight=$height ..." }
-
-        val base64picture = this.get(id).picture
-        val byteArrayPicture = when {
-            !base64picture.isNullOrBlank() -> Base64.getDecoder().decode(base64picture)!!
-            else -> throw PictureService.PictureNotFoundException(id)
+    fun getResizedPicture(id: UUID, maxWidth: Int?, maxHeight: Int?): ByteArray {
+        logger.debug { "Getting resized picture for id='$id' with maxWidth=$maxWidth, maxHeight=$maxHeight ..." }
+        if (maxWidth == null && maxHeight == null) {
+            throw IllegalArgumentException("maxWidth or maxHeight must not be null")
         }
 
-        val bufferedImage = imageService.createImageFromBytes(byteArrayPicture)
-        val resizedImage = imageService.resizeImage(bufferedImage, width, height)
-        val resizedByteArrayPicture = imageService.createBytesFromImage(resizedImage)
+        val bytes = this.getPicture(id)
 
-        logger.debug { "Got picture for id='$id'" }
-        return resizedByteArrayPicture
+        val image = imageService.createImageFromBytes(bytes)
+        val scaledDimension = imageService.getScaledDimension(
+            Dimension(image.width, image.height),
+            Dimension(maxWidth ?: Int.MAX_VALUE, maxHeight ?: Int.MAX_VALUE)
+        )
+        val resizedImage = imageService.resizeImage(image, scaledDimension)
+        val resizedBytes = imageService.createBytesFromImage(resizedImage)
+
+        logger.debug { "Got resized picture for id='$id'" }
+        return resizedBytes
     }
 }
