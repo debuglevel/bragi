@@ -1,7 +1,7 @@
 <template>
   <tr>
     <td>
-      <router-link :to="'/places/' + place.id">{{ place.name }}</router-link>
+      <place-chip v-bind:place="place" />
     </td>
     <!-- <td>{{ place.id }}</td> -->
     <td>
@@ -16,11 +16,14 @@
 
 <script>
 import TextPreview from "@/components/TextPreview.vue";
+import ColorService from "@/services/ColorService";
+import PlaceChip from "@/components/PlaceChip.vue";
 
 export default {
   name: "PlaceItem",
   components: {
-    TextPreview
+    TextPreview,
+    PlaceChip
   },
 
   props: {
@@ -28,6 +31,19 @@ export default {
   },
   data: () => ({
     //
-  })
+  }),
+  methods: {
+    containsKey(obj, key) {
+      return Object.keys(obj).includes(key);
+    }
+  },
+  computed: {
+    background: function() {
+      return ColorService.generateRandomHexColor(this.place.id);
+    },
+    hasPicture: function() {
+      return this.containsKey(this.place, "picture");
+    }
+  }
 };
 </script>
