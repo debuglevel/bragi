@@ -1,7 +1,7 @@
 <template>
   <div class="place">
     <!-- TODO: migrate this as well-->
-    <h1>Place</h1>
+    <h1>Place: {{ place.name }}</h1>
     <div>
       It has the ID {{ place.id }}, was created on {{ place.createdOn }} and
       last modified on {{ place.lastModified }}.
