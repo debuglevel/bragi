@@ -1,12 +1,23 @@
 import json
+import base64
+import requests
+import random
 
 def print_template(name):
     if any(exclusion in name for exclusion in exclusions):
         return
-    output = f"{name}"
+    base64image = try_get_an_image(name)
+    output = f"{name};{base64image}"
 
     print(output)
 
+def try_get_an_image(name):
+    # placeholder until maybe replaced by a real search
+    x = random.randint(200, 500)
+    y = random.randint(100, 300)
+    url = f"https://picsum.photos/{x}/{y}"
+    return base64.b64encode(requests.get(url).content).decode('ascii')
+   
 exclusions = ["To ", "Outside ", "Away ", " to ", "Near ", " of "]
 
 locations_file = open("locations.json")

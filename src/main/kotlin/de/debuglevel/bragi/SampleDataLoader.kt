@@ -75,13 +75,26 @@ class SampleDataLoader(
             .forEach {
                 val notes = loremIpsum.getParagraphs(0, 6)
 
+                val name = it.split(";")[0]
+
+                val base64image = try {
+                    val base64 = it.split(";")[1]
+                    if (base64.isNotBlank()) {
+                        base64
+                    } else {
+                        null
+                    }
+                } catch (e: IndexOutOfBoundsException) {
+                    null
+                }
+
                 placeService.add(
                     Place(
                         id = null,
-                        name = it,
+                        name = name,
                         aliases = listOf(),
                         notes = notes,
-                        picture = null
+                        picture = base64image
                     )
                 )
             }
