@@ -8,25 +8,21 @@
     </div>
 
     <v-form>
-      <v-text-field
-        v-model="place.name"
-        :rules="nameRules"
-        label="Name"
-        required
-      ></v-text-field>
+      <v-text-field v-model="place.name" :rules="nameRules" label="Name" required></v-text-field>
 
-      <v-textarea
-        v-model="place.notes"
-        label="Notes"
-        auto-grow
-        rows="1"
-      ></v-textarea>
+      <!-- TODO: image is larger than it should be -->
+      <v-img v-if="hasPicture" :src="place.picture" max-height="150px" contain />
+      <v-file-input
+        accept="image/*"
+        placeholder="Change picture"
+        label="Picture"
+        @change="changePicture"
+      />
+
+      <v-textarea v-model="place.notes" label="Notes" auto-grow rows="1"></v-textarea>
 
       <!-- TODO: better than textarea, but not ideal (can be edited, but adding new items is not possible) -->
-      <tree-view
-        :data="place.aliases"
-        :options="{ modifiable: true }"
-      ></tree-view>
+      <tree-view :data="place.aliases" :options="{ modifiable: true }"></tree-view>
 
       <!-- <v-textarea v-model="place.aliases" label="Aliases"></v-textarea> -->
 
@@ -47,7 +43,7 @@ import { TreeView } from "vue-json-tree-view"; // { } is somehow needed: https:/
 export default {
   name: "Place",
   components: {
-    TreeView,
+    TreeView
   },
 
   props: ["id"],
@@ -57,21 +53,21 @@ export default {
       id: 12,
       name: "The Wall",
       notes: "Some large bricks of ice.",
-      aliases: ["Wall"],
+      aliases: ["Wall"]
     },
-    nameRules: [(v) => !!v || "Name is required"],
+    nameRules: [v => !!v || "Name is required"]
   }),
 
   mounted() {
     PlaceService.get(this.id)
-      .then((placeResponse) => {
+      .then(placeResponse => {
         // handle success
         console.log("Axios Success for Place");
         console.log(placeResponse);
 
         this.place = placeResponse.data;
       })
-      .catch((error) => {
+      .catch(error => {
         // handle error
         console.log("Axios Error for Place");
         console.log(error);
@@ -92,10 +88,32 @@ export default {
         name: this.place.name,
         notes: this.place.notes,
         aliases: this.place.aliases,
-      }).then((placeResponse) => {
+        picture: this.place.picture
+      }).then(placeResponse => {
         this.place = placeResponse.data;
       });
     },
+    changePicture(file) {
+      this.convertPictureToBase64(file);
+    },
+    convertPictureToBase64(file) {
+      console.log("Converting file to Base64 data URL...");
+
+      const reader = new FileReader();
+      reader.onload = e => {
+        console.log("Read file as data URL.");
+        this.place.picture = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    },
+    containsKey(obj, key) {
+      return Object.keys(obj).includes(key);
+    }
   },
+  computed: {
+    hasPicture: function() {
+      return this.containsKey(this.place, "picture");
+    }
+  }
 };
 </script>

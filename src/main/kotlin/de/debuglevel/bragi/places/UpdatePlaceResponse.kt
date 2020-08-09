@@ -9,6 +9,7 @@ data class UpdatePlaceResponse(
     var name: String,
     var aliases: List<String>,
     var notes: String,
+    var picture: String?,
     override var createdOn: LocalDateTime,
     override var lastModified: LocalDateTime
 ) : UpdateEntityResponse {
@@ -17,6 +18,7 @@ data class UpdatePlaceResponse(
         name = place.name,
         aliases = place.aliases.toList(),
         notes = place.notes,
+        picture = if (place.picture != null) { "data:image/png;base64,${place.picture}" } else { null },
         createdOn = place.createdOn,
         lastModified = place.lastModified
     )

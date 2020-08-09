@@ -80,7 +80,8 @@ class SampleDataLoader(
                         id = null,
                         name = it,
                         aliases = listOf(),
-                        notes = notes
+                        notes = notes,
+                        picture = null
                     )
                 )
             }

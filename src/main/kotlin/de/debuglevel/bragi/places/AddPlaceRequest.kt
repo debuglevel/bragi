@@ -10,7 +10,8 @@ data class AddPlaceRequest(
             id = null,
             name = this.name,
             aliases = listOf(),
-            notes = ""
+            notes = "",
+            picture = null
         )
     }
 }

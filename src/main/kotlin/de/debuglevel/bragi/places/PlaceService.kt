@@ -22,6 +22,7 @@ class PlaceService(
             name = item.name
             aliases = item.aliases
             notes = item.notes
+            picture = item.picture
         }
 
         val updatedPlace = placeRepository.update(updatePlace)

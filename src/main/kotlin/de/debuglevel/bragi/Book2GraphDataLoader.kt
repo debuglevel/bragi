@@ -133,79 +133,92 @@ class Book2GraphDataLoader(
             id = null,
             name = "Die Plasa",
             aliases = listOf("Plasa"),
-            notes = ""
+            notes = "",
+            picture = null
         )
         val komplex = Place(
             id = null,
             name = "Der Komplex",
             aliases = listOf("Komplex"),
-            notes = ""
+            notes = "",
+            picture = null
         )
         val ebeneNull = Place(
             id = null,
             name = "Ebene Null",
             aliases = listOf(),
-            notes = ""
+            notes = "",
+            picture = null
         )
         val evil = Place(
             id = null,
             name = "Evil",
             aliases = listOf(),
-            notes = ""
+            notes = "",
+            picture = null
         )
         val stMarysHospital = Place(
             id = null,
             name = "St. Mary's Hospital",
             aliases = listOf("St. Mary's", "Mary's"),
-            notes = ""
+            notes = "",
+            picture = null
         )
         val aufzug = Place(
             id = null,
             name = "Aufzug",
             aliases = listOf(),
-            notes = ""
+            notes = "",
+            picture = null
         )
         val skt = Place(
             id = null,
             name = "SKT",
             aliases = listOf("Shared Knowledge Technology", "Shared-Knowledge-Technology"),
-            notes = ""
+            notes = "",
+            picture = null
         )
         val landhaus = Place(
             id = null,
             name = "Landhaus",
             aliases = listOf(),
-            notes = ""
+            notes = "",
+            picture = null
         )
         val funkhaus = Place(
             id = null,
             name = "Funkhaus",
             aliases = listOf(),
-            notes = ""
+            notes = "",
+            picture = null
         )
         val auffanglager = Place(
             id = null,
             name = "Auffanglager",
             aliases = listOf(),
-            notes = ""
+            notes = "",
+            picture = null
         )
         val schreibzimmer = Place(
             id = null,
             name = "Schreibzimmer",
             aliases = listOf(),
-            notes = ""
+            notes = "",
+            picture = null
         )
         val ministerium = Place(
             id = null,
             name = "Ministerium",
             aliases = listOf(),
-            notes = ""
+            notes = "",
+            picture = null
         )
         val krankenfluegel = Place(
             id = null,
             name = "Krankenflügel",
             aliases = listOf(),
-            notes = ""
+            notes = "",
+            picture = null
         )
         placeService.add(plasa)
         placeService.add(komplex)
