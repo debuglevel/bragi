@@ -6,7 +6,12 @@ import random
 def print_template(name):
     if any(exclusion in name for exclusion in exclusions):
         return
-    base64image = try_get_an_image(name)
+    
+    if random.randint(1, 3) == 1: # 1 of 3 should have a picture
+      base64image = try_get_an_image(name)
+    else: 
+      base64image = ""
+
     output = f"{name};{base64image}"
 
     print(output)
