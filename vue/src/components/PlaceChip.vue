@@ -15,7 +15,9 @@
         </v-list-item>
 
         <v-list-item>
-          <v-list-item-subtitle>{{ place.notes }}</v-list-item-subtitle>
+          <v-list-item-content class="preformatted-newlines">{{
+            place.notes
+          }}</v-list-item-content>
         </v-list-item>
 
         <v-list-item :to="'/places/' + place.id">
@@ -49,3 +51,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.preformatted-newlines {
+  white-space: pre-wrap;
+}
+</style>
