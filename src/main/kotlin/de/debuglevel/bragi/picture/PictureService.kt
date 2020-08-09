@@ -9,4 +9,6 @@ interface PictureService {
     fun getPicture(id: UUID): ByteArray
 
     class PictureNotFoundException(criteria: Any) : Exception("Picture '$criteria' does not exist.")
+
+    fun getPicture(id: UUID, width: Int, height: Int): ByteArray
 }

@@ -54,12 +54,12 @@ class CharacterController(
      * @param uuid ID of the item
      * @return An item
      */
-    @Get("/{uuid}/picture")
+    @Get("/{uuid}/picture{?height,width}")
     @Produces(MediaType.IMAGE_PNG)
-    fun getPicture(uuid: UUID): HttpResponse<ByteArray> {
+    fun getPicture(uuid: UUID, height: Int?, width: Int?): HttpResponse<ByteArray> {
         logger.debug("Called getPicture($uuid)")
         return try {
-            val picture = characterService.getPicture(uuid)
+            val picture = characterService.getPicture(uuid, height, width)
             HttpResponse.ok(picture)
         } catch (e: EntityService.ItemNotFoundException) {
             HttpResponse.badRequest<ByteArray>()
