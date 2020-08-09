@@ -22,7 +22,7 @@
         </v-list-item>
 
         <v-list-item>
-          <v-list-item-subtitle>{{ character.notes }}</v-list-item-subtitle>
+          <v-list-item-content>{{ character.notes }}</v-list-item-content>
         </v-list-item>
 
         <v-list-item :to="'/characters/' + character.id">
