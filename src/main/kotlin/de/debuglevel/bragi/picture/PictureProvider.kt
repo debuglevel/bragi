@@ -2,7 +2,7 @@ package de.debuglevel.bragi.picture
 
 import java.util.*
 
-interface PictureService {
+interface PictureProvider {
     /**
      * Gets a picture as Base64
      */

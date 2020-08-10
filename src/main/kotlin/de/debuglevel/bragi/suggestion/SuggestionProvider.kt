@@ -1,5 +1,5 @@
 package de.debuglevel.bragi.suggestion
 
-interface SuggestionService<T> {
+interface SuggestionProvider<T> {
     fun getSuggested(text: String): Set<T>
 }

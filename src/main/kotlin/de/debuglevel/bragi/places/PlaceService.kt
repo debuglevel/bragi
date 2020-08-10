@@ -1,7 +1,7 @@
 package de.debuglevel.bragi.places
 
 import de.debuglevel.bragi.entity.EntityService
-import de.debuglevel.bragi.suggestion.SuggestionService
+import de.debuglevel.bragi.suggestion.SuggestionProvider
 import mu.KotlinLogging
 import java.util.*
 import javax.inject.Singleton
@@ -9,7 +9,7 @@ import javax.inject.Singleton
 @Singleton
 class PlaceService(
     private val placeRepository: PlaceRepository
-) : EntityService<Place>(placeRepository), SuggestionService<Place> {
+) : EntityService<Place>(placeRepository), SuggestionProvider<Place> {
     private val logger = KotlinLogging.logger {}
     override val entityName = "place"
 
