@@ -75,4 +75,29 @@ class ImageService {
         logger.trace { "Got scaled dimension for $imageSize inside boundary $boundary: $scaledSize" }
         return scaledSize
     }
+
+    // https://stackoverflow.com/a/26122845/4764279
+    fun getImageFormat(imageBytes: ByteArray): ImageFormat {
+        logger.trace { "Getting format from bytes..." }
+        val imageInputStream = ImageIO.createImageInputStream(ByteArrayInputStream(imageBytes))
+
+        val formatName = ImageIO.getImageReaders(imageInputStream)
+            .asSequence()
+            .map { it.formatName }
+            .firstOrNull()
+        logger.trace { "Got format name from bytes: $formatName" }
+
+        val format = when (formatName) {
+            "png" -> ImageFormat.PNG
+            "bmp" -> ImageFormat.BMP
+            "gif" -> ImageFormat.GIF
+            "JPEG" -> ImageFormat.JPEG
+            else -> throw UnknownImageFormat(formatName)
+        }
+
+        logger.trace { "Got format from bytes: $format" }
+        return format
+    }
+
+    class UnknownImageFormat(format: String?) : Exception("Detected image format '$format' is unknown.")
 }
