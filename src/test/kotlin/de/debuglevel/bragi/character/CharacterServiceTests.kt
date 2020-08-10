@@ -137,7 +137,9 @@ class CharacterServiceTests {
     @MethodSource("suggestionItemProvider")
     fun `suggest characters`(suggestionTestData: CharacterTestDataProvider.SuggestionTestData) {
         // Arrange
-        characterRepository.deleteAll()
+        //characterRepository.deleteAll() // somehow does not workwork; see https://github.com/micronaut-projects/micronaut-data/issues/684
+        characterRepository.findAll().forEach { characterRepository.delete(it) }
+
         suggestionTestData.existingCharacters.forEach {
             characterService.add(it)
         }
