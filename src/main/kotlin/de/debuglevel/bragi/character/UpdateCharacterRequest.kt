@@ -15,7 +15,11 @@ data class UpdateCharacterRequest(
             name = this.name,
             aliases = this.aliases,
             notes = this.notes,
-            picture = DataUrlUtils.getBase64Part(this.picture)
+            picture = if (!this.picture.isNullOrBlank()) {
+                DataUrlUtils.getBase64Part(this.picture)
+            } else {
+                null
+            }
         )
     }
 }
