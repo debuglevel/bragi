@@ -40,14 +40,14 @@ object CharacterTestDataProvider {
         val arya = Character(
             id = null,
             name = "Arya Stark",
-            aliases = mutableListOf(),
+            aliases = mutableListOf("Arya"),
             notes = "",
             picture = null
         )
         val eddard = Character(
             id = null,
             name = "Eddard Stark",
-            aliases = mutableListOf("Ned"),
+            aliases = mutableListOf("Eddard", "Ned"),
             notes = "",
             picture = null
         )
