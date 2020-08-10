@@ -9,7 +9,7 @@ data class AddCharacterRequest(
         return Character(
             id = null,
             name = this.name,
-            aliases = mutableListOf(),
+            aliases = mutableListOf(CharacterUtils.extractFirstName(this.name)),
             notes = "",
             picture = null
         )
