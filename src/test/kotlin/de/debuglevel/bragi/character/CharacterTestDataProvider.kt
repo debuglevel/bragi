@@ -6,6 +6,24 @@ import java.util.stream.Stream
 object CharacterTestDataProvider {
     private val logger = KotlinLogging.logger {}
 
+    data class FirstnameTestData(
+        val name: String,
+        val firstName: String
+    )
+
+    fun firstnameItemProvider() = Stream.of(
+        FirstnameTestData(name = "Arya", firstName = "Arya"),
+        FirstnameTestData(name = " Arya", firstName = "Arya"),
+        FirstnameTestData(name = "Arya ", firstName = "Arya"),
+        FirstnameTestData(name = "Arya Stark", firstName = "Arya"),
+        FirstnameTestData(name = "Arya  Stark", firstName = "Arya"),
+        FirstnameTestData(name = " Arya Stark", firstName = "Arya"),
+        FirstnameTestData(name = "Arya Stark ", firstName = "Arya"),
+        FirstnameTestData(name = " Arya Stark ", firstName = "Arya"),
+        FirstnameTestData(name = "Albus Percival Wulfric Brian Dumbledore", firstName = "Albus"),
+        FirstnameTestData(name = "Karl-Heinz Schmidt", firstName = "Karl-Heinz")
+    )
+
     fun itemProvider() = Stream.of(
         Character(
             id = null,
