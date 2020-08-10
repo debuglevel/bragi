@@ -1,5 +1,6 @@
 package de.debuglevel.bragi.character
 
+import de.debuglevel.bragi.character.CharacterUtils.extractFirstName
 import de.debuglevel.bragi.entity.EntityService
 import de.debuglevel.bragi.picture.ImageService
 import de.debuglevel.bragi.picture.PictureProvider
@@ -35,17 +36,12 @@ class CharacterService(
         return updatedCharacter
     }
 
-    // TODO: maybe move into Character class?
-    private fun extractFirstName(character: Character): String {
-        return character.name.split(" ").first()
-    }
-
     override fun getSuggested(text: String): Set<Character> {
         logger.debug { "Suggesting characters for given text..." }
 
         val allCharacters = this.list()
         val nameOccurredInTextCharacters = allCharacters.filter { text.contains(it.name) }
-        val firstNamePartOccurredInTextCharacters = allCharacters.filter { text.contains(extractFirstName(it)) }
+        val firstNamePartOccurredInTextCharacters = allCharacters.filter { text.contains(extractFirstName(it.name)) }
         val aliasesOccurredInTextCharacters =
             allCharacters.filter { character -> character.aliases.any { alias -> text.contains(alias) } }
 
