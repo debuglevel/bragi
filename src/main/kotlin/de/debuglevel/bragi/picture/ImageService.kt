@@ -81,7 +81,10 @@ class ImageService {
         return scaledSize
     }
 
-    // https://stackoverflow.com/a/26122845/4764279
+    /**
+     * Gets the image format of an image. JREs may differ in their image type support.
+     * See: https://stackoverflow.com/a/26122845/4764279
+     */
     fun getImageFormat(imageBytes: ByteArray): ImageFormat {
         logger.trace { "Getting format from bytes..." }
         val imageInputStream = ImageIO.createImageInputStream(ByteArrayInputStream(imageBytes))
