@@ -14,7 +14,7 @@ class ImageService {
     private val logger = KotlinLogging.logger {}
 
     /**
-     * Resizes an Image.
+     * Resizes an Image. Does not maintain aspect ratio.
      */
     fun resizeImage(
         image: BufferedImage,
