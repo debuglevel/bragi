@@ -1,5 +1,6 @@
 package de.debuglevel.bragi.places
 
+import de.debuglevel.bragi.picture.PictureEntity
 import io.micronaut.data.annotation.DateCreated
 import io.micronaut.data.annotation.DateUpdated
 import java.time.LocalDateTime
@@ -20,9 +21,9 @@ data class Place(
      * Picture as Base64
      */
     @Lob
-    var picture: String?,
+    override var picture: String?,
     @DateCreated
     override var createdOn: LocalDateTime = LocalDateTime.now(),
     @DateUpdated
     override var lastModified: LocalDateTime = LocalDateTime.now()
-) : de.debuglevel.bragi.entity.Entity
+) : de.debuglevel.bragi.entity.Entity, PictureEntity

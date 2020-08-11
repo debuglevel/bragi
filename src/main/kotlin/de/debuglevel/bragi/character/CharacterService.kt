@@ -1,18 +1,17 @@
 package de.debuglevel.bragi.character
 
 import de.debuglevel.bragi.entity.EntityService
-import de.debuglevel.bragi.picture.ImageService
 import de.debuglevel.bragi.picture.PictureProvider
+import de.debuglevel.bragi.picture.PictureService
 import de.debuglevel.bragi.suggestion.SuggestionProvider
 import mu.KotlinLogging
-import java.awt.Dimension
 import java.util.*
 import javax.inject.Singleton
 
 @Singleton
 class CharacterService(
     private val characterRepository: CharacterRepository,
-    private val imageService: ImageService
+    private val pictureService: PictureService
 ) : EntityService<Character>(characterRepository), SuggestionProvider<Character>, PictureProvider {
     private val logger = KotlinLogging.logger {}
     override val entityName = "character"
@@ -50,48 +49,11 @@ class CharacterService(
         return foundCharacters
     }
 
-    // TODO: refactor all this Image and Picture cruelty and make it available for Places, too.
-    override fun getPicture(id: UUID): ByteArray {
-        logger.debug { "Getting picture for id='$id'..." }
-
-        val base64picture = this.get(id).picture
-        val byteArrayPicture = when {
-            !base64picture.isNullOrBlank() -> Base64.getDecoder().decode(base64picture)!!
-            else -> throw PictureProvider.PictureNotFoundException(id)
-        }
-
-        logger.debug { "Got picture for id='$id'" }
-        return byteArrayPicture
-    }
-
-    /**
-     * Gets the picture if available. Resizes the picture if maxWidth or maxHeight is given while maintaining the aspect ratio.
-     */
-    fun getPicture(id: UUID, maxWidth: Int?, maxHeight: Int?): ByteArray {
+    override fun getPicture(id: UUID, maxWidth: Int?, maxHeight: Int?): ByteArray {
         return if (maxHeight == null && maxWidth == null) {
-            getPicture(id)
+            pictureService.getPicture(this.get(id))
         } else {
-            getResizedPicture(id, maxWidth = maxWidth, maxHeight = maxHeight)
+            pictureService.getResizedPicture(this.get(id), maxWidth = maxWidth, maxHeight = maxHeight)
         }
-    }
-
-    fun getResizedPicture(id: UUID, maxWidth: Int?, maxHeight: Int?): ByteArray {
-        logger.debug { "Getting resized picture for id='$id' with maxWidth=$maxWidth, maxHeight=$maxHeight ..." }
-        if (maxWidth == null && maxHeight == null) {
-            throw IllegalArgumentException("maxWidth or maxHeight must not be null")
-        }
-
-        val bytes = this.getPicture(id)
-
-        val image = imageService.buildImageFromBytes(bytes)
-        val scaledDimension = imageService.getScaledDimension(
-            imageSize = Dimension(image.width, image.height),
-            boundary = Dimension(maxWidth ?: Int.MAX_VALUE, maxHeight ?: Int.MAX_VALUE)
-        )
-        val resizedImage = imageService.resizeImage(image, scaledDimension)
-        val resizedBytes = imageService.buildBytesFromImage(resizedImage)
-
-        logger.debug { "Got resized picture for id='$id'" }
-        return resizedBytes
     }
 }
