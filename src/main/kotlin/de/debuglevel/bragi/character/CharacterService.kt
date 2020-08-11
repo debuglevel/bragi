@@ -83,13 +83,13 @@ class CharacterService(
 
         val bytes = this.getPicture(id)
 
-        val image = imageService.createImageFromBytes(bytes)
+        val image = imageService.buildImageFromBytes(bytes)
         val scaledDimension = imageService.getScaledDimension(
             Dimension(image.width, image.height),
             Dimension(maxWidth ?: Int.MAX_VALUE, maxHeight ?: Int.MAX_VALUE)
         )
         val resizedImage = imageService.resizeImage(image, scaledDimension)
-        val resizedBytes = imageService.createBytesFromImage(resizedImage)
+        val resizedBytes = imageService.buildBytesFromImage(resizedImage)
 
         logger.debug { "Got resized picture for id='$id'" }
         return resizedBytes

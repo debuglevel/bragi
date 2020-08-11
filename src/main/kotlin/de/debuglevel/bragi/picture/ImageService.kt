@@ -13,6 +13,9 @@ import javax.inject.Singleton
 class ImageService {
     private val logger = KotlinLogging.logger {}
 
+    /**
+     * Resizes an Image.
+     */
     fun resizeImage(
         image: BufferedImage,
         targetDimension: Dimension
@@ -28,26 +31,33 @@ class ImageService {
         return resizedImage
     }
 
-    // https://stackoverflow.com/a/13465476/4764279
-    fun createImageFromBytes(imageBytes: ByteArray): BufferedImage {
-        logger.trace { "Creating Image from bytes..." }
+    /**
+     * Gets an Image from a ByteArray.
+     * See: https://stackoverflow.com/a/13465476/4764279
+     */
+    fun buildImageFromBytes(imageBytes: ByteArray): BufferedImage {
+        logger.trace { "Creating Image from bytes (size=${imageBytes.size})..." }
 
         val byteArrayInputStream = ByteArrayInputStream(imageBytes)
         val bufferedImage = ImageIO.read(byteArrayInputStream)
 
-        logger.trace { "Created Image from bytes" }
+        logger.trace { "Created Image from bytes (size=${imageBytes.size})" }
         return bufferedImage
     }
 
-    // https://stackoverflow.com/a/15414490/4764279
-    fun createBytesFromImage(image: BufferedImage): ByteArray {
+    /**
+     * Gets a ByteArray from an Image.
+     * @implNote Current implementation always returns a JPG.
+     * See: https://stackoverflow.com/a/15414490/4764279
+     */
+    fun buildBytesFromImage(image: BufferedImage): ByteArray {
         logger.trace { "Creating bytes from Image..." }
 
         val byteArrayOutputStream = ByteArrayOutputStream()
         ImageIO.write(image, "jpg", byteArrayOutputStream)
         val bytes = byteArrayOutputStream.toByteArray()
 
-        logger.trace { "Created bytes from Image" }
+        logger.trace { "Created bytes (size=${bytes.size}) from Image" }
         return bytes
     }
 
