@@ -17,8 +17,33 @@ class ImageServiceTests {
     @Inject
     lateinit var imageService: ImageService
 
-    @Test
-    fun resizeImage() {
+    @ParameterizedTest
+    @MethodSource("imageFormatProvider")
+    fun `resize image`(imageFormatTestData: ImageFormatTestData) {
+        // Arrange
+        val image = imageService.buildImageFromBytes(imageFormatTestData.bytes)
+        val targetHeight = 23
+        val targetWidth = 42
+
+        // Act
+        val resizedImage = imageService.resizeImage(image, Dimension(targetWidth, targetHeight))
+
+        // Assert
+        Assertions.assertThat(resizedImage.height).isEqualTo(targetHeight)
+        Assertions.assertThat(resizedImage.width).isEqualTo(targetWidth)
+    }
+
+    @ParameterizedTest
+    @MethodSource("imageFormatProvider")
+    fun `resize image to invalid size`(imageFormatTestData: ImageFormatTestData) {
+        // Arrange
+        val image = imageService.buildImageFromBytes(imageFormatTestData.bytes)
+
+        // Act & Assert
+        assertThrows<java.lang.IllegalArgumentException> { imageService.resizeImage(image, Dimension(0, 10)) }
+        assertThrows<java.lang.IllegalArgumentException> { imageService.resizeImage(image, Dimension(10, 0)) }
+        assertThrows<java.lang.IllegalArgumentException> { imageService.resizeImage(image, Dimension(-10, 10)) }
+        assertThrows<java.lang.IllegalArgumentException> { imageService.resizeImage(image, Dimension(10, -10)) }
     }
 
     @Test

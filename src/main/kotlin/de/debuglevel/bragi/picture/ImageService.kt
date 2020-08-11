@@ -22,6 +22,10 @@ class ImageService {
     ): BufferedImage {
         logger.trace { "Resizing image width=${image.width} height=${image.height} to width=${targetDimension.width} height=${targetDimension.height}..." }
 
+        if (targetDimension.height <= 0 || targetDimension.width <= 0) {
+            throw IllegalArgumentException("width and height must be greater than 0")
+        }
+
         val resizedImage = BufferedImage(targetDimension.width, targetDimension.height, BufferedImage.TYPE_INT_RGB)
         val graphics2D = resizedImage.createGraphics()
         graphics2D.drawImage(image, 0, 0, targetDimension.width, targetDimension.height, null)
