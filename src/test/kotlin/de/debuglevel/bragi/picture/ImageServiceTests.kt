@@ -4,8 +4,10 @@ import io.micronaut.test.annotation.MicronautTest
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
+import java.awt.Dimension
 import java.util.*
 import javax.inject.Inject
 
@@ -27,8 +29,108 @@ class ImageServiceTests {
     fun createBytesFromImage() {
     }
 
+    @ParameterizedTest
+    @MethodSource("scaleImageProvider")
+    fun `get scaled image dimensions`(scaleImageTestData: ScaleImageTestData) {
+        // Arrange
+
+        // Act
+        val result = imageService.getScaledDimension(scaleImageTestData.original, scaleImageTestData.boundary)
+
+        // Assert
+        Assertions.assertThat(result).isEqualTo(scaleImageTestData.result)
+    }
+
     @Test
-    fun getScaledDimension() {
+    fun `get scaled image dimensions for invalid values`() {
+        // Arrange
+
+        // Act & Assert
+        assertThrows<IllegalArgumentException> {
+            imageService.getScaledDimension(
+                Dimension(-10, 10),
+                Dimension(10, 10)
+            )
+        }
+        assertThrows<IllegalArgumentException> {
+            imageService.getScaledDimension(
+                Dimension(10, -10),
+                Dimension(10, 10)
+            )
+        }
+        assertThrows<IllegalArgumentException> {
+            imageService.getScaledDimension(
+                Dimension(10, 10),
+                Dimension(-10, 10)
+            )
+        }
+        assertThrows<IllegalArgumentException> {
+            imageService.getScaledDimension(
+                Dimension(10, 10),
+                Dimension(10, -10)
+            )
+        }
+        assertThrows<IllegalArgumentException> { imageService.getScaledDimension(Dimension(0, 10), Dimension(10, 10)) }
+        assertThrows<IllegalArgumentException> { imageService.getScaledDimension(Dimension(10, 0), Dimension(10, 10)) }
+        assertThrows<IllegalArgumentException> { imageService.getScaledDimension(Dimension(10, 10), Dimension(0, 10)) }
+        assertThrows<IllegalArgumentException> { imageService.getScaledDimension(Dimension(10, 10), Dimension(10, 0)) }
+    }
+
+    data class ScaleImageTestData(val original: Dimension, val boundary: Dimension, val result: Dimension)
+
+    fun scaleImageProvider(): List<ScaleImageTestData> {
+        return listOf(
+            // scale to the same boundary
+            ScaleImageTestData(
+                original = Dimension(100, 100),
+                boundary = Dimension(100, 100),
+                result = Dimension(100, 100)
+            ),
+            // do not scale up
+            ScaleImageTestData(
+                original = Dimension(100, 100),
+                boundary = Dimension(200, 200),
+                result = Dimension(100, 100)
+            ),
+            // scale down a square in a square boundary
+            ScaleImageTestData(
+                original = Dimension(100, 100),
+                boundary = Dimension(50, 50),
+                result = Dimension(50, 50)
+            ),
+            // scale down a square in a rectangle boundary
+            ScaleImageTestData(
+                original = Dimension(100, 100),
+                boundary = Dimension(25, 50),
+                result = Dimension(25, 25)
+            ),
+            ScaleImageTestData(
+                original = Dimension(100, 100),
+                boundary = Dimension(50, 25),
+                result = Dimension(25, 25)
+            ),
+            // scale down a rectangle to a square boundary
+            ScaleImageTestData(
+                original = Dimension(200, 100),
+                boundary = Dimension(100, 100),
+                result = Dimension(100, 50)
+            ),
+            ScaleImageTestData(
+                original = Dimension(100, 200),
+                boundary = Dimension(100, 100),
+                result = Dimension(50, 100)
+            ),
+            ScaleImageTestData(
+                original = Dimension(200, 100),
+                boundary = Dimension(50, 50),
+                result = Dimension(50, 25)
+            ),
+            ScaleImageTestData(
+                original = Dimension(100, 200),
+                boundary = Dimension(50, 50),
+                result = Dimension(25, 50)
+            )
+        )
     }
 
     @ParameterizedTest

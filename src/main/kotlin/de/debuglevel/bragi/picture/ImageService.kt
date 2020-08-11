@@ -8,6 +8,7 @@ import java.io.ByteArrayOutputStream
 import javax.imageio.ImageIO
 import javax.inject.Singleton
 
+
 @Singleton
 class ImageService {
     private val logger = KotlinLogging.logger {}
@@ -53,6 +54,10 @@ class ImageService {
     // https://stackoverflow.com/a/10245583/4764279
     fun getScaledDimension(imageSize: Dimension, boundary: Dimension): Dimension {
         logger.trace { "Getting scaled dimension for $imageSize inside boundary $boundary..." }
+
+        if (imageSize.height <= 0 || imageSize.width <= 0 || boundary.height <= 0 || boundary.width <= 0) {
+            throw IllegalArgumentException("widths and heights must be greater than 0")
+        }
 
         var newWidth = imageSize.width
         var newHeight = imageSize.height
