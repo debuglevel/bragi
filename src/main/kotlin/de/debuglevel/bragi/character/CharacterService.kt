@@ -85,8 +85,8 @@ class CharacterService(
 
         val image = imageService.buildImageFromBytes(bytes)
         val scaledDimension = imageService.getScaledDimension(
-            Dimension(image.width, image.height),
-            Dimension(maxWidth ?: Int.MAX_VALUE, maxHeight ?: Int.MAX_VALUE)
+            imageSize = Dimension(image.width, image.height),
+            boundary = Dimension(maxWidth ?: Int.MAX_VALUE, maxHeight ?: Int.MAX_VALUE)
         )
         val resizedImage = imageService.resizeImage(image, scaledDimension)
         val resizedBytes = imageService.buildBytesFromImage(resizedImage)
