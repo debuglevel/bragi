@@ -51,7 +51,11 @@ class ImageService {
         return bytes
     }
 
-    // https://stackoverflow.com/a/10245583/4764279
+    /**
+     * Calculates the image dimensions when scaled down to a boundary while maintaining the aspect ratio.
+     * Does not scale up image dimensions.
+     * See: https://stackoverflow.com/a/10245583/4764279
+     */
     fun getScaledDimension(imageSize: Dimension, boundary: Dimension): Dimension {
         logger.trace { "Getting scaled dimension for $imageSize inside boundary $boundary..." }
 
