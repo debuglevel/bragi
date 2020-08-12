@@ -151,5 +151,49 @@ class CharacterControllerTests {
         Assertions.assertThat(getPicture).isEqualTo(byteArray)
     }
 
+    @Test
+    fun `get character picture resized`() {
+        // Arrange
+        val character = Character(
+            id = null,
+            name = "Picture Character",
+            aliases = mutableListOf(),
+            notes = "",
+            // 2x2 gif
+            picture = "R0lGODdhAgACAKEEAAsA/607AAWtGf/eACwAAAAAAgACAAACA4wGBQA7"
+        )
+        val byteArray = Base64.getDecoder().decode(character.picture)
+        val addCharacterRequest = AddCharacterRequest(
+            name = character.name
+        )
+        val addUri = UriBuilder.of("/").build()
+        val addedItem = httpClient.toBlocking()
+            .retrieve(HttpRequest.POST(addUri, addCharacterRequest), AddCharacterResponse::class.java)
+        val updateCharacterRequest = UpdateCharacterRequest(
+            name = character.name,
+            notes = character.notes,
+            aliases = character.aliases,
+            picture = "data:image/png;base64,${character.picture}"
+        )
+        val updateUri = UriBuilder.of("/{id}")
+            .expand(mutableMapOf("id" to addedItem.id))
+            .toString()
+        val updatedItem = httpClient.toBlocking()
+            .retrieve(HttpRequest.PUT(updateUri, updateCharacterRequest), UpdateCharacterResponse::class.java)
+
+        // Act
+        val getPictureUri = UriBuilder.of("/{id}/picture?maxWidth=1&maxHeight=1")
+            .expand(mutableMapOf("id" to addedItem.id))
+            .toString()
+        val getPicture = httpClient.toBlocking()
+            .retrieve(getPictureUri, ByteArray::class.java)
+
+        // Assert
+        Assertions.assertThat(getPicture.size).isGreaterThan(0)
+        Assertions.assertThat(getPicture).isNotEqualTo(byteArray)
+        // backend does not necessarily also output this gif as gif if resized; therefore we cannot check if the size is smaller, but only different.
+        Assertions.assertThat(getPicture.size).isNotEqualTo(byteArray.size)
+    }
+
     fun itemRequestProvider() = CharacterTestDataProvider.itemProvider()
 }
