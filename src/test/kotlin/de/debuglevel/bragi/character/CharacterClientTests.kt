@@ -28,7 +28,7 @@ class CharacterClientTests {
 
     @ParameterizedTest
     @MethodSource("addItemRequestProvider")
-    fun `retrieve character`(addCharacterRequest: AddCharacterRequest) {
+    fun `get character`(addCharacterRequest: AddCharacterRequest) {
         // Arrange
         val addedItem = characterClient.postOne(addCharacterRequest).blockingGet()
 

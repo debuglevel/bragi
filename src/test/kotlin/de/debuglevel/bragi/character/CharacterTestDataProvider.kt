@@ -25,25 +25,65 @@ object CharacterTestDataProvider {
     )
 
     fun itemProvider() = Stream.of(
+        // very basic
         Character(
             id = null,
-            name = "Character 1",
+            name = "Basic Character",
+            aliases = mutableListOf(),
+            notes = "",
+            picture = null
+        ),
+        // aliases
+        Character(
+            id = null,
+            name = "Alias Character",
+            aliases = mutableListOf("alias1"),
+            notes = "",
+            picture = null
+        ),
+        Character(
+            id = null,
+            name = "Aliases Character",
+            aliases = mutableListOf("alias 1", "alias 2"),
+            notes = "",
+            picture = null
+        ),
+        // notes
+        Character(
+            id = null,
+            name = "Note Character",
+            aliases = mutableListOf(),
+            notes = "A note",
+            picture = null
+        ),
+        Character(
+            id = null,
+            name = "Long Notes Character",
             aliases = mutableListOf(),
             notes = "LongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotesLongNotes",
             picture = null
         ),
+        // picture
         Character(
             id = null,
-            name = "Character ÖÜÄß",
+            name = "Picture Character",
             aliases = mutableListOf(),
-            notes = "Notes",
+            notes = "",
+            picture = "/9j/4AAQSkZJRgABAQEBLAEsAAD//gATQ3JlYXRlZCB3aXRoIEdJTVD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wgARCAABAAEDAREAAhEBAxEB/8QAFAABAAAAAAAAAAAAAAAAAAAACP/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/9oADAMBAAIQAxAAAAFQTW//xAAUEAEAAAAAAAAAAAAAAAAAAAAA/9oACAEBAAEFAn//xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oACAEDAQE/AX//xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oACAECAQE/AX//xAAUEAEAAAAAAAAAAAAAAAAAAAAA/9oACAEBAAY/An//xAAUEAEAAAAAAAAAAAAAAAAAAAAA/9oACAEBAAE/IX//2gAMAwEAAgADAAAAEH//xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oACAEDAQE/EH//xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oACAECAQE/EH//xAAUEAEAAAAAAAAAAAAAAAAAAAAA/9oACAEBAAE/EH//2Q=="
+        ),
+        // umlauts etc
+        Character(
+            id = null,
+            name = "Umlauts Character",
+            aliases = mutableListOf("ööö", "äää", "ßßß"),
+            notes = "ÖÜÄß",
             picture = null
         ),
         Character(
             id = null,
-            name = "コハウプト マルク",
-            aliases = mutableListOf(),
-            notes = "",
+            name = "Unicode Character コハウプト マルク",
+            aliases = mutableListOf("コハウプト", "マルク"),
+            notes = "マルク",
             picture = null
         )
     )

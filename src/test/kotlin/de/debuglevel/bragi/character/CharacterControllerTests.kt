@@ -24,42 +24,90 @@ class CharacterControllerTests {
     lateinit var httpClient: HttpClient
 
     @ParameterizedTest
-    @MethodSource("addItemRequestProvider")
-    fun `add character`(addCharacterRequest: AddCharacterRequest) {
+    @MethodSource("itemRequestProvider")
+    fun `add character`(character: Character) {
         // Arrange
+        val addCharacterRequest = AddCharacterRequest(
+            name = character.name
+        )
 
         // Act
-        val uri = UriBuilder.of("/").build()
+        val addUri = UriBuilder.of("/").build()
         val addedItem = httpClient.toBlocking()
-            .retrieve(HttpRequest.POST(uri, addCharacterRequest), AddCharacterResponse::class.java)
+            .retrieve(HttpRequest.POST(addUri, addCharacterRequest), AddCharacterResponse::class.java)
 
         // Assert
         Assertions.assertThat(addedItem.name).isEqualTo(addCharacterRequest.name)
     }
 
     @ParameterizedTest
-    @MethodSource("addItemRequestProvider")
-    fun `retrieve character`(addCharacterRequest: AddCharacterRequest) {
+    @MethodSource("itemRequestProvider")
+    fun `get character`(character: Character) {
         // Arrange
+        val addCharacterRequest = AddCharacterRequest(
+            name = character.name
+        )
         val addUri = UriBuilder.of("/").build()
         val addedItem = httpClient.toBlocking()
             .retrieve(HttpRequest.POST(addUri, addCharacterRequest), AddCharacterResponse::class.java)
 
         // Act
-        val retrieveUri = UriBuilder.of("/{id}")
+        val getUri = UriBuilder.of("/{id}")
             .expand(mutableMapOf("id" to addedItem.id))
             .toString()
-        val retrievedItem = httpClient.toBlocking()
-            .retrieve(retrieveUri, AddCharacterResponse::class.java)
+        val getItem = httpClient.toBlocking()
+            .retrieve(getUri, GetCharacterResponse::class.java)
 
         // Assert
-        Assertions.assertThat(retrievedItem.id).isEqualTo(addedItem.id)
-        Assertions.assertThat(retrievedItem.name).isEqualTo(addedItem.name)
-        Assertions.assertThat(retrievedItem).isEqualTo(addedItem)
+        Assertions.assertThat(getItem.id).isEqualTo(addedItem.id)
+        Assertions.assertThat(addedItem.name).isEqualTo(character.name)
+        Assertions.assertThat(getItem.name).isEqualTo(character.name)
     }
 
-    fun addItemRequestProvider() = CharacterTestDataProvider.itemProvider()
-        .map {
-            AddCharacterRequest(it.name)
-        }
+    @ParameterizedTest
+    @MethodSource("itemRequestProvider")
+    fun `update character`(character: Character) {
+        // Arrange
+        val addCharacterRequest = AddCharacterRequest(
+            name = character.name
+        )
+        val addUri = UriBuilder.of("/").build()
+        val addedItem = httpClient.toBlocking()
+            .retrieve(HttpRequest.POST(addUri, addCharacterRequest), AddCharacterResponse::class.java)
+        val getUri = UriBuilder.of("/{id}")
+            .expand(mutableMapOf("id" to addedItem.id))
+            .toString()
+        val getItem = httpClient.toBlocking()
+            .retrieve(getUri, GetCharacterResponse::class.java)
+
+        // Act
+        val updateCharacterRequest = UpdateCharacterRequest(
+            name = character.name,
+            notes = character.notes,
+            aliases = character.aliases,
+            picture = "data:image/png;base64,${character.picture}"
+        )
+        val updateUri = UriBuilder.of("/{id}")
+            .expand(mutableMapOf("id" to addedItem.id))
+            .toString()
+        val updatedItem = httpClient.toBlocking()
+            .retrieve(HttpRequest.PUT(updateUri, updateCharacterRequest), UpdateCharacterResponse::class.java)
+        val getUpdatedItem = httpClient.toBlocking()
+            .retrieve(getUri, GetCharacterResponse::class.java)
+
+        // Assert
+        Assertions.assertThat(updatedItem.id).isEqualTo(addedItem.id)
+        Assertions.assertThat(getUpdatedItem.id).isEqualTo(addedItem.id)
+        Assertions.assertThat(updatedItem.name).isEqualTo(character.name)
+        Assertions.assertThat(getUpdatedItem.name).isEqualTo(character.name)
+        Assertions.assertThat(updatedItem.notes).isEqualTo(character.notes)
+        Assertions.assertThat(getUpdatedItem.notes).isEqualTo(character.notes)
+        Assertions.assertThat(updatedItem.picture).isEqualTo("data:image/png;base64,${character.picture}")
+        Assertions.assertThat(getUpdatedItem.picture).isEqualTo("data:image/png;base64,${character.picture}")
+        // containsAll() instead of containsExactly() because server may automatically add some initial aliases based on the name
+        Assertions.assertThat(updatedItem.aliases).containsAll(character.aliases)
+        Assertions.assertThat(getUpdatedItem.aliases).containsAll(character.aliases)
+    }
+
+    fun itemRequestProvider() = CharacterTestDataProvider.itemProvider()
 }
