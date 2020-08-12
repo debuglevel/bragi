@@ -7,9 +7,11 @@ import io.micronaut.http.uri.UriBuilder
 import io.micronaut.runtime.server.EmbeddedServer
 import io.micronaut.test.annotation.MicronautTest
 import org.assertj.core.api.Assertions
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
+import java.util.*
 import javax.inject.Inject
 
 
@@ -107,6 +109,46 @@ class CharacterControllerTests {
         // containsAll() instead of containsExactly() because server may automatically add some initial aliases based on the name
         Assertions.assertThat(updatedItem.aliases).containsAll(character.aliases)
         Assertions.assertThat(getUpdatedItem.aliases).containsAll(character.aliases)
+    }
+
+    @Test
+    fun `get character picture`() {
+        // Arrange
+        val character = Character(
+            id = null,
+            name = "Picture Character",
+            aliases = mutableListOf(),
+            notes = "",
+            picture = "/9j/4AAQSkZJRgABAQEBLAEsAAD//gATQ3JlYXRlZCB3aXRoIEdJTVD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wgARCAABAAEDAREAAhEBAxEB/8QAFAABAAAAAAAAAAAAAAAAAAAACP/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/9oADAMBAAIQAxAAAAFQTW//xAAUEAEAAAAAAAAAAAAAAAAAAAAA/9oACAEBAAEFAn//xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oACAEDAQE/AX//xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oACAECAQE/AX//xAAUEAEAAAAAAAAAAAAAAAAAAAAA/9oACAEBAAY/An//xAAUEAEAAAAAAAAAAAAAAAAAAAAA/9oACAEBAAE/IX//2gAMAwEAAgADAAAAEH//xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oACAEDAQE/EH//xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oACAECAQE/EH//xAAUEAEAAAAAAAAAAAAAAAAAAAAA/9oACAEBAAE/EH//2Q=="
+        )
+        val byteArray = Base64.getDecoder().decode(character.picture)
+        val addCharacterRequest = AddCharacterRequest(
+            name = character.name
+        )
+        val addUri = UriBuilder.of("/").build()
+        val addedItem = httpClient.toBlocking()
+            .retrieve(HttpRequest.POST(addUri, addCharacterRequest), AddCharacterResponse::class.java)
+        val updateCharacterRequest = UpdateCharacterRequest(
+            name = character.name,
+            notes = character.notes,
+            aliases = character.aliases,
+            picture = "data:image/png;base64,${character.picture}"
+        )
+        val updateUri = UriBuilder.of("/{id}")
+            .expand(mutableMapOf("id" to addedItem.id))
+            .toString()
+        val updatedItem = httpClient.toBlocking()
+            .retrieve(HttpRequest.PUT(updateUri, updateCharacterRequest), UpdateCharacterResponse::class.java)
+
+        // Act
+        val getPictureUri = UriBuilder.of("/{id}/picture")
+            .expand(mutableMapOf("id" to addedItem.id))
+            .toString()
+        val getPicture = httpClient.toBlocking()
+            .retrieve(getPictureUri, ByteArray::class.java)
+
+        // Assert
+        Assertions.assertThat(getPicture).isEqualTo(byteArray)
     }
 
     fun itemRequestProvider() = CharacterTestDataProvider.itemProvider()
