@@ -1,8 +1,21 @@
 <template>
   <div class="renderings">
     <h1>Exports</h1>
-    <v-btn :href="htmlUrl">HTML</v-btn>
-    <v-btn :href="odtUrl">ODT</v-btn>
+    <v-card class="mx-auto" max-width="400">
+      <v-card-title>HTML</v-card-title>
+      <v-card-text>Export as HTML to be viewed in a Browser.</v-card-text>
+      <v-card-actions>
+        <v-btn :href="htmlUrl" class="primary">Download</v-btn>
+      </v-card-actions>
+    </v-card>
+
+    <v-card class="mx-auto" max-width="400">
+      <v-card-title>OpenDocument</v-card-title>
+      <v-card-text>Export as ODT to be viewer or edited in Open/LibreOffice.</v-card-text>
+      <v-card-actions>
+        <v-btn :href="odtUrl" class="primary">Download</v-btn>
+      </v-card-actions>
+    </v-card>
   </div>
 </template>
 
