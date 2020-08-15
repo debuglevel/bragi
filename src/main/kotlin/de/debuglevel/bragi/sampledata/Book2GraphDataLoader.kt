@@ -1,4 +1,4 @@
-package de.debuglevel.bragi
+package de.debuglevel.bragi.sampledata
 
 import de.debuglevel.book2graph.parser.xml.FodtParser
 import de.debuglevel.bragi.chapter.Chapter
@@ -8,6 +8,7 @@ import de.debuglevel.bragi.character.CharacterService
 import de.debuglevel.bragi.places.Place
 import de.debuglevel.bragi.places.PlaceService
 import io.micronaut.context.annotation.Requires
+import io.micronaut.context.annotation.Value
 import io.micronaut.context.env.Environment
 import io.micronaut.context.event.ApplicationEventListener
 import io.micronaut.discovery.event.ServiceReadyEvent
@@ -21,15 +22,25 @@ import javax.inject.Singleton
 @Singleton
 @Requires(notEnv = [Environment.TEST]) // Do not load data in tests.
 class Book2GraphDataLoader(
+    @Value("\${app.bragi.sampledata.name:got}") private val sampledataName: String,
+    @Value("\${app.bragi.sampledata.autoload:false}") private val autoload: Boolean,
+    private val dataCleaner: DataCleaner,
     private val characterService: CharacterService,
     private val placeService: PlaceService,
     private val chapterService: ChapterService
-) : ApplicationEventListener<ServiceReadyEvent> {
+) : ApplicationEventListener<ServiceReadyEvent>, SampleDataLoader {
     private val logger = KotlinLogging.logger {}
 
     override fun onApplicationEvent(event: ServiceReadyEvent) {
-        return // remove if you've got the necessary data ;)
+        if (autoload && sampledataName == "book2graph") {
+            populate()
+        }
+    }
+
+    override fun populate() {
         logger.debug { "Populating database with sample data..." }
+
+        dataCleaner.clean()
 
         val mrPreston = Character(
             id = null,
@@ -50,70 +61,70 @@ class Book2GraphDataLoader(
             name = "Ira Preston",
             aliases = mutableListOf("Ira"),
             notes = "",
-            picture =null
+            picture = null
         )
         val charly = Character(
             id = null,
             name = "Charly",
             aliases = mutableListOf(),
             notes = "",
-            picture =null
+            picture = null
         )
         val kayne = Character(
             id = null,
             name = "Kayne",
             aliases = mutableListOf(),
             notes = "",
-            picture =null
+            picture = null
         )
         val sandra = Character(
             id = null,
             name = "Sandra",
             aliases = mutableListOf("San"),
             notes = "",
-            picture =null
+            picture = null
         )
         val sirrus = Character(
             id = null,
             name = "Sirrus",
             aliases = mutableListOf(),
             notes = "",
-            picture =null
+            picture = null
         )
         val joey = Character(
             id = null,
             name = "Joey",
             aliases = mutableListOf(),
             notes = "",
-            picture =null
+            picture = null
         )
         val amrai = Character(
             id = null,
             name = "Amrai",
             aliases = mutableListOf(),
             notes = "",
-            picture =null
+            picture = null
         )
         val dave = Character(
             id = null,
             name = "Dave",
             aliases = mutableListOf(),
             notes = "",
-            picture =null
+            picture = null
         )
         val floyd = Character(
             id = null,
             name = "Floyd",
             aliases = mutableListOf(),
             notes = "",
-            picture =null
+            picture = null
         )
         val edward = Character(
             id = null,
             name = "Edward",
             aliases = mutableListOf(),
             notes = "",
-            picture =null
+            picture = null
         )
 
         characterService.add(mrPreston)

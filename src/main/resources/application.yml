@@ -1,5 +1,8 @@
 app:
   bragi:
+    sampledata:
+      autoload: true # automatically load sample data on startup
+      name: "got" # "book2graph" # name of the sample data to load
   security:
     configurable-credential-authentication:
       username: "SECRET_USERNAME"

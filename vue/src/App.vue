@@ -53,6 +53,7 @@ export default {
     title: "Bragi",
     navigationItems: [
       { title: "Home", icon: "mdi-home", link: "/" },
+      { title: "Sample Data", icon: "mdi-database", link: "/sampledata" },
       {
         title: "Chapters",
         icon: "mdi-text-box-outline",
