@@ -64,6 +64,7 @@ export default {
         icon: "mdi-map-marker",
         link: "/places"
       },
+      { title: "Exports", icon: "mdi-download", link: "/renderings" },
       { title: "About", icon: "mdi-information", link: "/about" }
     ]
   })

@@ -142,6 +142,9 @@ dependencies {
 
     // Generate random texts as samples
     implementation 'com.thedeanda:lorem:2.1'
+
+    // ODF Toolkit
+    implementation 'org.odftoolkit:odfdom-java:0.8.7'
 }
 
 // Java configuration

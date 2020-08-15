@@ -14,19 +14,19 @@ class HtmlRenderer : DocumentRenderer {
     override fun render(chapters: List<Chapter>, characters: List<Character>, places: List<Place>): Any {
         var output = ""
 
-        output += renderHtmlHead()
+        output += renderHead()
         output += renderFrontMatter()
         output += renderChapters(chapters)
         output += renderCharacters(characters)
         output += renderPlaces(places)
         output += renderBackMatter()
-        output += renderHtmlFoot()
+        output += renderFoot()
 
         return output
     }
 
     // See: https://css4.pub/2015/oliver-twist/oliver-twist.html
-    private fun renderHtmlFoot(): String {
+    private fun renderFoot(): String {
         return """
             <script>
 
@@ -72,7 +72,7 @@ class HtmlRenderer : DocumentRenderer {
         """.trimIndent()
     }
 
-    private fun renderHtmlHead(): String {
+    private fun renderHead(): String {
         return """
             <html>
             <head>

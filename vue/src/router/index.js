@@ -26,6 +26,18 @@ const routes = [
     },
   },
   {
+    path: "/renderings",
+    name: "Renderings",
+    // route level code-splitting
+    // this generates a separate chunk (renderings.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () =>
+      import(/* webpackChunkName: "renderings" */ "../views/Renderings.vue"),
+    meta: {
+      title: "Exports",
+    },
+  },
+  {
     path: "/chapters",
     name: "Chapters",
     // route level code-splitting

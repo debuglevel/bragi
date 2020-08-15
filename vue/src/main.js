@@ -6,6 +6,7 @@ import Axios from "axios";
 
 Vue.config.productionTip = false;
 
+// TODO: a ConfigService or something would probably be nice to put all config variables into.
 Axios.defaults.baseURL = process.env.VUE_APP_API_ENDPOINT;
 console.log("Using endpoint: " + Axios.defaults.baseURL);
 

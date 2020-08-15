@@ -10,10 +10,12 @@ import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.Produces
+import io.micronaut.http.server.types.files.SystemFile
 import io.micronaut.security.annotation.Secured
 import io.micronaut.security.rules.SecurityRule
 import io.swagger.v3.oas.annotations.tags.Tag
 import mu.KotlinLogging
+import java.io.File
 
 @Secured(SecurityRule.IS_ANONYMOUS)
 @Controller("/renderings")
@@ -41,6 +43,25 @@ class RenderController(
         } catch (e: Exception) {
             logger.error(e) { "Unhandled exception" }
             HttpResponse.serverError<String>()
+        }
+    }
+
+    @Get("/odt")
+    @Produces(MediaType.TEXT_PLAIN)
+    fun getOdt(): HttpResponse<SystemFile> {
+        logger.debug("Called getOdt()")
+        return try {
+            val chapters = chapterService.list().toList()
+            val characters = characterService.list().toList()
+            val places = placeService.list().toList()
+            val file = odtRenderer.render(chapters, characters, places) as File
+            val systemFile = SystemFile(file, MediaType.of("application/vnd.oasis.opendocument.text"))
+            systemFile.attach("document.odt")
+
+            HttpResponse.ok(systemFile)
+        } catch (e: Exception) {
+            logger.error(e) { "Unhandled exception" }
+            HttpResponse.serverError<SystemFile>()
         }
     }
 }
