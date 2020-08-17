@@ -44,7 +44,7 @@
 
 <script>
 import ColorService from "@/services/ColorService";
-import PlaceService from "@/api-services/PlaceService";
+import PictureService from "@/services/PictureService";
 
 export default {
   name: "PlaceChip",
@@ -66,7 +66,7 @@ export default {
         return this.place.picture;
       } else if (this.place.picture.startsWith("/")) {
         // seems to be a URL, prepend API URL
-        return PlaceService.getPictureUrl(this.place.picture, {
+        return PictureService.getPictureUrl(this.place.picture, {
           maxWidth: maxWidth,
           maxHeight: maxHeight
         });

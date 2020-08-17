@@ -42,7 +42,7 @@
 
 <script>
 import ColorService from "@/services/ColorService";
-import CharacterService from "@/api-services/CharacterService";
+import PictureService from "@/services/PictureService";
 
 export default {
   name: "CharacterChip",
@@ -64,7 +64,7 @@ export default {
         return this.character.picture;
       } else if (this.character.picture.startsWith("/")) {
         // seems to be a URL, prepend API URL
-        return CharacterService.getPictureUrl(this.character.picture, {
+        return PictureService.getPictureUrl(this.character.picture, {
           maxWidth: maxWidth,
           maxHeight: maxHeight
         });

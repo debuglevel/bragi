@@ -22,15 +22,4 @@ export default {
   delete(id) {
     return Axios.delete(`${RESOURCE_NAME}/${id}`);
   },
-
-  getPictureUrl(url, opts) {
-    // gets /characters/<UUID>/picture and transforms it to http://<HOST>/places/<UUID>/picture
-    if (!opts["maxWidth"] && !opts["maxHeight"]) {
-      return `${process.env.VUE_APP_API_ENDPOINT}${url}`;
-    } else {
-      let maxWidth = opts["maxWidth"];
-      let maxHeight = opts["maxHeight"];
-      return `${process.env.VUE_APP_API_ENDPOINT}${url}?maxWidth=${maxWidth}&maxHeight=${maxHeight}`;
-    }
-  },
 };

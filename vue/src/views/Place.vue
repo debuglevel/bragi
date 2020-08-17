@@ -38,6 +38,7 @@
 <script>
 // @ is an alias to /src
 import PlaceService from "@/api-services/PlaceService";
+import PictureService from "@/services/PictureService";
 import { TreeView } from "vue-json-tree-view"; // { } is somehow needed: https://github.com/michaelfitzhavey/vue-json-tree-view/issues/21#issuecomment-641537049
 
 export default {
@@ -115,7 +116,7 @@ export default {
         return this.place.picture;
       } else if (this.place.picture.startsWith("/")) {
         // seems to be a URL, prepend API URL
-        return PlaceService.getPictureUrl(this.place.picture, {
+        return PictureService.getPictureUrl(this.place.picture, {
           maxWidth: maxWidth,
           maxHeight: maxHeight
         });

@@ -39,6 +39,7 @@
 <script>
 // @ is an alias to /src
 import CharacterService from "@/api-services/CharacterService";
+import PictureService from "@/services/PictureService";
 import { TreeView } from "vue-json-tree-view"; // { } is somehow needed: https://github.com/michaelfitzhavey/vue-json-tree-view/issues/21#issuecomment-641537049
 
 export default {
@@ -116,7 +117,7 @@ export default {
         return this.character.picture;
       } else if (this.character.picture.startsWith("/")) {
         // seems to be a URL, prepend API URL
-        return CharacterService.getPictureUrl(this.character.picture, {
+        return PictureService.getPictureUrl(this.character.picture, {
           maxWidth: maxWidth,
           maxHeight: maxHeight
         });
