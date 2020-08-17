@@ -3,7 +3,7 @@
     <template v-slot:activator="{ on }">
       <v-chip class="ma-1" pill v-on="on" :color="background">
         <v-avatar left v-if="hasPicture">
-          <v-img :src="place.picture" />
+          <v-img :src="getPictureUrl(96, 96)" />
         </v-avatar>
         {{
         place.name
@@ -15,7 +15,7 @@
       <v-list>
         <v-list-item>
           <v-list-item-avatar v-if="hasPicture" size="96">
-            <v-img :src="place.picture" />
+            <v-img :src="getPictureUrl()" />
           </v-list-item-avatar>
 
           <v-list-item-content>
@@ -44,6 +44,7 @@
 
 <script>
 import ColorService from "@/services/ColorService";
+import PlaceService from "@/api-services/PlaceService";
 
 export default {
   name: "PlaceChip",
@@ -58,6 +59,21 @@ export default {
   methods: {
     containsKey(obj, key) {
       return Object.keys(obj).includes(key);
+    },
+    getPictureUrl(maxWidth, maxHeight) {
+      if (this.place.picture.startsWith("data:image")) {
+        // seems to be a data URL, return value
+        return this.place.picture;
+      } else if (this.place.picture.startsWith("/")) {
+        // seems to be a URL, prepend API URL
+        return PlaceService.getPictureUrl(this.place.picture, {
+          maxWidth: maxWidth,
+          maxHeight: maxHeight
+        });
+      } else {
+        // no idea, just return value
+        return this.place.picture;
+      }
     }
   },
   computed: {

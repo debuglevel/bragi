@@ -11,7 +11,7 @@
       <v-text-field v-model="place.name" :rules="nameRules" label="Name" required></v-text-field>
 
       <!-- TODO: image is larger than it should be -->
-      <v-img v-if="hasPicture" :src="place.picture" max-height="150px" contain />
+      <v-img v-if="hasPicture" :src="getPictureUrl()" max-height="150px" contain />
       <v-file-input
         accept="image/*"
         placeholder="Change picture"
@@ -108,6 +108,21 @@ export default {
     },
     containsKey(obj, key) {
       return Object.keys(obj).includes(key);
+    },
+    getPictureUrl(maxWidth, maxHeight) {
+      if (this.place.picture.startsWith("data:image")) {
+        // seems to be a data URL, return value
+        return this.place.picture;
+      } else if (this.place.picture.startsWith("/")) {
+        // seems to be a URL, prepend API URL
+        return PlaceService.getPictureUrl(this.place.picture, {
+          maxWidth: maxWidth,
+          maxHeight: maxHeight
+        });
+      } else {
+        // no idea, just return value
+        return this.place.picture;
+      }
     }
   },
   computed: {

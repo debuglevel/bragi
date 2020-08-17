@@ -12,7 +12,7 @@
       <v-text-field v-model="character.name" :rules="nameRules" label="Name" required></v-text-field>
 
       <!-- TODO: image is larger than it should be -->
-      <v-img v-if="hasPicture" :src="character.picture" max-height="150px" contain />
+      <v-img v-if="hasPicture" :src="getPictureUrl()" max-height="150px" contain />
       <v-file-input
         accept="image/*"
         placeholder="Change picture"
@@ -109,6 +109,21 @@ export default {
     },
     containsKey(obj, key) {
       return Object.keys(obj).includes(key);
+    },
+    getPictureUrl(maxWidth, maxHeight) {
+      if (this.character.picture.startsWith("data:image")) {
+        // seems to be a data URL, return value
+        return this.character.picture;
+      } else if (this.character.picture.startsWith("/")) {
+        // seems to be a URL, prepend API URL
+        return CharacterService.getPictureUrl(this.character.picture, {
+          maxWidth: maxWidth,
+          maxHeight: maxHeight
+        });
+      } else {
+        // no idea, just return value
+        return this.character.picture;
+      }
     }
   },
   computed: {

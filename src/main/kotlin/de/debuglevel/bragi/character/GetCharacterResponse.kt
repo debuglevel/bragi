@@ -18,7 +18,7 @@ data class GetCharacterResponse(
         name = character.name,
         aliases = character.aliases.toList(),
         notes = character.notes,
-        picture = if (character.picture != null) { "data:image/png;base64,${character.picture}" } else { null },
+        picture = if (character.picture != null) { "/characters/${character.id}/picture" } else { null },
         createdOn = character.createdOn,
         lastModified = character.lastModified
     )

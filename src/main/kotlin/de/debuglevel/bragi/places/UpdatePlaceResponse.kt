@@ -18,7 +18,7 @@ data class UpdatePlaceResponse(
         name = place.name,
         aliases = place.aliases.toList(),
         notes = place.notes,
-        picture = if (place.picture != null) { "data:image/png;base64,${place.picture}" } else { null },
+        picture = if (place.picture != null) { "/places/${place.id}/picture" } else { null },
         createdOn = place.createdOn,
         lastModified = place.lastModified
     )

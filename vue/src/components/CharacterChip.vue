@@ -3,17 +3,17 @@
     <template v-slot:activator="{ on }">
       <v-chip class="ma-1" pill v-on="on" :color="background">
         <v-avatar left v-if="hasPicture">
-          <v-img :src="character.picture" />
+          <v-img :src="getPictureUrl(96, 96)" />
         </v-avatar>
-        {{ character.name }}</v-chip
-      >
+        {{ character.name }}
+      </v-chip>
     </template>
 
     <v-card width="600">
       <v-list>
         <v-list-item>
           <v-list-item-avatar v-if="hasPicture" size="96">
-            <v-img :src="character.picture" />
+            <v-img :src="getPictureUrl()" />
           </v-list-item-avatar>
 
           <v-list-item-content>
@@ -22,9 +22,11 @@
         </v-list-item>
 
         <v-list-item>
-          <v-list-item-content class="preformatted-newlines">{{
+          <v-list-item-content class="preformatted-newlines">
+            {{
             character.notes
-          }}</v-list-item-content>
+            }}
+          </v-list-item-content>
         </v-list-item>
 
         <v-list-item :to="'/characters/' + character.id">
@@ -40,13 +42,14 @@
 
 <script>
 import ColorService from "@/services/ColorService";
+import CharacterService from "@/api-services/CharacterService";
 
 export default {
   name: "CharacterChip",
   components: {},
 
   props: {
-    character: {},
+    character: {}
   },
   data: () => ({
     //
@@ -55,6 +58,21 @@ export default {
     containsKey(obj, key) {
       return Object.keys(obj).includes(key);
     },
+    getPictureUrl(maxWidth, maxHeight) {
+      if (this.character.picture.startsWith("data:image")) {
+        // seems to be a data URL, return value
+        return this.character.picture;
+      } else if (this.character.picture.startsWith("/")) {
+        // seems to be a URL, prepend API URL
+        return CharacterService.getPictureUrl(this.character.picture, {
+          maxWidth: maxWidth,
+          maxHeight: maxHeight
+        });
+      } else {
+        // no idea, just return value
+        return this.character.picture;
+      }
+    }
   },
   computed: {
     background: function() {
@@ -62,8 +80,8 @@ export default {
     },
     hasPicture: function() {
       return this.containsKey(this.character, "picture");
-    },
-  },
+    }
+  }
 };
 </script>
 
