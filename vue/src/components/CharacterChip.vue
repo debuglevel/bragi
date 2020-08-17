@@ -59,19 +59,11 @@ export default {
       return Object.keys(obj).includes(key);
     },
     getPictureUrl(maxWidth, maxHeight) {
-      if (this.character.picture.startsWith("data:image")) {
-        // seems to be a data URL, return value
-        return this.character.picture;
-      } else if (this.character.picture.startsWith("/")) {
-        // seems to be a URL, prepend API URL
-        return PictureService.getPictureUrl(this.character.picture, {
-          maxWidth: maxWidth,
-          maxHeight: maxHeight
-        });
-      } else {
-        // no idea, just return value
-        return this.character.picture;
-      }
+      return PictureService.getPictureUrl(
+        this.character.picture,
+        maxWidth,
+        maxHeight
+      );
     }
   },
   computed: {
