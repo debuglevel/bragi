@@ -11,8 +11,9 @@ def print_template(character):
         alias = ""
 
     try:
-        characterImageThumb = character["characterImageThumb"]
-        base64image = get_as_base64(characterImageThumb)
+        characterImage = character["characterImageThumb"]
+        #characterImage = character["characterImageFull"] # use this to get full character images; but I do not want to blow up my git repository for this...
+        base64image = get_as_base64(characterImage)
         if base64image == "Tm90IEZvdW5k": # "Not Found"
             base64image = ""
     except KeyError:
