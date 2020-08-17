@@ -1,6 +1,7 @@
 package de.debuglevel.bragi.character
 
 import de.debuglevel.bragi.entity.*
+import de.debuglevel.bragi.picture.PictureProvider
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.*
@@ -63,6 +64,8 @@ class CharacterController(
             HttpResponse.ok(picture)
         } catch (e: EntityService.ItemNotFoundException) {
             HttpResponse.badRequest<ByteArray>()
+        } catch (e: PictureProvider.PictureNotFoundException) {
+            HttpResponse.notFound<ByteArray>()
         } catch (e: Exception) {
             logger.error(e) { "Unhandled exception" }
             HttpResponse.serverError<ByteArray>()

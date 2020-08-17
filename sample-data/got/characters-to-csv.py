@@ -12,11 +12,13 @@ def print_template(character):
         alias = ""
 
     try:
-        characterImage = character["characterImageThumb"]
+        #characterImage = character["characterImageThumb"]
         #characterImage = character["characterImageFull"] # use this to get full character images; but I do not want to blow up my git repository for this...
-        base64image = get_as_base64(characterImage)
-        if base64image == "Tm90IEZvdW5k": # "Not Found"
-            base64image = ""
+        #base64image = get_as_base64(characterImage)
+        #if base64image == "Tm90IEZvdW5k": # "Not Found"
+        #    base64image = ""
+
+        base64image = character["characterImageFull"] # use this to just reference the image by an URL instead of downloading it.
     except KeyError:
         base64image = ""
     except:

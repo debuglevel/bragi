@@ -9,7 +9,7 @@ object DataUrlUtils {
 
         return when {
             dataUrl.isNullOrBlank() -> throw IllegalArgumentException("dataUrl must not be null or blank")
-            !dataUrl.contains("data:") -> throw IllegalArgumentException("dataUrl must begin with 'data:'")
+            !isDataUrl(dataUrl) -> throw IllegalArgumentException("dataUrl must begin with 'data:'")
             !dataUrl.contains(encodingPrefix) -> throw IllegalArgumentException("dataUrl must be base64 encoded")
             else -> {
                 val contentStartIndex = dataUrl.indexOf(encodingPrefix) + encodingPrefix.length
@@ -17,5 +17,9 @@ object DataUrlUtils {
                 base64
             }
         }
+    }
+
+    fun isDataUrl(dataUrl: String): Boolean {
+        return dataUrl.contains("data:")
     }
 }
