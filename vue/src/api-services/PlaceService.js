@@ -24,7 +24,7 @@ export default {
   },
 
   getPictureUrl(url, opts) {
-    // gets /characters/<UUID>/picture and transforms it to http://<HOST>/characters/<UUID>/picture
+    // gets /characters/<UUID>/picture and transforms it to http://<HOST>/places/<UUID>/picture
     if (!opts["maxWidth"] && !opts["maxHeight"]) {
       return `${process.env.VUE_APP_API_ENDPOINT}${url}`;
     } else {
