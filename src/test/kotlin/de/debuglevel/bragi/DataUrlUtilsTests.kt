@@ -28,7 +28,54 @@ class DataUrlUtilsTests {
         org.junit.jupiter.api.assertThrows<IllegalArgumentException> { DataUrlUtils.getBase64Part(dataUrlTestData.dataUrl) }
     }
 
+    @ParameterizedTest
+    @MethodSource("dataUrlProvider")
+    fun `is valid data URL`(dataUrlTestData: DataUrlTestData) {
+        // Arrange
+
+        // Act
+        val isDataUrl = DataUrlUtils.isDataUrl(dataUrlTestData.dataUrl)
+
+        // Assert
+        Assertions.assertThat(isDataUrl).isEqualTo(true)
+    }
+
+    @ParameterizedTest
+    @MethodSource("invalidDataUrlProvider")
+    fun `is invalid data URL`(dataUrlTestData: DataUrlTestData) {
+        // Arrange
+
+        // Act
+        val isDataUrl = DataUrlUtils.isDataUrl(dataUrlTestData.dataUrl)
+
+        // Assert
+        Assertions.assertThat(isDataUrl).isEqualTo(false)
+    }
+
     data class DataUrlTestData(val dataUrl: String?, val base64: String? = null)
+
+    fun dataUrlProvider(): List<DataUrlTestData> {
+        return listOf(
+            DataUrlTestData("data:text/vnd-example+xyz;foo=bar;base64,R0lGODdh", "R0lGODdh"),
+            DataUrlTestData("data:image/*;base64,R0lGODdh", "R0lGODdh"),
+            DataUrlTestData("data:base64,R0lGODdh", "R0lGODdh"),
+            DataUrlTestData("data:base64,", ""),
+            DataUrlTestData("data:text/plain;charset=UTF-8;page=21,the%20data:1234,5678"),
+            DataUrlTestData("data:,")
+        )
+    }
+
+    fun invalidDataUrlProvider(): List<DataUrlTestData> {
+        return listOf(
+            DataUrlTestData("data:"),
+            DataUrlTestData("data:base64"),
+            DataUrlTestData("base64,"),
+            DataUrlTestData("base64"),
+            DataUrlTestData("whatever"),
+            DataUrlTestData(""),
+            DataUrlTestData(null)
+        )
+    }
 
     fun base64DataUrlProvider(): List<DataUrlTestData> {
         return listOf(

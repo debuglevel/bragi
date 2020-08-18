@@ -19,7 +19,13 @@ object DataUrlUtils {
         }
     }
 
-    fun isDataUrl(dataUrl: String): Boolean {
-        return dataUrl.contains("data:")
+    /**
+     * Checks if string is (or at least could be) a data URL. Does not perform a strict check but rather a plausibility check.
+     */
+    fun isDataUrl(dataUrl: String?): Boolean {
+        return when {
+            dataUrl.isNullOrBlank() -> false
+            else -> dataUrl.startsWith("data:") && dataUrl.contains(",")
+        }
     }
 }
